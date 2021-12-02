@@ -1,5 +1,8 @@
 package Server.Servlets;
 
+
+import DataBase.DBCPDataSource;
+import DataBase.UsersJDBC;
 import Server.LoginServerConstants;
 import Util.ClientInfo;
 import Util.Config;
@@ -11,14 +14,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.logging.Logger;
+import static Server.HttpServer.LOGGER;
 
 /**
  * Implements logic for the /login path where Slack will redirect requests after
  * the user has entered their auth info.
  */
 public class LoginServlet extends HttpServlet {
+
+    //private Connection connection;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,12 +74,26 @@ public class LoginServlet extends HttpServlet {
             resp.getWriter().println("<h1>Oops, login unsuccessful</h1>");
             resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
         } else {
-            req.getSession().setAttribute(LoginServerConstants.CLIENT_INFO_KEY, clientInfo);
-            resp.setStatus(HttpStatus.OK_200);
-            resp.getWriter().println(LoginServerConstants.PAGE_HEADER);
-            resp.getWriter().println("<h1>Hello, " + clientInfo.getName() + "</h1>");
-            resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");
-            resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
+            String email = clientInfo.getEmail();
+            String userName = clientInfo.getName();
+            try (Connection connection = DBCPDataSource.getConnection()){
+                LOGGER.info(connection);
+                ResultSet result = UsersJDBC.executeSelectUserByEmail(connection, email);
+                LOGGER.info(result);
+                if(result.next() == false){
+                    UsersJDBC.executeInsertUser(connection, userName, email);
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }finally {
+                req.getSession().setAttribute(LoginServerConstants.CLIENT_INFO_KEY, clientInfo);
+                resp.setStatus(HttpStatus.OK_200);
+                resp.getWriter().println(LoginServerConstants.PAGE_HEADER);
+                resp.getWriter().println("<h1>Hello, " + clientInfo.getName() + "</h1>");
+                resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");
+                resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
+            }
+
 
         }
     }
