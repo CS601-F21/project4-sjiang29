@@ -1,0 +1,9 @@
+target/
+out/
+.idea/
+.idea_modules/
+lib/
+
+*.log
+*.txt
+*.json
