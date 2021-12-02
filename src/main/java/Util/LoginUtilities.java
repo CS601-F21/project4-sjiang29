@@ -132,7 +132,8 @@ public class LoginUtilities {
 
         // extract name from response
         String username = (String) payloadMap.get(LoginServerConstants.NAME_KEY);
-        return new ClientInfo(username);
+        String email = (String)payloadMap.get(LoginServerConstants.EMAIL_KEY);
+        return new ClientInfo(username,email);
     }
 
     /**

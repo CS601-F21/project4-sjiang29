@@ -29,7 +29,7 @@ public class LandingServlet extends HttpServlet {
 
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
-        LOGGER.info("get client info");
+        LOGGER.info("landing---get client info");
 
         if(clientInfoObj != null) {
             // already authed, no need to log in
