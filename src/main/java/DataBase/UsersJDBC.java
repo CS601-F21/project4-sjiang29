@@ -29,12 +29,11 @@ public class UsersJDBC {
      * @throws SQLException
      */
     public static void executeInsertUser(Connection con, String name, String email) throws SQLException {
-        String insertUserSql = "INSERT INTO users (name, email, ticket_id, zipcode) VALUES (?, ?, ?, ?);";
+        String insertUserSql = "INSERT INTO users (name, email, zipcode) VALUES (?, ?, ?);";
         PreparedStatement insertUserStmt = con.prepareStatement(insertUserSql);
         insertUserStmt.setString(1, name);
         insertUserStmt.setString(2, email);
         insertUserStmt.setNull(3,java.sql.Types.NULL);
-        insertUserStmt.setNull(4,java.sql.Types.NULL);
 
         insertUserStmt.executeUpdate();
     }

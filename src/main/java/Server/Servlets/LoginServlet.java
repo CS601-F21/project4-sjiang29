@@ -2,6 +2,7 @@ package Server.Servlets;
 
 
 import DataBase.DBCPDataSource;
+import DataBase.SessionsJDBC;
 import DataBase.UsersJDBC;
 import Server.LoginServerConstants;
 import Util.ClientInfo;
@@ -71,7 +72,8 @@ public class LoginServlet extends HttpServlet {
         if(clientInfo == null) {
             resp.setStatus(HttpStatus.OK_200);
             resp.getWriter().println(LoginServerConstants.PAGE_HEADER);
-            resp.getWriter().println("<h1>Oops, login unsuccessful</h1>");
+            resp.getWriter().println("<h1>Oops, login unsuccessful, please try to login again</h1>");
+            resp.getWriter().println("<a href=\""+url+"\"><img src=\"" + LoginServerConstants.BUTTON_URL +"\"/></a>");
             resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
         } else {
             String email = clientInfo.getEmail();
@@ -81,16 +83,24 @@ public class LoginServlet extends HttpServlet {
                 ResultSet result = UsersJDBC.executeSelectUserByEmail(connection, email);
                 LOGGER.info(result);
                 if(result.next() == false){
+                    // update users table
                     UsersJDBC.executeInsertUser(connection, userName, email);
                 }
+                // update sessions table
+                SessionsJDBC.executeInsertSession(connection, sessionId, email);
+
             } catch(SQLException e) {
                 e.printStackTrace();
             }finally {
                 req.getSession().setAttribute(LoginServerConstants.CLIENT_INFO_KEY, clientInfo);
                 resp.setStatus(HttpStatus.OK_200);
                 resp.getWriter().println(LoginServerConstants.PAGE_HEADER);
-                resp.getWriter().println("<h1>Hello, " + clientInfo.getName() + "</h1>");
-                resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");
+                resp.getWriter().println("<br></br>");
+                resp.getWriter().println("<h1 style=\"text-align: center\">Hello, " + clientInfo.getName() + "</h1>");
+                resp.getWriter().println("<p style=\"text-align: center\">" +
+                        "<a href=\"/account\"> Show My Account</a> | " +
+                        "<a href=\"/allEvents\"> Show All Events</a> | " +
+                        "<a href=\"/logout\">Logout</a></p>");
                 resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
             }
 
