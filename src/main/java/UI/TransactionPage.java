@@ -36,9 +36,15 @@ public class TransactionPage {
                         "</li>\n");
             }
         }
+        builder.append(LINKS);
         builder.append(PAGE_FOOTER);
-
         return builder.toString();
 
     }
+
+    public static final String LINKS=
+            "<p><a href=\"/account\"> Show My Account</a> | " +
+                    "<a href=\"/events\"> Show All Events</a> | " +
+                    "<a href=\"/newEvent\"> Add a New Event</a> | " +
+                    "<a href=\"/logout\">Logout</a></p>\n";
 }

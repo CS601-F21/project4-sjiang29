@@ -59,11 +59,11 @@ public class AccountPage {
     public static final String LINKS_POST_PAGE =
                     "<p><a href=\"/account\"> Show My Account</a> | " +
                             "<a href=\"/transaction\"> Show My Transactions</a> | " +
-                            "<a href=\"/allEvents\"> Show All Events</a> | " +
+                            "<a href=\"/events\"> Show All Events</a> | " +
                             "<a href=\"/logout\">Logout</a></p>\n";
 
     public static final String LINKS_GET_PAGE =
             "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
-                    "<a href=\"/allEvents\"> Show All Events</a> | " +
+                    "<a href=\"/events\"> Show All Events</a> | " +
                     "<a href=\"/logout\">Logout</a></p>\n";
 }
