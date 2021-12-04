@@ -1,9 +1,6 @@
 package DataBase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class EventsJDBC {
 
@@ -43,6 +40,59 @@ public class EventsJDBC {
         ResultSet results = selectEventByIdStmt.executeQuery();
         return results;
     }
+
+    /**
+     * A method to demonstrate using a PreparedStatement to execute a database insert.
+     * @param con
+     * @param creatorEmail
+     * @param eventName
+     * @param date
+     * @param zipcode
+     * @param eventDescription
+
+     * @throws SQLException
+     */
+    public static void executeInsertEvent(Connection con, String creatorEmail, String eventName, String eventDescription,
+                                          int zipcode, Date date, String startTime, String endTime) throws SQLException {
+        String insertEventSql = "INSERT INTO events (name, creator_email, time, zipcode, description, start_time, end_time) " +
+                "VALUES (?, ?, ?, ?, ?, ? ,?);";
+        PreparedStatement insertEventStmt = con.prepareStatement(insertEventSql);
+        insertEventStmt.setString(1, eventName);
+        insertEventStmt.setString(2, creatorEmail);
+        if(date == null){
+            insertEventStmt.setNull(3,java.sql.Types.NULL);
+        }else{
+            insertEventStmt.setDate(3, date);
+        }
+
+        if(zipcode == 0){
+            insertEventStmt.setNull(3,java.sql.Types.NULL);
+        }else{
+            insertEventStmt.setInt(4, zipcode);
+        }
+
+        if(eventDescription.equals("")){
+            insertEventStmt.setNull(5,java.sql.Types.NULL);
+        }else{
+            insertEventStmt.setString(5, eventDescription);
+        }
+
+        if(startTime.equals("")){
+            insertEventStmt.setNull(6, java.sql.Types.NULL);
+        }else{
+            insertEventStmt.setString(6,startTime);
+        }
+
+        if(endTime.equals("")){
+            insertEventStmt.setNull(7, java.sql.Types.NULL);
+        }else{
+            insertEventStmt.setString(7, endTime);
+        }
+
+
+        insertEventStmt.executeUpdate();
+    }
+
 
 
 }

@@ -2,7 +2,10 @@ package Server.Servlets;
 
 import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
+import DataBase.SessionsJDBC;
+import DataBase.UsersJDBC;
 import Server.LoginServerConstants;
+import UI.AccountPage;
 import UI.EventsPage;
 import UI.NewEventPage;
 import jakarta.servlet.ServletException;
@@ -15,8 +18,10 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import static Server.HttpServer.LOGGER;
 
@@ -30,18 +35,7 @@ public class NewEventServlet extends HttpServlet {
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
         if(clientInfoObj != null) {
             // already authed, no need to log in
-            String userName = "";
-            String userEmail = "";
-            int zipcode = 0;
-            try (Connection connection = DBCPDataSource.getConnection()){
-                ResultSet allEvents = EventsJDBC.executeSelectAllEvents(connection);
-                resp.getWriter().println(EventsPage.displayEvents(allEvents));
-
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-
-
+           resp.getWriter().println(NewEventPage.RESPONSE_FOR_GET);
         }else{
             // ask the user to login
             resp.getWriter().println(NewEventPage.RETURN_TO_LANDING);
@@ -61,14 +55,45 @@ public class NewEventServlet extends HttpServlet {
                 String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
                 //TODO: verify the body exists and it contains a =
                 LOGGER.info("body: " + body);
-                String[] bodyParts = body.split("=");
+                String[] bodyParts = body.split("&");
 
-                String eventId = bodyParts[1];
-                int eventID = Integer.parseInt(eventId);
+                String eventNamePart = bodyParts[0];
+                String eventName = getBodyParameter(eventNamePart);
+                LOGGER.info("new event name: " + eventName);
+
+                String zipcodePart = bodyParts[1];
+                String zipcode = getBodyParameter(zipcodePart);
+                LOGGER.info("new event zipcode: " + zipcode);
+                int zipCode = 0;
+                if(!zipcode.equals("")){
+                    zipCode = Integer.parseInt(zipcode);
+                }
+
+                String eventDatePart = bodyParts[2];
+                Date date = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
+
+                String startTimePart = bodyParts[3];
+                String startTime = getBodyParameter(startTimePart);
+
+                String endTimePart = bodyParts[4];
+                String endTime = getBodyParameter(endTimePart);
+
+                String eventDescriptionPart = bodyParts[5];
+                String eventDescription = getBodyParameter(eventDescriptionPart);
+
+
+                String userEmail = "";
 
                 try (Connection connection = DBCPDataSource.getConnection()){
-                    ResultSet event = EventsJDBC.executeSelectEventById(connection, eventID);
-                    EventsPage.displaySingleEvent(event);
+                    ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
+                    if(user.next()){
+                        userEmail = user.getString("email");
+                    }
+
+                    EventsJDBC.executeInsertEvent(connection, userEmail,eventName,eventDescription,zipCode,date,startTime,endTime);
+
+                    ResultSet allEvents = EventsJDBC.executeSelectAllEvents(connection);
+                    resp.getWriter().println(NewEventPage.displayResponseForPost(allEvents));
 
                 }catch (SQLException e){
                     e.printStackTrace();
@@ -80,5 +105,10 @@ public class NewEventServlet extends HttpServlet {
         }
     }
 
+
+    public static String getBodyParameter(String bodyPart){
+        String[] parsedBodyPart = bodyPart.split("=");
+        return parsedBodyPart[1];
+    }
 
 }

@@ -53,7 +53,7 @@ public class UsersJDBC {
         }
         String updateUserSql = "UPDATE users SET name=?, zipcode=? where email=?;";
         PreparedStatement updateUserStmt = con.prepareStatement(updateUserSql);
-        if(name != ""){
+        if(!name.equals("")){
             updateUserStmt.setString(1, name);
         }
         if(zipcode != 0){

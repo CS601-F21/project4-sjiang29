@@ -38,7 +38,6 @@ public class EventsPage {
         builder.append(LINKS_IN_GET);
         builder.append(PAGE_FOOTER);
 
-
         return builder.toString();
     }
 
