@@ -89,7 +89,6 @@ public class EventsJDBC {
             insertEventStmt.setString(7, endTime);
         }
 
-
         insertEventStmt.executeUpdate();
     }
 
