@@ -5,7 +5,7 @@ public class AccountPage {
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
             "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
             "<head>\n" +
-            "  <title>Show user account</title>\n" +
+            "  <title>Get account page</title>\n" +
             "</head>\n" +
             "<body>\n" +
             "\n";
@@ -15,14 +15,10 @@ public class AccountPage {
             "</html>";
 
     public static String getUserInfo(String userName, String email, int zipcode){
-        return  PAGE_HEADER +
-                "<h1>Below are your user account information</h1>\n" +
-                "<li>" + "UserName: " + userName + "</li>\n" +
+        return "<li>" + "UserName: " + userName + "</li>\n" +
                 "<li>" + "UserEmail: " + email + "</li>\n" +
-                "<li>" + "Zipcode: " + zipcode + "</li>\n" +
-                "<h2>If needed, please use the from to modify your user account</h2>\n" +
-                ACCOUNT_FORM +
-                PAGE_FOOTER;
+                "<li>" + "Zipcode: " + zipcode + "</li>\n" ;
+
 
     }
 
@@ -30,10 +26,43 @@ public class AccountPage {
             "<form style=\"text-align: center\" action=\"/account\" method=\"post\">\n" +
                     "  <label for=\"term\">New UserName</label><br/>\n" +
                     "  <input type=\"text\" id=\"userName\" name=\"userName\"/><br/>\n" +
-                    "  <label for=\"term\">New Email</label><br/>\n" +
-                    "  <input type=\"text\" id=\"email\" name=\"email\"/><br/>\n" +
                     "  <label for=\"term\">New Zipcode</label><br/>\n" +
                     "  <input type=\"text\" id=\"zipcode\" name=\"zipcode\"/><br/>\n" +
                     "  <input type=\"submit\" value=\"Submit\"/>\n" +
                     "</form>";
+
+    public static String getAccountPage(String userName, String email, int zipcode){
+        return  PAGE_HEADER +
+                "<h1>Below are your user account information</h1>\n" +
+                getUserInfo(userName, email, zipcode) +
+                ACCOUNT_FORM +
+                LINKS_GET_PAGE +
+                PAGE_FOOTER;
+    }
+
+    public static String postAccountPage(String userName, String email, int zipcode){
+        return  PAGE_HEADER +
+                "<h1>Below are your updated user account information</h1>\n" +
+                getUserInfo(userName, email, zipcode) +
+                ACCOUNT_FORM +
+                LINKS_POST_PAGE +
+                PAGE_FOOTER;
+    }
+
+    public static final String RETURN_TO_LANDING =
+                    PAGE_HEADER +
+                    "<h1>Please login</h1>\n" +
+                    "<p><a href=\"/\">Login</a></p>" +
+                    PAGE_FOOTER;
+
+
+    public static final String LINKS_POST_PAGE =
+                    "<p><a href=\"/account\"> Show My Account</a> | " +
+                    "<a href=\"/allEvents\"> Show All Events</a> | " +
+                    "<a href=\"/logout\">Logout</a></p>\n";
+
+    public static final String LINKS_GET_PAGE =
+            "<p><a href=\"/transactions\"> Show My tickets</a> | " +
+                    "<a href=\"/allEvents\"> Show All Events</a> | " +
+                    "<a href=\"/logout\">Logout</a></p>\n";
 }

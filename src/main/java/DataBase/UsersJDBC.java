@@ -37,4 +37,31 @@ public class UsersJDBC {
 
         insertUserStmt.executeUpdate();
     }
+
+    /**
+     * A method to demonstrate using a PreparedStatement to execute a database insert.
+     * @param con
+     * @param name
+     * @param zipcode
+     * @param email
+
+     * @throws SQLException
+     */
+    public static void executeUpdateUser(Connection con, String email, String name, int zipcode) throws SQLException {
+        if(name == "" && zipcode == 0){
+            return;
+        }
+        String updateUserSql = "UPDATE users SET name=?, zipcode=? where email=?;";
+        PreparedStatement updateUserStmt = con.prepareStatement(updateUserSql);
+        if(name != ""){
+            updateUserStmt.setString(1, name);
+        }
+        if(zipcode != 0){
+            updateUserStmt.setInt(2, zipcode);
+        }
+        updateUserStmt.setString(3, email);
+        updateUserStmt.executeUpdate();
+    }
+
+
 }

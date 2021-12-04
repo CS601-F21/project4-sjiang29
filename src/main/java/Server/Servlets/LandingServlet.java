@@ -1,6 +1,7 @@
 package Server.Servlets;
 
 import Server.LoginServerConstants;
+import UI.LandingPage;
 import Util.Config;
 import Util.LoginUtilities;
 import jakarta.servlet.ServletException;
@@ -70,10 +71,11 @@ public class LandingServlet extends HttpServlet {
         resp.setStatus(HttpStatus.OK_200);
         PrintWriter writer = resp.getWriter();
         LOGGER.info("landing successfully");
-        writer.println(LoginServerConstants.PAGE_HEADER);
-        writer.println("<h1>Welcome to the Login with Slack Demo Application</h1>");
-        writer.println("<a href=\""+url+"\"><img src=\"" + LoginServerConstants.BUTTON_URL +"\"/></a>");
-        writer.println(LoginServerConstants.PAGE_FOOTER);
+        writer.println(LandingPage.getLandingPage(url));
+        //writer.println(LoginServerConstants.PAGE_HEADER);
+        //writer.println("<h1>Welcome to the Login with Slack Demo Application</h1>");
+        //writer.println("<a href=\""+url+"\"><img src=\"" + LoginServerConstants.BUTTON_URL +"\"/></a>");
+        //writer.println(LoginServerConstants.PAGE_FOOTER);
     }
 
 
