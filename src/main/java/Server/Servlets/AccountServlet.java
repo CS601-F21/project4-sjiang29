@@ -109,30 +109,15 @@ public class AccountServlet extends HttpServlet {
                         updatedZipcode = updatedUser.getInt("zipcode");
                         LOGGER.info("updated zipcode from db: " + updatedZipcode);
                     }
-
                     resp.getWriter().println(AccountPage.postAccountPage(updatedName,userEmail, updatedZipcode));
-
-
 
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
-
-
-
             }
-
-
-
         }else{
-
             // ask the user to login
             resp.getWriter().println(AccountPage.RETURN_TO_LANDING);
-
         }
-
-
-
-
     }
 }

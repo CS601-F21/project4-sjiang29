@@ -58,6 +58,9 @@ public class HttpServer {
 
         context.addServlet(AccountServlet.class, "/account");
         context.addServlet(TransactionServlet.class, "/transaction");
+        context.addServlet(EventsServlet.class, "/events");
+        context.addServlet(NewEventServlet.class, "/newEvent");
+
 
         // handle logout
         context.addServlet(LogoutServlet.class, "/logout");

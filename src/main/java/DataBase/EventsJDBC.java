@@ -20,4 +20,29 @@ public class EventsJDBC {
         ResultSet results = selectEventsByBuyerEmailStmt.executeQuery();
         return results;
     }
+
+    /**
+     * A method to demonstrate using a PrepareStatement to execute a database select
+     * @param con
+
+     * @throws SQLException
+     */
+    public static ResultSet executeSelectAllEvents(Connection con) throws SQLException {
+        String selectAllEventsSql = "SELECT * FROM events;";
+        PreparedStatement selectAllEventsStmt = con.prepareStatement(selectAllEventsSql);
+
+        ResultSet results = selectAllEventsStmt.executeQuery();
+        return results;
+    }
+
+    public static ResultSet executeSelectEventById(Connection con, int eventId) throws SQLException {
+        String selectEventByIdSql = "SELECT * FROM events WHERE id=?;";
+        PreparedStatement selectEventByIdStmt = con.prepareStatement(selectEventByIdSql);
+        selectEventByIdStmt.setInt(1, eventId);
+
+        ResultSet results = selectEventByIdStmt.executeQuery();
+        return results;
+    }
+
+
 }
