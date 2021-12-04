@@ -5,7 +5,7 @@ public class AccountPage {
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
             "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
             "<head>\n" +
-            "  <title>Get account page</title>\n" +
+            "  <title>Account page</title>\n" +
             "</head>\n" +
             "<body>\n" +
             "\n";
@@ -35,6 +35,7 @@ public class AccountPage {
         return  PAGE_HEADER +
                 "<h1>Below are your user account information</h1>\n" +
                 getUserInfo(userName, email, zipcode) +
+                "<h2>You can use the form below to modify your account information(name and/or zipcode)</h2>\n" +
                 ACCOUNT_FORM +
                 LINKS_GET_PAGE +
                 PAGE_FOOTER;
@@ -44,7 +45,6 @@ public class AccountPage {
         return  PAGE_HEADER +
                 "<h1>Below are your updated user account information</h1>\n" +
                 getUserInfo(userName, email, zipcode) +
-                ACCOUNT_FORM +
                 LINKS_POST_PAGE +
                 PAGE_FOOTER;
     }
@@ -58,11 +58,12 @@ public class AccountPage {
 
     public static final String LINKS_POST_PAGE =
                     "<p><a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/allEvents\"> Show All Events</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>\n";
+                            "<a href=\"/transaction\"> Show My Transactions</a> | " +
+                            "<a href=\"/allEvents\"> Show All Events</a> | " +
+                            "<a href=\"/logout\">Logout</a></p>\n";
 
     public static final String LINKS_GET_PAGE =
-            "<p><a href=\"/transactions\"> Show My tickets</a> | " +
+            "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
                     "<a href=\"/allEvents\"> Show All Events</a> | " +
                     "<a href=\"/logout\">Logout</a></p>\n";
 }

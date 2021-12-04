@@ -1,9 +1,6 @@
 package Server;
 
-import Server.Servlets.AccountServlet;
-import Server.Servlets.LandingServlet;
-import Server.Servlets.LoginServlet;
-import Server.Servlets.LogoutServlet;
+import Server.Servlets.*;
 import Util.Config;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
@@ -60,6 +57,7 @@ public class HttpServer {
         context.addServlet(LoginServlet.class, "/login");
 
         context.addServlet(AccountServlet.class, "/account");
+        context.addServlet(TransactionServlet.class, "/transaction");
 
         // handle logout
         context.addServlet(LogoutServlet.class, "/logout");
