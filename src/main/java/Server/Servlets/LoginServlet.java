@@ -99,7 +99,7 @@ public class LoginServlet extends HttpServlet {
                 resp.getWriter().println("<h1 style=\"text-align: center\">Hello, " + clientInfo.getName() + "</h1>");
                 resp.getWriter().println("<p style=\"text-align: center\">" +
                         "<a href=\"/account\"> Show My Account</a> | " +
-                        "<a href=\"/allEvents\"> Show All Events</a> | " +
+                        "<a href=\"/events\"> Show All Events</a> | " +
                         "<a href=\"/logout\">Logout</a></p>");
                 resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
             }

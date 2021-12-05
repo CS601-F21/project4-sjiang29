@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DBUtilities {
 
@@ -25,5 +27,7 @@ public class DBUtilities {
         }
         return config;
     }
+
+
 }
 

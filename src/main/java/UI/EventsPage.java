@@ -3,6 +3,8 @@ package UI;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 public class EventsPage {
 
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
@@ -24,14 +26,18 @@ public class EventsPage {
         StringBuilder builder = new StringBuilder();
         builder.append(PAGE_HEADER);
         builder.append("<h1>Below are all the events.</h1>\n");
-        if(events.next() == false){
-            builder.append("<h2>There are no available events ongoing.</h2>\n");
-        }else{
+
+        //if(rowcount == 0){
+            //builder.append("<h2>There are no available events ongoing.</h2>\n");
+        //}else{
             while(events.next()){
                 builder.append("<li>" + "Event Id: " + events.getInt("id") + "\n" +
                         "Event name: " + events.getString("name") + "\n" +
                         "</li>\n");
             }
+        //}
+        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are all the events.</h1>\n")){
+            builder.append("<h2>There are no available events ongoing.</h2>\n");
         }
 
         builder.append(EVENT_DETAIL_FORM);
@@ -59,10 +65,10 @@ public class EventsPage {
         StringBuilder builder = new StringBuilder();
         builder.append(PAGE_HEADER);
         builder.append("<h1>Below are the details of your selected event.</h1>\n");
-        if(event.next() == false){
-            builder.append("<h2>There is no event that has the given id, please double check</h2>\n");
 
-        }else{
+            //builder.append("<h2>There is no event that has the given id, please double check</h2>\n");
+
+        //}else{
             while(event.next()){
                 builder.append("<li>" + "Event id: " + event.getInt("id") + "\n" +
                         "Event name: " + event.getString("name") + "\n" +
@@ -73,6 +79,9 @@ public class EventsPage {
                         "Event creator's email: " + event.getString("creator_email") +
                         "</li>\n");
             }
+        //}
+        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are the details of your selected event.</h1>\n")){
+            builder.append("<h2>There is no event that has the given id, please double check</h2>\n");
         }
 
         builder.append(LINKS_IN_POST);

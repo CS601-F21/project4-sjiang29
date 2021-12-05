@@ -2,6 +2,9 @@ package UI;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static Server.HttpServer.LOGGER;
+
+
 
 public class TransactionPage {
 
@@ -24,9 +27,9 @@ public class TransactionPage {
         StringBuilder builder = new StringBuilder();
         builder.append(PAGE_HEADER);
         builder.append("<h1>Below are the details of all your transactions.</h1>\n");
-        if(transactions.next() == false){
-            builder.append("<h2>You don't have any transactions yet.</h2>\n");
-        }else{
+
+            //builder.append("<h2>You don't have any transactions yet.</h2>\n");
+        //}else{
             while(transactions.next()){
                 builder.append("<li>" + "Event name: " + transactions.getString("name") + "\n" +
                         "Event description: " + transactions.getString("description") + "\n" +
@@ -35,7 +38,12 @@ public class TransactionPage {
                         "Event creator's email: " + transactions.getString("creater_email") +
                         "</li>\n");
             }
+        //}
+        LOGGER.info("stringBuilder for transcations: " + builder.toString());
+        if(builder.toString().equals(PAGE_HEADER +"<h1>Below are the details of all your transactions.</h1>\n")){
+            builder.append("<h2>You don't have any transactions yet.</h2>\n");
         }
+
         builder.append(LINKS);
         builder.append(PAGE_FOOTER);
         return builder.toString();

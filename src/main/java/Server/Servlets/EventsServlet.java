@@ -37,6 +37,7 @@ public class EventsServlet extends HttpServlet {
             int zipcode = 0;
             try (Connection connection = DBCPDataSource.getConnection()){
                 ResultSet allEvents = EventsJDBC.executeSelectAllEvents(connection);
+                LOGGER.info("all events: " + allEvents);
                 resp.getWriter().println(EventsPage.displayEvents(allEvents));
 
             }catch (SQLException e){
