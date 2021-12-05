@@ -69,6 +69,7 @@ public class EventsPage {
                         "Event description: " + event.getString("description") + "\n" +
                         "Event time: " + event.getDate("time") + "\n" +
                         "Event zipcode: " + event.getInt("zipcode") + "\n" +
+                        "Event location: " + event.getInt("location") + "\n" +
                         "Event creator's email: " + event.getString("creator_email") +
                         "</li>\n");
             }

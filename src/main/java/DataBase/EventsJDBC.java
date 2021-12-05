@@ -42,9 +42,8 @@ public class EventsJDBC {
     }
 
     public static ResultSet executeSelectEventHasTickets(Connection con) throws SQLException {
-        String selectEventHasTicketsSql = "SELECT events.id, events.name, events.date, tickets.price" +
-                "FROM events, tickets" +
-                "WHERE events.id=" + "(SELECT DISTINCT event_id FROM tickets WHERE sold='no');";
+        String selectEventHasTicketsSql = "SELECT events.id, events.name, events.date FROM events" +
+                "WHERE events.id= ANY (SELECT DISTINCT event_id FROM tickets WHERE sold= 'no');";
         PreparedStatement selectEventHasTicketsStmt = con.prepareStatement(selectEventHasTicketsSql);
 
         ResultSet results = selectEventHasTicketsStmt.executeQuery();
@@ -63,9 +62,9 @@ public class EventsJDBC {
      * @throws SQLException
      */
     public static void executeInsertEvent(Connection con, String creatorEmail, String eventName, String eventDescription,
-                                          int zipcode, Date date, String startTime, String endTime) throws SQLException {
-        String insertEventSql = "INSERT INTO events (name, creator_email, time, zipcode, description, start_time, end_time) " +
-                "VALUES (?, ?, ?, ?, ?, ? ,?);";
+                                          int zipcode, Date date, String startTime, String endTime, String location) throws SQLException {
+        String insertEventSql = "INSERT INTO events (name, creator_email, date, zipcode, description, start_time, end_time, location) " +
+                "VALUES (?, ?, ?, ?, ?, ? ,?, ?);";
         PreparedStatement insertEventStmt = con.prepareStatement(insertEventSql);
         insertEventStmt.setString(1, eventName);
         insertEventStmt.setString(2, creatorEmail);
@@ -97,6 +96,12 @@ public class EventsJDBC {
             insertEventStmt.setNull(7, java.sql.Types.NULL);
         }else{
             insertEventStmt.setString(7, endTime);
+        }
+
+        if(location.equals("")){
+            insertEventStmt.setNull(7, java.sql.Types.NULL);
+        }else {
+            insertEventStmt.setString(8, location);
         }
 
         insertEventStmt.executeUpdate();

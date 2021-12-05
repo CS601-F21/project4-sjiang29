@@ -69,16 +69,19 @@ public class NewEventServlet extends HttpServlet {
                     zipCode = Integer.parseInt(zipcode);
                 }
 
-                String eventDatePart = bodyParts[2];
+                String locationPart = bodyParts[2];
+                String location = getBodyParameter(locationPart);
+
+                String eventDatePart = bodyParts[3];
                 Date date = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
 
-                String startTimePart = bodyParts[3];
+                String startTimePart = bodyParts[4];
                 String startTime = getBodyParameter(startTimePart);
 
-                String endTimePart = bodyParts[4];
+                String endTimePart = bodyParts[5];
                 String endTime = getBodyParameter(endTimePart);
 
-                String eventDescriptionPart = bodyParts[5];
+                String eventDescriptionPart = bodyParts[6];
                 String eventDescription = getBodyParameter(eventDescriptionPart);
 
 
@@ -90,7 +93,7 @@ public class NewEventServlet extends HttpServlet {
                         userEmail = user.getString("email");
                     }
 
-                    EventsJDBC.executeInsertEvent(connection, userEmail,eventName,eventDescription,zipCode,date,startTime,endTime);
+                    EventsJDBC.executeInsertEvent(connection, userEmail,eventName,eventDescription,zipCode,date,startTime,endTime, location);
 
                     ResultSet allEvents = EventsJDBC.executeSelectAllEvents(connection);
                     resp.getWriter().println(NewEventPage.displayResponseForPost(allEvents));

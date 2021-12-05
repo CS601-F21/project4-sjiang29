@@ -27,6 +27,8 @@ public class NewEventPage {
                     "  <input type=\"text\" id=\"eventName\" name=\"eventName\"/><br/>\n" +
                     "  <label for=\"term\">Event Zipcode</label><br/>\n" +
                     "  <input type=\"text\" id=\"eventZipcode\" name=\"eventZipcode\"/><br/>\n" +
+                    "  <label for=\"term\">Event Location</label><br/>\n" +
+                    "  <input type=\"text\" id=\"eventLocation\" name=\"eventLocation\"/><br/>\n" +
                     "  <label for=\"term\">Event Date(YYYY-MM-DD)</label><br/>\n" +
                     "  <input type=\"text\" id=\"eventDate\" name=\"eventDate\"/><br/>\n" +
                     "  <label for=\"term\">Start Time(hh-mm)</label><br/>\n" +
