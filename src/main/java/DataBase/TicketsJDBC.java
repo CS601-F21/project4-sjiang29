@@ -16,6 +16,8 @@ public class TicketsJDBC {
         return results;
     }
 
+
+
     public static void transferTicket(Connection con, String oldBuyerEmail, String newBuyerEmail, int ticketId) throws SQLException {
         String updateBuyerEmailSql = "UPDATE tickets SET buyer_email=? WHERE id=?; ";
         PreparedStatement updateBuyerEmailStmt = con.prepareStatement(updateBuyerEmailSql);
@@ -25,5 +27,25 @@ public class TicketsJDBC {
         updateBuyerEmailStmt.executeUpdate();
     }
 
+
+    /**
+     * A method to demonstrate using a PreparedStatement to execute a database insert.
+     * @param con
+     * @param price
+     * @param eventId
+     * @param sold
+
+     * @throws SQLException
+     */
+    public static void executeInsertTicket(Connection con, int price, int eventId, String sold) throws SQLException {
+        String insertTicketSql = "INSERT INTO tickets (event_id, price, sold, buyer_email) VALUES (?, ?, ?, ?);";
+        PreparedStatement insertTicketStmt = con.prepareStatement(insertTicketSql);
+        insertTicketStmt.setInt(1, eventId);
+        insertTicketStmt.setInt(2, price);
+        insertTicketStmt.setString(3, sold);
+        insertTicketStmt.setNull(4,java.sql.Types.NULL);
+
+        insertTicketStmt.executeUpdate();
+    }
 
 }

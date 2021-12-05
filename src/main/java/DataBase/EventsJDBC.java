@@ -41,6 +41,16 @@ public class EventsJDBC {
         return results;
     }
 
+    public static ResultSet executeSelectEventHasTickets(Connection con) throws SQLException {
+        String selectEventHasTicketsSql = "SELECT events.id, events.name, events.date, tickets.price" +
+                "FROM events, tickets" +
+                "WHERE events.id=" + "(SELECT DISTINCT event_id FROM tickets WHERE sold='no');";
+        PreparedStatement selectEventHasTicketsStmt = con.prepareStatement(selectEventHasTicketsSql);
+
+        ResultSet results = selectEventHasTicketsStmt.executeQuery();
+        return results;
+    }
+
     /**
      * A method to demonstrate using a PreparedStatement to execute a database insert.
      * @param con
