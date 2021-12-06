@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -35,12 +36,22 @@ public class EventsServlet extends HttpServlet {
             String userName = "";
             String userEmail = "";
             int zipcode = 0;
+            String eventId = req.getParameter("eventId");
+            LOGGER.info("parameter -- eventId:" + eventId);
             try (Connection connection = DBCPDataSource.getConnection()){
-                ResultSet allEvents = EventsJDBC.executeSelectAllEvents(connection);
-                LOGGER.info("all events: " + allEvents);
-                resp.getWriter().println(EventsPage.displayEvents(allEvents));
+                if(eventId != null){
+                    int eventID = Integer.parseInt(eventId);
+                    ResultSet event = EventsJDBC.executeSelectEventById(connection, eventID);
+                    LOGGER.info("single event result:" + event);
+                    resp.getWriter().println(EventsPage.displaySingleEvent(event));
+                }else{
+                    ResultSet allEvents = EventsJDBC.executeSelectAllEvents(connection);
+                    LOGGER.info("all events: " + allEvents);
+                    resp.getWriter().println(EventsPage.displayEvents(allEvents));
+                }
 
-            }catch (SQLException e){
+
+            }catch (SQLException | URISyntaxException e){
                 e.printStackTrace();
             }
 
@@ -71,7 +82,7 @@ public class EventsServlet extends HttpServlet {
 
                 try (Connection connection = DBCPDataSource.getConnection()){
                     ResultSet event = EventsJDBC.executeSelectEventById(connection, eventID);
-                    EventsPage.displaySingleEvent(event);
+                    resp.getWriter().println(EventsPage.displaySingleEvent(event));
 
                 }catch (SQLException e){
                     e.printStackTrace();
@@ -82,6 +93,8 @@ public class EventsServlet extends HttpServlet {
             resp.getWriter().println(EventsPage.RETURN_TO_LANDING);
         }
     }
+
+
 
 
 }
