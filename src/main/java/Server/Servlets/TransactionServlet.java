@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.eclipse.jetty.http.HttpStatus;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,6 +25,7 @@ public class TransactionServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        resp.setStatus(HttpStatus.OK_200);
         if(clientInfoObj != null) {
             // already authed, no need to log in
             String userName = "";
@@ -47,6 +49,7 @@ public class TransactionServlet extends HttpServlet {
 
         }else{
             // ask the user to login
+            resp.setStatus(HttpStatus.UNAUTHORIZED_401);
             resp.getWriter().println(TransactionPage.RETURN_TO_LANDING);
         }
     }

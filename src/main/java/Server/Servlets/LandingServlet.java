@@ -1,6 +1,7 @@
 package Server.Servlets;
 
 import Server.LoginServerConstants;
+import Server.ServerConstants;
 import UI.LandingPage;
 import Util.Config;
 import Util.LoginUtilities;
@@ -31,11 +32,19 @@ public class LandingServlet extends HttpServlet {
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
         LOGGER.info("landing---get client info");
+        String uri = req.getRequestURI();
+        LOGGER.info("uri from landing:" + uri);
+        if(!ServerConstants.PATHS.contains(uri)){
+            resp.setStatus(HttpStatus.NOT_FOUND_404);
+            resp.getWriter().println("Page not Found 404");
+            return;
+        }
 
         if(clientInfoObj != null) {
             // already authed, no need to log in
             resp.getWriter().println(LoginServerConstants.PAGE_HEADER);
             resp.getWriter().println("<h1>You have already been authenticated</h1>");
+            resp.getWriter().println(LandingPage.LINKS);
             resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
             return;
         }

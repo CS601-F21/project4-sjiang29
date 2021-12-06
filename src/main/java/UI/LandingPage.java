@@ -16,6 +16,12 @@ public class LandingPage {
             "</html>";
 
 
+    public static String LINKS = "<p style=\"text-align: center\">" +
+            "<a href=\"/account\"> Show My Account</a> | " +
+            "<a href=\"/events\"> Show All Events</a> | " +
+            "<a href=\"/tickets\"> Buy Ticket</a> | " +
+            "<a href=\"/logout\">Logout</a></p>";
+
     public static String getLandingPage(String url){
         return PAGE_HEADER +
                 "<h1>Welcome to your event handler, please login using slack</h1>\n"+

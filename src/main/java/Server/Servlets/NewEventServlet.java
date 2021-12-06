@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.eclipse.jetty.http.HttpStatus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class NewEventServlet extends HttpServlet {
            resp.getWriter().println(NewEventPage.RESPONSE_FOR_GET);
         }else{
             // ask the user to login
+            resp.setStatus(HttpStatus.UNAUTHORIZED_401);
             resp.getWriter().println(NewEventPage.RETURN_TO_LANDING);
         }
     }
@@ -49,6 +51,7 @@ public class NewEventServlet extends HttpServlet {
 
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        resp.setStatus(HttpStatus.OK_200);
         if(clientInfoObj != null) {
 
             try(BufferedReader reader = req.getReader()) {
@@ -104,6 +107,7 @@ public class NewEventServlet extends HttpServlet {
             }
         }else{
             // ask the user to login
+            resp.setStatus(HttpStatus.UNAUTHORIZED_401);
             resp.getWriter().println(NewEventPage.RETURN_TO_LANDING);
         }
     }

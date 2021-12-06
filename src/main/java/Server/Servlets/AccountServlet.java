@@ -38,6 +38,7 @@ public class AccountServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        resp.setStatus(HttpStatus.OK_200);
         if(clientInfoObj != null) {
             // already authed, no need to log in
             String userName = "";
@@ -58,6 +59,7 @@ public class AccountServlet extends HttpServlet {
 
         }else{
             // ask the user to login
+            resp.setStatus(HttpStatus.UNAUTHORIZED_401);
             resp.getWriter().println(AccountPage.RETURN_TO_LANDING);
         }
     }
@@ -69,6 +71,7 @@ public class AccountServlet extends HttpServlet {
 
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        resp.setStatus(HttpStatus.OK_200);
         if(clientInfoObj != null) {
 
             try(BufferedReader reader = req.getReader()) {
@@ -117,6 +120,7 @@ public class AccountServlet extends HttpServlet {
             }
         }else{
             // ask the user to login
+            resp.setStatus(HttpStatus.UNAUTHORIZED_401);
             resp.getWriter().println(AccountPage.RETURN_TO_LANDING);
         }
     }
