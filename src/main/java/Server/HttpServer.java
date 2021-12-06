@@ -59,6 +59,8 @@ public class HttpServer {
         context.addServlet(AccountServlet.class, "/account");
         context.addServlet(TransactionServlet.class, "/transaction");
         context.addServlet(EventsServlet.class, "/events");
+
+        context.addServlet(EventsServlet.class, "/tickets");
         context.addServlet(NewEventServlet.class, "/newEvent");
 
 
