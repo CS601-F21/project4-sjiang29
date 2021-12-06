@@ -61,7 +61,10 @@ public class HttpServer {
         context.addServlet(EventsServlet.class, "/events");
 
         context.addServlet(TicketsServlet.class, "/tickets");
+
+        context.addServlet(MyTicketsServlet.class, "/myTickets");
         context.addServlet(NewEventServlet.class, "/newEvent");
+        context.addServlet(MyOwnEventsServlet.class, "/myOwnEvents");
 
 
         // handle logout

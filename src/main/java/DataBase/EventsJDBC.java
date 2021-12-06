@@ -32,6 +32,14 @@ public class EventsJDBC {
         return results;
     }
 
+    public static ResultSet executeSelectEventsByCreator(Connection con, String creator_email) throws SQLException {
+        String selectEventsByCreatorSql = "SELECT * FROM events where creator_email=? ;";
+        PreparedStatement selectEventsByCreatorStmt = con.prepareStatement(selectEventsByCreatorSql);
+
+        ResultSet results = selectEventsByCreatorStmt.executeQuery();
+        return results;
+    }
+
     public static ResultSet executeSelectEventById(Connection con, int eventId) throws SQLException {
         String selectEventByIdSql = "SELECT * FROM events WHERE id=?;";
         PreparedStatement selectEventByIdStmt = con.prepareStatement(selectEventByIdSql);

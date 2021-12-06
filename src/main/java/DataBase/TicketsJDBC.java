@@ -16,6 +16,25 @@ public class TicketsJDBC {
         return results;
     }
 
+    public static ResultSet selectTicketsByEventAndBuyer(Connection con, String buyerEmail, int eventId) throws SQLException {
+        String selectTicketsByEventAndBuyerSql = "SELECT * FROM tickets WHERE buyer_email=? AND event_id=? ;";
+        PreparedStatement selectTicketsByEventAndBuyerStmt = con.prepareStatement(selectTicketsByEventAndBuyerSql);
+        selectTicketsByEventAndBuyerStmt.setString(1, buyerEmail);
+        selectTicketsByEventAndBuyerStmt.setInt(2, eventId);
+
+        ResultSet results = selectTicketsByEventAndBuyerStmt.executeQuery();
+        return results;
+    }
+
+    public static ResultSet executeSelectTicketsByBuyer(Connection con, String buyerEmail) throws SQLException {
+        String selectTicketsByBuyerSql = "SELECT * FROM tickets WHERE sold='yes' AND buyer_email=? ;";
+        PreparedStatement selectTicketsByBuyerStmt = con.prepareStatement(selectTicketsByBuyerSql);
+        selectTicketsByBuyerStmt.setString(1, buyerEmail);
+
+        ResultSet results = selectTicketsByBuyerStmt.executeQuery();
+        return results;
+    }
+
 
 
     public static void transferTicket(Connection con, String oldBuyerEmail, String newBuyerEmail, int ticketId) throws SQLException {
