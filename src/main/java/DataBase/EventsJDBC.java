@@ -11,7 +11,7 @@ public class EventsJDBC {
      * @throws SQLException
      */
     public static ResultSet executeDisplayUserTransactions(Connection con, String buyerEmail) throws SQLException {
-        String selectEventsByBuyerEmailSql = "SELECT * FROM events WHERE id=(SELECT event_id FROM tickets WHERE buyer_email=?);";
+        String selectEventsByBuyerEmailSql = "SELECT * FROM events WHERE id= ANY (SELECT DISTINCT event_id FROM tickets WHERE buyer_email=?);";
         PreparedStatement selectEventsByBuyerEmailStmt = con.prepareStatement(selectEventsByBuyerEmailSql);
         selectEventsByBuyerEmailStmt.setString(1,buyerEmail);
         ResultSet results = selectEventsByBuyerEmailStmt.executeQuery();
@@ -42,8 +42,7 @@ public class EventsJDBC {
     }
 
     public static ResultSet executeSelectEventHasTickets(Connection con) throws SQLException {
-        String selectEventHasTicketsSql = "SELECT events.id, events.name, events.date FROM events" +
-                "WHERE events.id= ANY (SELECT DISTINCT event_id FROM tickets WHERE sold= 'no');";
+        String selectEventHasTicketsSql = "SELECT events.id, events.name, events.date FROM events WHERE events.id= ANY (SELECT DISTINCT event_id FROM tickets WHERE sold= 'no');";
         PreparedStatement selectEventHasTicketsStmt = con.prepareStatement(selectEventHasTicketsSql);
 
         ResultSet results = selectEventHasTicketsStmt.executeQuery();

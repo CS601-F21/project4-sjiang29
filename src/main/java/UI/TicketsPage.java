@@ -77,12 +77,12 @@ public class TicketsPage {
             String urlToBuyTicket = buildUriToBuyTicket(Integer.toString(tickets.getInt("id")));
             LOGGER.info("url to buy event ticket:" + urlToBuyTicket);
 
-            builder.append("<li>" + "Event Id: " + tickets.getInt("event_id") + "<br>" +
-                    "Ticket Id: " + tickets.getInt("id") + "<br>" +
-                    "Ticket Price: " + tickets.getInt("price") + "<br>" +
-                    "Sold Or Not: " + tickets.getString("sold") + "<br>" +
-                    "Buyer Email: " + tickets.getString("buyer_email") + "<br>" +
-                    "Ticket Type: " + tickets.getString("type") + "<br>" +
+            builder.append("<li>" + "Event Id: " + tickets.getInt("event_id") + "    " +
+                    "Ticket Id: " + tickets.getInt("id") + "    " +
+                    "Ticket Price: " + tickets.getInt("price") + "    " +
+                    "Sold Or Not: " + tickets.getString("sold") + "    " +
+                    "Buyer Email: " + tickets.getString("buyer_email") + "    " +
+                    "Ticket Type: " + tickets.getString("type") + "    " +
                     "<a href=" + urlToBuyTicket + ">" + "Buy this Ticket</a>" + "\n" +
                     "</li>\n");
         }

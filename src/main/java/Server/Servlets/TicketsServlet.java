@@ -44,7 +44,7 @@ public class TicketsServlet extends HttpServlet {
                     int eventID = Integer.parseInt(eventId);
                     ResultSet tickets = TicketsJDBC.executeSelectTicketsByEventId(connection, eventID);
 
-                    resp.getWriter().println(EventsPage.displaySingleEvent(tickets));
+                    resp.getWriter().println(TicketsPage.displayTickets(tickets));
                 }else if(ticketId != null){
                     int ticketID = Integer.parseInt(ticketId);
 

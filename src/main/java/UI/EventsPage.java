@@ -87,14 +87,14 @@ public class EventsPage {
 
         //}else{
             while(event.next()){
-                builder.append("Event id: " + event.getInt("id") + "<br>" +
+                builder.append("<li>" + "Event id: " + event.getInt("id") + "<br>" +
                         "Event name: " + event.getString("name") + "<br>" +
                         "Event description: " + event.getString("description") + "<br>" +
                         "Event time: " + event.getDate("date") + "<br>" +
                         "Event zipcode: " + event.getInt("zipcode") + "<br>" +
                         "Event location: " + event.getInt("location") + "<br>" +
                         "Event creator's email: " + event.getString("creator_email") +
-                        "\n");
+                        "</li>\n");
             }
         //}
         if(builder.toString().equals(PAGE_HEADER + "<h1>Below are the details of your selected event.</h1>\n")){

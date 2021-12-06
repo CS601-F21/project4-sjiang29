@@ -26,21 +26,21 @@ public class TransactionPage {
     public static String displayTransactions(ResultSet transactions) throws SQLException {
         StringBuilder builder = new StringBuilder();
         builder.append(PAGE_HEADER);
-        builder.append("<h1>Below are the details of all your transactions.</h1>\n");
+        builder.append("<h1>Below are the details for all events for which you have purchased tickets..</h1>\n");
 
             //builder.append("<h2>You don't have any transactions yet.</h2>\n");
         //}else{
             while(transactions.next()){
                 builder.append("<li>" + "Event name: " + transactions.getString("name") + "\n" +
                         "Event description: " + transactions.getString("description") + "\n" +
-                        "Event time: " + transactions.getDate("time") + "\n" +
+                        "Event time: " + transactions.getDate("date") + "\n" +
                         "Event zipcode: " + transactions.getInt("zipcode") + "\n" +
-                        "Event creator's email: " + transactions.getString("creater_email") +
+                        "Event creator's email: " + transactions.getString("creator_email") +
                         "</li>\n");
             }
         //}
-        LOGGER.info("stringBuilder for transcations: " + builder.toString());
-        if(builder.toString().equals(PAGE_HEADER +"<h1>Below are the details of all your transactions.</h1>\n")){
+        LOGGER.info("stringBuilder for transactions: " + builder.toString());
+        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are the details for all events for which you have purchased tickets..</h1>\n")){
             builder.append("<h2>You don't have any transactions yet.</h2>\n");
         }
 
