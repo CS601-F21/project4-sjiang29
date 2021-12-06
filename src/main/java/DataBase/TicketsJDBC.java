@@ -48,4 +48,15 @@ public class TicketsJDBC {
         insertTicketStmt.executeUpdate();
     }
 
+    public static void executeUpdateTicket(Connection con, String buyerEmail, String sold, int ticketId) throws SQLException {
+        String updateTicketSql = "UPDATE tickets SET buyer_email=? , sold=? WHERE id=?; ";
+        PreparedStatement updateTicketStmt = con.prepareStatement(updateTicketSql);
+
+        updateTicketStmt.setString(1, buyerEmail);
+        updateTicketStmt.setString(2, sold);
+        updateTicketStmt.setInt(3, ticketId);
+        updateTicketStmt.executeUpdate();
+    }
+
+
 }

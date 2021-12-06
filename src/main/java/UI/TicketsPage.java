@@ -43,12 +43,12 @@ public class TicketsPage {
         //String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
         while(events.next()){
 
-            String urlToBuyTicket = buildBuyTicketUri(Integer.toString(events.getInt("id")));
-            LOGGER.info("url to buy event ticket:" + urlToBuyTicket);
+            String urlToTicketDetail = buildUriToTicketDetail(Integer.toString(events.getInt("id")));
+            LOGGER.info("url to show event ticket:" + urlToTicketDetail);
 
             builder.append("<li>" + "Event Id: " + events.getInt("id") + "\n" +
                     "Event name: " + events.getString("name") + "\n" +
-                    "Tickets Detail: " + "<a href=" + urlToBuyTicket + ">" + "Show Tickets</a>" + "\n" +
+                    "Tickets Detail: " + "<a href=" + urlToTicketDetail + ">" + "Show Tickets</a>" + "\n" +
                     "</li>\n");
         }
         //}
@@ -63,6 +63,42 @@ public class TicketsPage {
         return builder.toString();
     }
 
+    public static String displayTickets(ResultSet tickets) throws SQLException, FileNotFoundException, URISyntaxException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(PAGE_HEADER);
+        builder.append("<h1>Below are all the tickets for the selected event.</h1>\n");
+
+        //if(rowcount == 0){
+        //builder.append("<h2>There are no available events ongoing.</h2>\n");
+        //}else{
+        //String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
+        while(tickets.next()){
+
+            String urlToBuyTicket = buildUriToBuyTicket(Integer.toString(tickets.getInt("id")));
+            LOGGER.info("url to buy event ticket:" + urlToBuyTicket);
+
+            builder.append("<li>" + "Event Id: " + tickets.getInt("event_id") + "<br>" +
+                    "Ticket Id: " + tickets.getInt("id") + "<br>" +
+                    "Ticket Price: " + tickets.getInt("price") + "<br>" +
+                    "Sold Or Not: " + tickets.getString("sold") + "<br>" +
+                    "Buyer Email: " + tickets.getString("buyer_email") + "<br>" +
+                    "Ticket Type: " + tickets.getString("type") + "<br>" +
+                    "<a href=" + urlToBuyTicket + ">" + "Buy this Ticket</a>" + "\n" +
+                    "</li>\n");
+        }
+        //}
+        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are all the tickets for the selected event.</h1>\n")){
+            builder.append("<h2>There are no available tickets.</h2>\n");
+        }
+
+        //builder.append(EVENT_DETAIL_FORM);
+        builder.append(LINKS_IN_GET);
+        builder.append(PAGE_FOOTER);
+
+        return builder.toString();
+
+    }
+
     public static String LINKS_IN_GET =
             "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
                     "<a href=\"/account\"> Show My Account</a> | " +
@@ -71,7 +107,7 @@ public class TicketsPage {
                     "<a href=\"/logout\">Logout</a></p>\n";
 
 
-    public static String buildBuyTicketUri (String eventId) throws URISyntaxException, FileNotFoundException {
+    public static String buildUriToTicketDetail (String eventId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
         Gson gson = new Gson();
@@ -86,4 +122,26 @@ public class TicketsPage {
                 .build();
         return uri.toString();
     }
+
+    public static String buildUriToBuyTicket (String ticketId) throws URISyntaxException, FileNotFoundException {
+
+        String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
+        Gson gson = new Gson();
+        LandingUri landingUri = gson.fromJson(new FileReader(file), LandingUri.class);
+
+        String ticketsUrl = landingUri.getLandingUri() + "/tickets";
+        LOGGER.info("tickets url:" + ticketsUrl);
+
+        HttpGet httpGet = new HttpGet(ticketsUrl);
+        URI uri = new URIBuilder(httpGet.getURI())
+                .addParameter("ticketId", ticketId)
+                .build();
+        return uri.toString();
+    }
+
+    public static String updateSuccessfully = PAGE_HEADER +
+            "<h2>You have purchased the ticket successfully</h2>\n" +
+            LINKS_IN_GET +
+            PAGE_FOOTER;
+
 }

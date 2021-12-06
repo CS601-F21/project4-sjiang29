@@ -113,6 +113,7 @@ public class EventsPage {
                     "<a href=\"/account\"> Show My Account</a> | " +
                     "<a href=\"/newEvent\"> Add a New Event</a> | " +
                     "<a href=\"/events\"> Show All Events</a> | " +
+                    "<a href=\"/tickets\"> Buy Tickets</a> | " +
                     "<a href=\"/logout\">Logout</a></p>\n";
 
 
