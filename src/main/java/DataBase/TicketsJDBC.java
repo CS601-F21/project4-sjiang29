@@ -16,6 +16,15 @@ public class TicketsJDBC {
         return results;
     }
 
+    public static ResultSet executeSelectTicketsByTicketId(Connection con, int ticketId) throws SQLException {
+        String selectTicketsByTicketIdSql = "SELECT * FROM tickets WHERE id=? ;";
+        PreparedStatement selectTicketsByTicketIdStmt = con.prepareStatement(selectTicketsByTicketIdSql);
+        selectTicketsByTicketIdStmt.setInt(1, ticketId);
+
+        ResultSet results = selectTicketsByTicketIdStmt.executeQuery();
+        return results;
+    }
+
     public static ResultSet selectTicketsByEventAndBuyer(Connection con, String buyerEmail, int eventId) throws SQLException {
         String selectTicketsByEventAndBuyerSql = "SELECT * FROM tickets WHERE buyer_email=? AND event_id=? ;";
         PreparedStatement selectTicketsByEventAndBuyerStmt = con.prepareStatement(selectTicketsByEventAndBuyerSql);
@@ -37,7 +46,7 @@ public class TicketsJDBC {
 
 
 
-    public static void transferTicket(Connection con, String oldBuyerEmail, String newBuyerEmail, int ticketId) throws SQLException {
+    public static void transferTicket(Connection con, String newBuyerEmail, int ticketId) throws SQLException {
         String updateBuyerEmailSql = "UPDATE tickets SET buyer_email=? WHERE id=?; ";
         PreparedStatement updateBuyerEmailStmt = con.prepareStatement(updateBuyerEmailSql);
 

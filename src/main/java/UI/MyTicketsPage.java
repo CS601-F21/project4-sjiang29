@@ -47,11 +47,58 @@ public class MyTicketsPage {
         return builder.toString();
     }
 
+    public static String transferTicket(ResultSet ticketToBeTransfer) throws SQLException, FileNotFoundException, URISyntaxException {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(UIConstants.PAGE_HEADER);
+        builder.append("<h1>Below are the details of the ticket you would like to transfer, please double check</h1>\n");
+        String transferredTicketId = "";
+
+        while(ticketToBeTransfer.next()){
+
+            String urlToAnEvent = buildGetEventByIdUri(Integer.toString(ticketToBeTransfer.getInt("event_id")));
+
+            transferredTicketId = Integer.toString(ticketToBeTransfer.getInt("id"));
+            builder.append("<li>" + "Event Id: " + "<a href=" + urlToAnEvent + ">" + ticketToBeTransfer.getInt("event_id") +"</a>" + "    " +
+                    "Ticket Id: " + ticketToBeTransfer.getInt("id") + "    " +
+                    "Ticket Price: " + ticketToBeTransfer.getInt("price") + "    " +
+                    "Sold Or Not: " + ticketToBeTransfer.getString("sold") + "    " +
+                    "Buyer Email: " + ticketToBeTransfer.getString("buyer_email") + "    " +
+                    "Ticket Type: " + ticketToBeTransfer.getString("type") + "    " +
+
+                    "</li>\n");
+        }
+        //}
+        builder.append(getTransferTicketForm(transferredTicketId));
+        builder.append(LINKS_IN_MYTICKETS);
+        builder.append(UIConstants.PAGE_FOOTER);
+        return builder.toString();
+    }
+
+    public static String getTransferTicketForm(String ticketId) throws FileNotFoundException, URISyntaxException {
+        StringBuilder builder = new StringBuilder();
+        String actionUri = buildUriToTransferTicket(ticketId);
+        builder.append("<form style=\"text-align: center\" action=" + actionUri + "method=\"post\">\n" +
+                "  <label for=\"term\">Email of whom you would transfer ticket to</label><br/>\n" +
+                "  <input type=\"text\" id=\"newOwnerEmail\" name=\"newOwnerEmail\"/><br/>\n" +
+                "  <input type=\"submit\" value=\"Submit\"/>\n" +
+                "</form>");
+
+        return builder.toString();
+    }
+
+
     public static final String LINKS_IN_MYTICKETS = "<p style=\"text-align: center\">" +
             "<a href=\"/account\"> Show My Account</a> | " +
             "<a href=\"/events\"> Show All Events</a> | " +
             "<a href=\"/tickets\"> Buy Ticket</a> | " +
             "<a href=\"/logout\">Logout</a></p>";
+
+
+    public static final String TRANSFER_SUCCESSFUL = UIConstants.PAGE_HEADER +
+            "<h1>The ticket has been transferred successfully</h1>\n" +
+            LINKS_IN_MYTICKETS +
+            UIConstants.PAGE_FOOTER;
 
     public static String buildUriToTransferTicket (String ticketId) throws URISyntaxException, FileNotFoundException {
 
