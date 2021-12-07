@@ -101,9 +101,10 @@ public class MyOwnEventsServlet extends HttpServlet {
                 if(body.contains("deletedEventId")){
                     String[] bodyParts = body.split("=");
 
-                    String deletedEventId = bodyParts[1];
+                    String deletedEventId = getDeletedEventId(bodyParts[1]);
                     try (Connection connection = DBCPDataSource.getConnection()){
                         EventsJDBC.executeDeleteEventById(connection, Integer.parseInt(deletedEventId));
+                        resp.getWriter().println(MyOwnEventsPage.DELETE_SUCCESS);
 
                     }catch (SQLException e){
                         e.printStackTrace();
@@ -135,7 +136,10 @@ public class MyOwnEventsServlet extends HttpServlet {
                     String location = getBodyParameter(locationPart);
 
                     String eventDatePart = bodyParts[4];
-                    Date date = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
+                    Date date = null;
+                    if(getBodyParameter(eventDatePart) != ""){
+                        date  = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
+                    }
 
                     String startTimePart = bodyParts[5];
                     String startTime = getBodyParameter(startTimePart);
@@ -172,4 +176,16 @@ public class MyOwnEventsServlet extends HttpServlet {
         }
     }
 
+    public static String getDeletedEventId(String part) {
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < part.length(); i++) {
+            if (Character.isDigit(part.charAt(i))) {
+                res.append(part.charAt(i));
+            } else {
+                break;
+            }
+
+        }
+        return res.toString();
+    }
 }

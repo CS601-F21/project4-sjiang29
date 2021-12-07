@@ -80,6 +80,7 @@ public class MyOwnEventsPage {
         builder.append("<form style=\"text-align: center\" action=\"/myOwnEvents\" method=\"post\">\n" +
                 "  <label for=\"deletedEventId\">DELETE</label><br/>\n" +
                 "  <input type=\"checkbox\" id=\"deletedEventId\" name=\"deletedEventId\" value=" + eventId + "/><br/>\n" +
+                "  <input type=\"submit\" value=\"Submit\"/>\n" +
                 "</form>");
         return  builder.toString();
     }
@@ -124,9 +125,9 @@ public class MyOwnEventsPage {
                 "  <input type=\"text\" id=\"eventLocation\" name=\"eventLocation\"/><br/>\n" +
                 "  <label for=\"term\">Event Date(YYYY-MM-DD)</label><br/>\n" +
                 "  <input type=\"text\" id=\"eventDate\" name=\"eventDate\"/><br/>\n" +
-                "  <label for=\"term\">Start Time(hh-mm)</label><br/>\n" +
+                "  <label for=\"term\">Start Time(hh:mm)</label><br/>\n" +
                 "  <input type=\"text\" id=\"startTime\" name=\"startTime\"/><br/>\n" +
-                "  <label for=\"term\">End Time(hh-mm)</label><br/>\n" +
+                "  <label for=\"term\">End Time(hh:mm)</label><br/>\n" +
                 "  <input type=\"text\" id=\"endTime\" name=\"endTime\"/><br/>\n" +
                 "  <label for=\"term\">Event Description</label><br/>\n" +
                 "  <input type=\"text\" id=\"eventDescription\" name=\"eventDescription\"/><br/>\n" +

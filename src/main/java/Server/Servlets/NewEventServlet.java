@@ -7,6 +7,7 @@ import DataBase.UsersJDBC;
 import Server.LoginServerConstants;
 import UI.AccountPage;
 import UI.EventsPage;
+import UI.MyOwnEventsPage;
 import UI.NewEventPage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import org.eclipse.jetty.http.HttpStatus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -67,26 +69,35 @@ public class NewEventServlet extends HttpServlet {
 
                 String zipcodePart = bodyParts[1];
                 String zipcode = getBodyParameter(zipcodePart);
-                LOGGER.info("new event zipcode: " + zipcode);
+
                 int zipCode = 0;
                 if(!zipcode.equals("")){
                     zipCode = Integer.parseInt(zipcode);
                 }
-
+                LOGGER.info("new event zipcode: " + zipcode);
                 String locationPart = bodyParts[2];
                 String location = getBodyParameter(locationPart);
+                LOGGER.info("new event location:" + location);
 
                 String eventDatePart = bodyParts[3];
-                Date date = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
+                Date date = null;
+                if(getBodyParameter(eventDatePart) != ""){
+                   date  = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
+                }
+
+                LOGGER.info("new event date:" + date);
 
                 String startTimePart = bodyParts[4];
                 String startTime = getBodyParameter(startTimePart);
+                LOGGER.info("new event start time:" + startTime);
 
                 String endTimePart = bodyParts[5];
                 String endTime = getBodyParameter(endTimePart);
+                LOGGER.info("new event end time:" + endTime);
 
                 String eventDescriptionPart = bodyParts[6];
                 String eventDescription = getBodyParameter(eventDescriptionPart);
+                LOGGER.info("new event des:" + eventDescription);
 
 
                 String userEmail = "";
@@ -99,10 +110,10 @@ public class NewEventServlet extends HttpServlet {
 
                     EventsJDBC.executeInsertEvent(connection, userEmail,eventName,eventDescription,zipCode,date,startTime,endTime, location);
 
-                    ResultSet allEvents = EventsJDBC.executeSelectAllEvents(connection);
-                    resp.getWriter().println(NewEventPage.displayResponseForPost(allEvents));
+                    ResultSet allMyEvents = EventsJDBC.executeSelectEventsByCreator(connection, userEmail);
+                    resp.getWriter().println(MyOwnEventsPage.displayMyEvents(allMyEvents));
 
-                }catch (SQLException e){
+                }catch (SQLException | URISyntaxException e){
                     e.printStackTrace();
                 }
             }

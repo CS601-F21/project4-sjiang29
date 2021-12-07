@@ -35,6 +35,7 @@ public class EventsJDBC {
     public static ResultSet executeSelectEventsByCreator(Connection con, String creator_email) throws SQLException {
         String selectEventsByCreatorSql = "SELECT * FROM events where creator_email=? ;";
         PreparedStatement selectEventsByCreatorStmt = con.prepareStatement(selectEventsByCreatorSql);
+        selectEventsByCreatorStmt.setString(1, creator_email);
 
         ResultSet results = selectEventsByCreatorStmt.executeQuery();
         return results;
@@ -58,10 +59,10 @@ public class EventsJDBC {
     }
 
     public static void executeDeleteEventById(Connection con, int eventId) throws SQLException {
-        String deleteEventByIdSql = "SELECT FROM events WHERE id=?;";
+        String deleteEventByIdSql = "DELETE FROM events WHERE id=?;";
         PreparedStatement deleteEventByIdStmt = con.prepareStatement(deleteEventByIdSql);
         deleteEventByIdStmt.setInt(1, eventId);
-        deleteEventByIdStmt.executeQuery();
+        deleteEventByIdStmt.executeUpdate();
 
     }
 
@@ -114,7 +115,7 @@ public class EventsJDBC {
         }
 
         if(location.equals("")){
-            insertEventStmt.setNull(7, java.sql.Types.NULL);
+            insertEventStmt.setNull(8, java.sql.Types.NULL);
         }else {
             insertEventStmt.setString(8, location);
         }
@@ -132,7 +133,7 @@ public class EventsJDBC {
 
 
 
-        if(eventName != null){
+        if(!eventName.equals("")){
             updateEventSql = "UPDATE events SET" +
                     "name=?" +
                     "WHERE id=?;";
