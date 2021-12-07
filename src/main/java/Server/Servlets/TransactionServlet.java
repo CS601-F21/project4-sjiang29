@@ -25,9 +25,10 @@ public class TransactionServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
-        resp.setStatus(HttpStatus.OK_200);
+
         if(clientInfoObj != null) {
             // already authed, no need to log in
+            resp.setStatus(HttpStatus.OK_200);
             String userName = "";
             String userEmail = "";
             int zipcode = 0;

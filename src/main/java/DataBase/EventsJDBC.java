@@ -57,6 +57,14 @@ public class EventsJDBC {
         return results;
     }
 
+    public static void executeDeleteEventById(Connection con, int eventId) throws SQLException {
+        String deleteEventByIdSql = "SELECT FROM events WHERE id=?;";
+        PreparedStatement deleteEventByIdStmt = con.prepareStatement(deleteEventByIdSql);
+        deleteEventByIdStmt.setInt(1, eventId);
+        deleteEventByIdStmt.executeQuery();
+
+    }
+
     /**
      * A method to demonstrate using a PreparedStatement to execute a database insert.
      * @param con
@@ -113,6 +121,90 @@ public class EventsJDBC {
 
         insertEventStmt.executeUpdate();
     }
+
+
+    public static void executeUpdateEventById(Connection con, int eventId, String eventName, String eventDescription,
+                                          int zipcode, Date date, String startTime, String endTime, String location) throws SQLException {
+        String updateEventSql = "UPDATE events SET" +
+                "name=?, creator_email=?, date=?, zipcode=?, description=?, start_time=?, end_time=?, location=?" +
+                "WHERE id=?;";
+        PreparedStatement updateEventStmt;
+
+
+
+        if(eventName != null){
+            updateEventSql = "UPDATE events SET" +
+                    "name=?" +
+                    "WHERE id=?;";
+            updateEventStmt = con.prepareStatement(updateEventSql);
+            updateEventStmt.setString(1, eventName);
+            updateEventStmt.setInt(2,eventId);
+            updateEventStmt.executeUpdate();
+        }
+
+        if(date != null){
+            updateEventSql = "UPDATE events SET" +
+                    "date=?" +
+                    "WHERE id=?;";
+            updateEventStmt = con.prepareStatement(updateEventSql);
+            updateEventStmt.setDate(1, date);
+            updateEventStmt.setInt(2,eventId);
+            updateEventStmt.executeUpdate();
+        }
+
+        if(zipcode != 0){
+            updateEventSql = "UPDATE events SET" +
+                    "zipcode=?" +
+                    "WHERE id=?;";
+            updateEventStmt = con.prepareStatement(updateEventSql);
+            updateEventStmt.setInt(1, zipcode);
+            updateEventStmt.setInt(2,eventId);
+            updateEventStmt.executeUpdate();
+        }
+
+        if(!eventDescription.equals("")){
+            updateEventSql = "UPDATE events SET" +
+                    "description=?" +
+                    "WHERE id=?;";
+            updateEventStmt = con.prepareStatement(updateEventSql);
+            updateEventStmt.setString(1, eventDescription);
+            updateEventStmt.setInt(2,eventId);
+            updateEventStmt.executeUpdate();
+        }
+
+        if(!startTime.equals("")){
+            updateEventSql = "UPDATE events SET" +
+                    "start_time=?" +
+                    "WHERE id=?;";
+            updateEventStmt = con.prepareStatement(updateEventSql);
+            updateEventStmt.setString(1, startTime);
+            updateEventStmt.setInt(2,eventId);
+            updateEventStmt.executeUpdate();
+        }
+
+        if(!endTime.equals("")){
+            updateEventSql = "UPDATE events SET" +
+                    "end_time=?" +
+                    "WHERE id=?;";
+            updateEventStmt = con.prepareStatement(updateEventSql);
+            updateEventStmt.setString(1, endTime);
+            updateEventStmt.setInt(2,eventId);
+            updateEventStmt.executeUpdate();
+        }
+
+        if(!location.equals("")){
+            updateEventSql = "UPDATE events SET" +
+                    "location=?" +
+                    "WHERE id=?;";
+            updateEventStmt = con.prepareStatement(updateEventSql);
+            updateEventStmt.setString(1, location);
+            updateEventStmt.setInt(2,eventId);
+            updateEventStmt.executeUpdate();
+        }
+
+
+    }
+
 
 
 
