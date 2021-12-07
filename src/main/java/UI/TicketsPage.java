@@ -68,10 +68,6 @@ public class TicketsPage {
         builder.append(PAGE_HEADER);
         builder.append("<h1>Below are all the tickets for the selected event.</h1>\n");
 
-        //if(rowcount == 0){
-        //builder.append("<h2>There are no available events ongoing.</h2>\n");
-        //}else{
-        //String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
         while(tickets.next()){
 
             String urlToBuyTicket = buildUriToBuyTicket(Integer.toString(tickets.getInt("id")));
@@ -91,12 +87,9 @@ public class TicketsPage {
             builder.append("<h2>There are no available tickets.</h2>\n");
         }
 
-        //builder.append(EVENT_DETAIL_FORM);
         builder.append(LINKS_IN_GET);
         builder.append(PAGE_FOOTER);
-
         return builder.toString();
-
     }
 
     public static String LINKS_IN_GET =
