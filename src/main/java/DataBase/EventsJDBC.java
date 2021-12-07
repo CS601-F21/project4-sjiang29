@@ -91,7 +91,7 @@ public class EventsJDBC {
         }
 
         if(zipcode == 0){
-            insertEventStmt.setNull(3,java.sql.Types.NULL);
+            insertEventStmt.setNull(4,java.sql.Types.NULL);
         }else{
             insertEventStmt.setInt(4, zipcode);
         }
