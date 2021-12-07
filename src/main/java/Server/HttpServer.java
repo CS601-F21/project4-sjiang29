@@ -66,7 +66,6 @@ public class HttpServer {
         context.addServlet(NewEventServlet.class, "/newEvent");
         context.addServlet(MyOwnEventsServlet.class, "/myOwnEvents");
 
-
         // handle logout
         context.addServlet(LogoutServlet.class, "/logout");
 
