@@ -21,10 +21,6 @@ public class MyOwnEventsPage {
         builder.append(UIConstants.PAGE_HEADER);
         builder.append("<h1>Below are all the events.</h1>\n");
 
-        //if(rowcount == 0){
-        //builder.append("<h2>There are no available events ongoing.</h2>\n");
-        //}else{
-        //String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
         while(myEvents.next()){
 
             String eventId = Integer.toString(myEvents.getInt("id"));
@@ -41,15 +37,108 @@ public class MyOwnEventsPage {
                     "<a href=" + urlToModifyEvent + ">" + "Modify</a>" + "\n" +
                     "</li>\n");
         }
-        //}
+
         if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the events.</h1>\n")){
             builder.append("<h2>You haven't created any events</h2>\n");
         }
         builder.append(LINKS_IN_MYEVENTS);
         builder.append(UIConstants.PAGE_FOOTER);
+        return builder.toString();
+    }
+
+    public static String getDeleteResponse(ResultSet deletedEvent) throws SQLException {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(UIConstants.PAGE_HEADER);
+        builder.append("<h1>Below are the details of the event you would like to delete.</h1>\n");
+
+        String deletedEventId = "";
+        while(deletedEvent.next()){
+
+            deletedEventId = Integer.toString(deletedEvent.getInt("id"));
+
+
+            builder.append("<li>" + "Event Id: " + deletedEvent.getInt("id") + "\n" +
+                    "Event name: " + deletedEvent.getString("name") + "\n" +
+                    "Event description: " + deletedEvent.getString("description") + "<br>" +
+                    "Event time: " + deletedEvent.getDate("date") + "<br>" +
+                    "Event zipcode: " + deletedEvent.getInt("zipcode") + "<br>" +
+                    "Event location: " + deletedEvent.getString("location") + "<br>" +
+                    "</li>\n");
+        }
+        builder.append(getDeleteEventForm(deletedEventId));
+        builder.append(LINKS_IN_MYEVENTS);
+        builder.append(UIConstants.PAGE_FOOTER);
+        return builder.toString();
+
+    }
+
+
+    public static String getDeleteEventForm(String eventId){
+        StringBuilder builder = new StringBuilder();
+        builder.append("<h2>Please check the box for deleting confirmation.</h2>\n");
+        builder.append("<form style=\"text-align: center\" action=\"/myEvents\" method=\"post\">\n" +
+                "  <label for=\"deletedEventId\">DELETE</label><br/>\n" +
+                "  <input type=\"checkbox\" id=\"deletedEventId\" name=\"deletedEventId\" value=" + eventId + "/><br/>\n" +
+                "</form>");
+        return  builder.toString();
+    }
+
+    public static String getModifyEventResponse(ResultSet modifiedEvent) throws SQLException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(UIConstants.PAGE_HEADER);
+        builder.append("<h1>Below are the details of the event you would like to modify.</h1>\n");
+
+        String modifiedEventId = "";
+        while(modifiedEvent.next()){
+
+            modifiedEventId = Integer.toString(modifiedEvent.getInt("id"));
+
+
+            builder.append("<li>" + "Event Id: " + modifiedEvent.getInt("id") + "\n" +
+                    "Event name: " + modifiedEvent.getString("name") + "\n" +
+                    "Event description: " + modifiedEvent.getString("description") + "<br>" +
+                    "Event time: " + modifiedEvent.getDate("date") + "<br>" +
+                    "Event zipcode: " + modifiedEvent.getInt("zipcode") + "<br>" +
+                    "Event location: " + modifiedEvent.getString("location") + "<br>" +
+                    "</li>\n");
+        }
+        builder.append(getModifyEventForm(modifiedEventId));
+        builder.append(LINKS_IN_MYEVENTS);
+        builder.append(UIConstants.PAGE_FOOTER);
+        return builder.toString();
+
+    }
+
+    public static String getModifyEventForm(String modifiedEventId){
+        StringBuilder builder = new StringBuilder();
+        builder.append("<h1>Please use the form below to update</h1>\n");
+        builder.append("<form style=\"text-align: center\" action=\"/myEvents\" method=\"post\">\n" +
+                "  <label for=\"term\">Modified Event Id(Please double check)</label><br/>\n" +
+                "  <input type=\"text\" id=\"modifiedEventId\" name=\"modifiedEventId\" value=" + modifiedEventId + "/><br/>\n" +
+                "  <label for=\"term\">Event Name(MUST HAVE)</label><br/>\n" +
+                "  <input type=\"text\" id=\"eventName\" name=\"eventName\"/><br/>\n" +
+                "  <label for=\"term\">Event Zipcode</label><br/>\n" +
+                "  <input type=\"text\" id=\"eventZipcode\" name=\"eventZipcode\"/><br/>\n" +
+                "  <label for=\"term\">Event Location</label><br/>\n" +
+                "  <input type=\"text\" id=\"eventLocation\" name=\"eventLocation\"/><br/>\n" +
+                "  <label for=\"term\">Event Date(YYYY-MM-DD)</label><br/>\n" +
+                "  <input type=\"text\" id=\"eventDate\" name=\"eventDate\"/><br/>\n" +
+                "  <label for=\"term\">Start Time(hh-mm)</label><br/>\n" +
+                "  <input type=\"text\" id=\"startTime\" name=\"startTime\"/><br/>\n" +
+                "  <label for=\"term\">End Time(hh-mm)</label><br/>\n" +
+                "  <input type=\"text\" id=\"endTime\" name=\"endTime\"/><br/>\n" +
+                "  <label for=\"term\">Event Description</label><br/>\n" +
+                "  <input type=\"text\" id=\"eventDescription\" name=\"eventDescription\"/><br/>\n" +
+                "  <input type=\"submit\" value=\"Submit\"/>\n" +
+                "</form>"
+            );
 
         return builder.toString();
     }
+
+
+
 
 
     public static final String LINKS_IN_MYEVENTS = "<p style=\"text-align: center\">" +
