@@ -101,6 +101,7 @@ public class LoginServlet extends HttpServlet {
                         "<a href=\"/account\"> Show My Account</a> | " +
                         "<a href=\"/events\"> Show All Events</a> | " +
                         "<a href=\"/tickets\"> Buy Ticket</a> | " +
+                        "<a href=\"/myTickets\"> My Ticket</a> | " +
                         "<a href=\"/logout\">Logout</a></p>");
                 resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
             }

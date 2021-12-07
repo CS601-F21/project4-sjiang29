@@ -86,15 +86,18 @@ public class MyTicketsServlet extends HttpServlet {
             resp.setStatus(HttpStatus.OK_200);
             try(BufferedReader reader = req.getReader()) {
 
-                String ticketId = req.getParameter("ticketId");
-                LOGGER.info("mytickets_post_ticketId:" + ticketId);
-                int ticketID = Integer.parseInt(ticketId);
                 String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
                 //TODO: verify the body exists and it contains a =
                 LOGGER.info("body: " + body);
-                String[] bodyParts = body.split("=");
+                String[] bodyParts = body.split("&");
 
-                String newOwnerEmail = bodyParts[1];
+
+                String ticketIdPart = bodyParts[0];
+                String ticketId = Util.ServeletUtil.getBodyParameter(ticketIdPart);
+                int ticketID = Integer.parseInt(ticketId);
+
+                String newOwnerEmailPart = bodyParts[1];
+                String newOwnerEmail = Util.ServeletUtil.getBodyParameter(newOwnerEmailPart);
 
                 try (Connection connection = DBCPDataSource.getConnection()){
                     TicketsJDBC.transferTicket(connection, newOwnerEmail, ticketID);

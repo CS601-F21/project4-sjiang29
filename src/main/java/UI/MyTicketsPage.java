@@ -69,23 +69,20 @@ public class MyTicketsPage {
                     "</li>\n");
         }
         //}
-        builder.append(getTransferTicketForm(transferredTicketId));
+        builder.append(TRANSFER_TICKET_FORM);
         builder.append(LINKS_IN_MYTICKETS);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
 
-    public static String getTransferTicketForm(String ticketId) throws FileNotFoundException, URISyntaxException {
-        StringBuilder builder = new StringBuilder();
-        String actionUri = buildUriToTransferTicket(ticketId);
-        builder.append("<form style=\"text-align: center\" action=" + actionUri + "method=\"post\">\n" +
-                "  <label for=\"term\">Email of whom you would transfer ticket to</label><br/>\n" +
-                "  <input type=\"text\" id=\"newOwnerEmail\" name=\"newOwnerEmail\"/><br/>\n" +
-                "  <input type=\"submit\" value=\"Submit\"/>\n" +
-                "</form>");
-
-        return builder.toString();
-    }
+    public static String TRANSFER_TICKET_FORM =
+            "<form style=\"text-align: center\" action=\"/myTickets\" method=\"post\">\n" +
+                    "  <label for=\"term\">Transferred Ticket Id</label><br/>\n" +
+                    "  <input type=\"text\" id=\"ticketId\" name=\"ticketId\"/><br/>\n" +
+                    "  <label for=\"term\">Email of whom you would transfer ticket to</label><br/>\n" +
+                    "  <input type=\"text\" id=\"newOwnerEmail\" name=\"newOwnerEmail\"/><br/>\n" +
+                    "  <input type=\"submit\" value=\"Submit\"/>\n" +
+                    "</form>";
 
 
     public static final String LINKS_IN_MYTICKETS = "<p style=\"text-align: center\">" +

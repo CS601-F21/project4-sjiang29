@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static Server.HttpServer.LOGGER;
+import static Util.ServeletUtil.getBodyParameter;
 
 public class NewEventServlet extends HttpServlet {
 
@@ -113,9 +114,5 @@ public class NewEventServlet extends HttpServlet {
     }
 
 
-    public static String getBodyParameter(String bodyPart){
-        String[] parsedBodyPart = bodyPart.split("=");
-        return parsedBodyPart[1];
-    }
 
 }

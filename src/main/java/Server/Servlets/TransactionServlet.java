@@ -46,7 +46,6 @@ public class TransactionServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
