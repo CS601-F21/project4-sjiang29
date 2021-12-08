@@ -9,6 +9,7 @@ import UI.AccountPage;
 import UI.EventsPage;
 import UI.MyOwnEventsPage;
 import UI.NewEventPage;
+import Util.ResponseFromSlack;
 import Util.SlackRequestBody;
 import Util.Token;
 import com.google.gson.Gson;
@@ -18,10 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -69,99 +67,10 @@ public class NewEventServlet extends HttpServlet {
                 LOGGER.info("body: " + body);
 
                 if(body.contains("sendToSlackEventId")){
-                    String[] bodyParts = body.split("=");
-                    String sendToSlackEventId = bodyParts[1];
-
-                    String message = "hello slack";
-                    Gson gson = new Gson();
-                    Token tokenObject = null;
-                    try {
-                        tokenObject = gson.fromJson(new FileReader("slackToken.json"), Token.class);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        System.exit(1);
-                    }
-
-                    String token = tokenObject.getToken();
-                    Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + token);
-                    headers.put("Content-Type", "application/json; utf-8");
-                    headers.put("as_user", "true");
-                    String url = "https://slack.com/api/chat.postMessage";
-                    String channel = "C02KZE22RU0";
-                    SlackRequestBody requestBody = new SlackRequestBody(channel, message);
-                    String jsonRequestBody = gson.toJson(requestBody);
-
-                    String res = Util.HttpFetcher.doPost(url, headers, jsonRequestBody);
-                    LOGGER.info(res);
-                    resp.getWriter().println(res);
-
-
+                    sendToSlackRequest(body, resp.getWriter());
 
                 }else{
-                    String[] bodyParts = body.split("&");
-
-                    String eventNamePart = bodyParts[0];
-                    String eventName = getBodyParameter(eventNamePart);
-                    LOGGER.info("new event name: " + eventName);
-
-                    String zipcodePart = bodyParts[1];
-                    String zipcode = getBodyParameter(zipcodePart);
-
-                    int zipCode = 0;
-                    if(!zipcode.equals("")){
-                        zipCode = Integer.parseInt(zipcode);
-                    }
-                    LOGGER.info("new event zipcode: " + zipcode);
-                    String locationPart = bodyParts[2];
-                    String location = getBodyParameter(locationPart);
-                    LOGGER.info("new event location:" + location);
-
-                    String eventDatePart = bodyParts[3];
-                    Date date = null;
-                    if(getBodyParameter(eventDatePart) != ""){
-                        date  = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
-                    }
-
-                    LOGGER.info("new event date:" + date);
-
-                    String startTimePart = bodyParts[4];
-                    String startTime = getBodyParameter(startTimePart);
-                    LOGGER.info("new event start time:" + startTime);
-
-                    String endTimePart = bodyParts[5];
-                    String endTime = getBodyParameter(endTimePart);
-                    LOGGER.info("new event end time:" + endTime);
-
-                    String eventDescriptionPart = bodyParts[6];
-                    String eventDescription = getBodyParameter(eventDescriptionPart);
-                    LOGGER.info("new event des:" + eventDescription);
-
-
-                    String userEmail = "";
-
-                    try (Connection connection = DBCPDataSource.getConnection()){
-                        ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
-                        if(user.next()){
-                            userEmail = user.getString("email");
-                        }
-
-                        ResultSet newEventId = EventsJDBC.executeInsertEvent(connection, userEmail,eventName,eventDescription,zipCode,date,startTime,endTime, location);
-
-                        LOGGER.info(newEventId);
-                        int lastInsertId = 0;
-                        if(newEventId.next()){
-                            lastInsertId = newEventId.getInt("LAST_INSERT_ID()");
-                            LOGGER.info("LAST_INSERT_ID():" + lastInsertId);
-                        }
-                        //LOGGER.info("rowCountAfterInsertion events:" + rowCountAfterInsertion);
-                        //ResultSet newlyCreatedEvent = EventsJDBC.executeSelectEventById(connection, rowCountAfterInsertion);
-                        //resp.getWriter().println(NewEventPage.displayResponseForPost(newlyCreatedEvent));
-
-                    }catch (SQLException e){
-                        e.printStackTrace();
-                    }
-
+                    createNewEvent(body, resp.getWriter(),sessionId);
                 }
 
             }
@@ -173,5 +82,117 @@ public class NewEventServlet extends HttpServlet {
     }
 
 
+    private void sendToSlackRequest(String body, PrintWriter writer){
+        String[] bodyParts = body.split("=");
+        String sendToSlackEventId = bodyParts[1];
+        LOGGER.info("send to slack event id:" + sendToSlackEventId);
+        StringBuilder messageBuilder = new StringBuilder();
+        try (Connection connection = DBCPDataSource.getConnection()){
+            ResultSet sendToSlackEvent = EventsJDBC.executeSelectEventById(connection, Integer.parseInt(sendToSlackEventId));
+            messageBuilder.append("A new Event was just created by me.\n" );
+            messageBuilder.append("Event name: " + sendToSlackEvent.getString("name") + "\n");
+            messageBuilder.append("Event location: " + sendToSlackEvent.getString("location") + "\n");
+            messageBuilder.append("Event date: " + sendToSlackEvent.getString("date") + "\n");
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        String message = messageBuilder.toString();
+        Gson gson = new Gson();
+        Token tokenObject = null;
+        try {
+            tokenObject = gson.fromJson(new FileReader("slackToken.json"), Token.class);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        String token = tokenObject.getToken();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + token);
+        headers.put("Content-Type", "application/json; utf-8");
+        headers.put("as_user", "true");
+        String url = "https://slack.com/api/chat.postMessage";
+        String channel = "C02KZE22RU0";
+        SlackRequestBody requestBody = new SlackRequestBody(channel, message);
+        String jsonRequestBody = gson.toJson(requestBody);
+
+        String res = Util.HttpFetcher.doPost(url, headers, jsonRequestBody);
+        ResponseFromSlack responseFromSlack = gson.fromJson(res, ResponseFromSlack.class);
+        if(responseFromSlack.getOk().equals("true")){
+
+        }
+
+        writer.println(res);
+
+    }
+
+    private void createNewEvent(String body, PrintWriter writer, String sessionId){
+        String[] bodyParts = body.split("&");
+
+        String eventNamePart = bodyParts[0];
+        String eventName = getBodyParameter(eventNamePart);
+        LOGGER.info("new event name: " + eventName);
+
+        String zipcodePart = bodyParts[1];
+        String zipcode = getBodyParameter(zipcodePart);
+
+        int zipCode = 0;
+        if(!zipcode.equals("")){
+            zipCode = Integer.parseInt(zipcode);
+        }
+        LOGGER.info("new event zipcode: " + zipcode);
+        String locationPart = bodyParts[2];
+        String location = getBodyParameter(locationPart);
+        LOGGER.info("new event location:" + location);
+
+        String eventDatePart = bodyParts[3];
+        Date date = null;
+        if(getBodyParameter(eventDatePart) != ""){
+            date  = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
+        }
+
+        LOGGER.info("new event date:" + date);
+
+        String startTimePart = bodyParts[4];
+        String startTime = getBodyParameter(startTimePart);
+        LOGGER.info("new event start time:" + startTime);
+
+        String endTimePart = bodyParts[5];
+        String endTime = getBodyParameter(endTimePart);
+        LOGGER.info("new event end time:" + endTime);
+
+        String eventDescriptionPart = bodyParts[6];
+        String eventDescription = getBodyParameter(eventDescriptionPart);
+        LOGGER.info("new event des:" + eventDescription);
+
+
+        String userEmail = "";
+
+        try (Connection connection = DBCPDataSource.getConnection()){
+            ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
+            if(user.next()){
+                userEmail = user.getString("email");
+            }
+
+            ResultSet newEventId = EventsJDBC.executeInsertEvent(connection, userEmail,eventName,eventDescription,zipCode,date,startTime,endTime, location);
+
+            LOGGER.info(newEventId);
+            int lastInsertId = 0;
+            if(newEventId.next()){
+                lastInsertId = newEventId.getInt("LAST_INSERT_ID()");
+                LOGGER.info("LAST_INSERT_ID():" + lastInsertId);
+            }
+            //LOGGER.info("rowCountAfterInsertion events:" + rowCountAfterInsertion);
+            ResultSet newlyCreatedEvent = EventsJDBC.executeSelectEventById(connection, lastInsertId);
+            writer.println(NewEventPage.displayResponseForPost(newlyCreatedEvent));
+
+        }catch (SQLException | URISyntaxException | FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+
+    }
 
 }

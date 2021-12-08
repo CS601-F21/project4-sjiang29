@@ -29,13 +29,13 @@ public class NewEventPage {
             "<h1>Please input the following table to create a new event</h1>\n" +
             "<form style=\"text-align: center\" action=\"/newEvent\" method=\"post\">\n" +
                     "  <label for=\"term\">Event Name(MUST HAVE)</label><br/>\n" +
-                    "  <input type=\"text\" id=\"eventName\" name=\"eventName\"/><br/>\n" +
+                    "  <input type=\"text\" id=\"eventName\" name=\"eventName\"/ required><br/>\n" +
                     "  <label for=\"term\">Event Zipcode</label><br/>\n" +
                     "  <input type=\"text\" id=\"eventZipcode\" name=\"eventZipcode\"/><br/>\n" +
                     "  <label for=\"term\">Event Location</label><br/>\n" +
-                    "  <input type=\"text\" id=\"eventLocation\" name=\"eventLocation\"/><br/>\n" +
+                    "  <input type=\"text\" id=\"eventLocation\" name=\"eventLocation\"/ required><br/>\n" +
                     "  <label for=\"term\">Event Date(YYYY-MM-DD)</label><br/>\n" +
-                    "  <input type=\"text\" id=\"eventDate\" name=\"eventDate\"/><br/>\n" +
+                    "  <input type=\"text\" id=\"eventDate\" name=\"eventDate\"/><br/ required>\n" +
                     "  <label for=\"term\">Start Time(hh:mm)</label><br/>\n" +
                     "  <input type=\"text\" id=\"startTime\" name=\"startTime\"/><br/>\n" +
                     "  <label for=\"term\">End Time(hh:mm)</label><br/>\n" +
