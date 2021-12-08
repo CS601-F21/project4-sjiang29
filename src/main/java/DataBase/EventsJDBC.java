@@ -77,10 +77,12 @@ public class EventsJDBC {
 
      * @throws SQLException
      */
-    public static void executeInsertEvent(Connection con, String creatorEmail, String eventName, String eventDescription,
+    public static ResultSet executeInsertEvent(Connection con, String creatorEmail, String eventName, String eventDescription,
                                           int zipcode, Date date, String startTime, String endTime, String location) throws SQLException {
-        String insertEventSql = "INSERT INTO events (name, creator_email, date, zipcode, description, start_time, end_time, location) " +
-                "VALUES (?, ?, ?, ?, ?, ? ,?, ?);";
+        String insertEventSql =
+                "INSERT INTO events (name, creator_email, date, zipcode, description, start_time, end_time, location) " +
+                "VALUES (?, ?, ?, ?, ?, ? ,?, ?); ";
+
         PreparedStatement insertEventStmt = con.prepareStatement(insertEventSql);
         insertEventStmt.setString(1, eventName);
         insertEventStmt.setString(2, creatorEmail);
@@ -121,6 +123,18 @@ public class EventsJDBC {
         }
 
         insertEventStmt.executeUpdate();
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID() FROM events;");
+
+        return rs;
+    }
+
+    public static ResultSet executeNewlyInsertedEventId(Connection con) throws SQLException {
+        String selectNewEventIdSql = "SELECT LAST_INSERT_ID() FROM events;";
+        PreparedStatement selectNewEventIdStmt = con.prepareStatement(selectNewEventIdSql);
+
+        ResultSet results = selectNewEventIdStmt.executeQuery();
+        return results;
     }
 
 

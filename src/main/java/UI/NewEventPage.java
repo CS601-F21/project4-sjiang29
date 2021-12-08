@@ -1,7 +1,12 @@
 package UI;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static UI.MyOwnEventsPage.buildDeleteEventByIdUri;
+import static UI.MyOwnEventsPage.buildModifyEventByIdUri;
 
 public class NewEventPage {
 
@@ -58,19 +63,40 @@ public class NewEventPage {
                     "<a href=\"/newEvents\"> Add New Event</a> | " +
                     "<a href=\"/logout\">Logout</a></p>\n";
 
-    public static String displayResponseForPost(ResultSet events) throws SQLException {
+    public static String displayResponseForPost(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(PAGE_HEADER);
-        builder.append("<h1>Below are all the events after updating.</h1>\n");
+        builder.append("<h1>Below is the event you just created.</h1>\n");
 
+        String eventId = "";
         while(events.next()){
-            builder.append("<li>" + "Event Id: " + events.getInt("id") + "\n" +
-                    "Event name: " + events.getString("name") + "\n" +
+
+            eventId= Integer.toString(events.getInt("id"));
+
+            String urlToDeleteEvent = buildDeleteEventByIdUri(eventId);
+            String urlToModifyEvent = buildModifyEventByIdUri(eventId);
+            builder.append("<li>" + "Event Id: " + events.getInt("id") + "    " +
+                    "Event name: " + events.getString("name") + "    " +
+                    "<a href=" + urlToDeleteEvent + ">" + "Delete</a>" + "    " +
+                    "<a href=" + urlToModifyEvent + ">" + "Modify</a>" + "\n" +
                     "</li>\n");
         }
+        builder.append(getSlackEventForm(eventId));
         builder.append(LINKS_IN_POST);
         builder.append(PAGE_FOOTER);
 
         return builder.toString();
     }
+
+    public static String getSlackEventForm(String eventId){
+        StringBuilder builder = new StringBuilder();
+        builder.append("<h2>Please check the box for sending this event to slack.</h2>\n");
+        builder.append("<form style=\"text-align: center\" action=\"/newEvent\" method=\"post\">\n" +
+                "  <label for=\"sendToSlackEventId\">SEND</label><br/>\n" +
+                "  <input type=\"checkbox\" id=\"sendToSlackEventId\" name=\"sendToSlackEventId\" value=" + eventId + "/><br/>\n" +
+                "  <input type=\"submit\" value=\"Submit\"/>\n" +
+                "</form>");
+        return  builder.toString();
+    }
+
 }

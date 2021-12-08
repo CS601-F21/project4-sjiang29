@@ -95,7 +95,7 @@ public class TicketsPage {
     public static String LINKS_IN_GET =
             "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
                     "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/transferTicket\"> Transfer Ticket</a> | " +
+                    "<a href=\"/myTickets\"> Transfer Ticket</a> | " +
                     "<a href=\"/newEvent\"> Add a New Event</a> | " +
                     "<a href=\"/logout\">Logout</a></p>\n";
 
