@@ -3,11 +3,7 @@ package Server.Servlets;
 import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
-import DataBase.UsersJDBC;
 import Server.LoginServerConstants;
-import UI.AccountPage;
-import UI.EventsPage;
-import UI.MyOwnEventsPage;
 import UI.NewEventPage;
 import Util.ResponseFromSlack;
 import Util.SlackRequestBody;
@@ -32,7 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static Server.HttpServer.LOGGER;
-import static Util.ServeletUtil.getBodyParameter;
+import static Util.ServletUtil.getBodyParameter;
+import static Util.ServletUtil.getId;
 
 public class NewEventServlet extends HttpServlet {
 
@@ -84,15 +81,18 @@ public class NewEventServlet extends HttpServlet {
 
     private void sendToSlackRequest(String body, PrintWriter writer){
         String[] bodyParts = body.split("=");
-        String sendToSlackEventId = bodyParts[1];
+        String sendToSlackEventId = getId(bodyParts[1]);
         LOGGER.info("send to slack event id:" + sendToSlackEventId);
         StringBuilder messageBuilder = new StringBuilder();
         try (Connection connection = DBCPDataSource.getConnection()){
             ResultSet sendToSlackEvent = EventsJDBC.executeSelectEventById(connection, Integer.parseInt(sendToSlackEventId));
-            messageBuilder.append("A new Event was just created by me.\n" );
-            messageBuilder.append("Event name: " + sendToSlackEvent.getString("name") + "\n");
-            messageBuilder.append("Event location: " + sendToSlackEvent.getString("location") + "\n");
-            messageBuilder.append("Event date: " + sendToSlackEvent.getString("date") + "\n");
+            if(sendToSlackEvent.next()){
+                messageBuilder.append("A new Event was just created by me.\n" );
+                messageBuilder.append("Event name: " + sendToSlackEvent.getString("name") + "\n");
+                messageBuilder.append("Event location: " + sendToSlackEvent.getString("location") + "\n");
+                messageBuilder.append("Event date: " + sendToSlackEvent.getString("date") + "\n");
+            }
+
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -121,10 +121,12 @@ public class NewEventServlet extends HttpServlet {
         String res = Util.HttpFetcher.doPost(url, headers, jsonRequestBody);
         ResponseFromSlack responseFromSlack = gson.fromJson(res, ResponseFromSlack.class);
         if(responseFromSlack.getOk().equals("true")){
-
+            writer.println(NewEventPage.SLACK_SUCCESS);
+        }else{
+            writer.println(NewEventPage.SLACK_FAILURE);
         }
 
-        writer.println(res);
+
 
     }
 

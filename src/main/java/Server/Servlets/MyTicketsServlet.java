@@ -1,13 +1,12 @@
 package Server.Servlets;
 
 import DataBase.DBCPDataSource;
-import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
 import DataBase.TicketsJDBC;
 import Server.LoginServerConstants;
 import UI.EventsPage;
 import UI.MyTicketsPage;
-import UI.TicketsPage;
+import Util.ServletUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -93,11 +92,11 @@ public class MyTicketsServlet extends HttpServlet {
 
 
                 String ticketIdPart = bodyParts[0];
-                String ticketId = Util.ServeletUtil.getBodyParameter(ticketIdPart);
+                String ticketId = ServletUtil.getBodyParameter(ticketIdPart);
                 int ticketID = Integer.parseInt(ticketId);
 
                 String newOwnerEmailPart = bodyParts[1];
-                String newOwnerEmail = Util.ServeletUtil.getBodyParameter(newOwnerEmailPart);
+                String newOwnerEmail = ServletUtil.getBodyParameter(newOwnerEmailPart);
 
                 try (Connection connection = DBCPDataSource.getConnection()){
                     TicketsJDBC.transferTicket(connection, newOwnerEmail, ticketID);

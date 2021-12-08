@@ -3,12 +3,9 @@ package Server.Servlets;
 import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
-import DataBase.TicketsJDBC;
 import Server.LoginServerConstants;
 import UI.EventsPage;
 import UI.MyOwnEventsPage;
-import UI.MyTicketsPage;
-import UI.NewEventPage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +24,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static Server.HttpServer.LOGGER;
-import static Util.ServeletUtil.getBodyParameter;
+import static Util.ServletUtil.getBodyParameter;
+import static Util.ServletUtil.getId;
 
 public class MyOwnEventsServlet extends HttpServlet {
 
@@ -101,7 +99,7 @@ public class MyOwnEventsServlet extends HttpServlet {
                 if(body.contains("deletedEventId")){
                     String[] bodyParts = body.split("=");
 
-                    String deletedEventId = getDeletedEventId(bodyParts[1]);
+                    String deletedEventId = getId(bodyParts[1]);
                     try (Connection connection = DBCPDataSource.getConnection()){
                         EventsJDBC.executeDeleteEventById(connection, Integer.parseInt(deletedEventId));
                         resp.getWriter().println(MyOwnEventsPage.DELETE_SUCCESS);
@@ -176,16 +174,5 @@ public class MyOwnEventsServlet extends HttpServlet {
         }
     }
 
-    public static String getDeletedEventId(String part) {
-        StringBuilder res = new StringBuilder();
-        for (int i = 0; i < part.length(); i++) {
-            if (Character.isDigit(part.charAt(i))) {
-                res.append(part.charAt(i));
-            } else {
-                break;
-            }
 
-        }
-        return res.toString();
-    }
 }

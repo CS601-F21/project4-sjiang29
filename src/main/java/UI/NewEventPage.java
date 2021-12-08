@@ -99,4 +99,18 @@ public class NewEventPage {
         return  builder.toString();
     }
 
+    public static final String SLACK_SUCCESS =
+            PAGE_HEADER +
+            "<h2>The message including newly created event detail has been sent to slack channel successfully</h2>\n" +
+                    LINKS_IN_POST
+            + PAGE_FOOTER;
+
+    public static final String SLACK_FAILURE =
+            PAGE_HEADER +
+            "<h2>Oops, something went wrong, please try again</h2>\n" +
+                    NEW_EVENT_FORM +
+                    LINKS_IN_POST +
+                    PAGE_FOOTER;
+
+
 }
