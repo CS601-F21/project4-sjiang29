@@ -3,6 +3,7 @@ package Server.Servlets;
 import Server.LoginServletConstants;
 import Server.ServerConstants;
 import UI.LandingPage;
+import UI.UIConstants;
 import Util.Config;
 import Util.LoginUtilities;
 import jakarta.servlet.ServletException;
@@ -40,10 +41,10 @@ public class LandingServlet extends HttpServlet {
 
         if(clientInfoObj != null) {
             // already authed, no need to log in
-            resp.getWriter().println(LoginServletConstants.PAGE_HEADER);
+            resp.getWriter().println(UIConstants.PAGE_HEADER);
             resp.getWriter().println("<h1>You have already been authenticated</h1>");
             resp.getWriter().println(LandingPage.LINKS);
-            resp.getWriter().println(LoginServletConstants.PAGE_FOOTER);
+            resp.getWriter().println(UIConstants.PAGE_FOOTER);
             return;
         }
 

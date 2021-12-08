@@ -24,7 +24,11 @@ public class LandingPage {
 
     public static String getLandingPage(String url){
         return PAGE_HEADER +
+                "<br>" +
+                "<br>" +
+                "<hr>" +
                 "<h1>Welcome to your event handler, please login using slack</h1>\n"+
+                "<br>" +
                 "<a href=\""+url+"\"><img src=\"" + LoginServletConstants.BUTTON_URL +"\"/></a>" +
                 PAGE_FOOTER;
     }
