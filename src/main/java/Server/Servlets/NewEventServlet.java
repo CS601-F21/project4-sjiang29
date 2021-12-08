@@ -3,7 +3,7 @@ package Server.Servlets;
 import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
-import Server.LoginServerConstants;
+import Server.LoginServletConstants;
 import UI.NewEventPage;
 import Util.ResponseFromSlack;
 import Util.SlackRequestBody;
@@ -38,7 +38,7 @@ public class NewEventServlet extends HttpServlet {
         // retrieve the ID of this session
         String sessionId = req.getSession(true).getId();
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
         if(clientInfoObj != null) {
             // already authed, no need to log in
            resp.getWriter().println(NewEventPage.RESPONSE_FOR_GET);
@@ -55,7 +55,7 @@ public class NewEventServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
 
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
 
         if(clientInfoObj != null) {
             resp.setStatus(HttpStatus.OK_200);
@@ -87,7 +87,7 @@ public class NewEventServlet extends HttpServlet {
         try (Connection connection = DBCPDataSource.getConnection()){
             ResultSet sendToSlackEvent = EventsJDBC.executeSelectEventById(connection, Integer.parseInt(sendToSlackEventId));
             if(sendToSlackEvent.next()){
-                messageBuilder.append("A new Event was just created by me.\n" );
+                messageBuilder.append("A new event was just created by me. Welcome to come.\n" );
                 messageBuilder.append("Event name: " + sendToSlackEvent.getString("name") + "\n");
                 messageBuilder.append("Event location: " + sendToSlackEvent.getString("location") + "\n");
                 messageBuilder.append("Event date: " + sendToSlackEvent.getString("date") + "\n");
@@ -114,7 +114,7 @@ public class NewEventServlet extends HttpServlet {
         headers.put("Content-Type", "application/json; utf-8");
         headers.put("as_user", "true");
         String url = "https://slack.com/api/chat.postMessage";
-        String channel = "C02KZE22RU0";
+        String channel = "C02KAM114UT";
         SlackRequestBody requestBody = new SlackRequestBody(channel, message);
         String jsonRequestBody = gson.toJson(requestBody);
 

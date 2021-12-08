@@ -1,6 +1,6 @@
 package Server.Servlets;
 
-import Server.LoginServerConstants;
+import Server.LoginServletConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,9 +18,9 @@ public class LogoutServlet extends HttpServlet {
 
         // log out by invalidating the session
         req.getSession().invalidate();
-        resp.getWriter().println(LoginServerConstants.PAGE_HEADER);
+        resp.getWriter().println(LoginServletConstants.PAGE_HEADER);
         resp.getWriter().println("<h1>Thanks for playing</h1>");
-        resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
+        resp.getWriter().println(LoginServletConstants.PAGE_FOOTER);
 
     }
 }

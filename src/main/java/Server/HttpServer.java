@@ -46,7 +46,7 @@ public class HttpServer {
         // make the config information available across servlets by setting an
         // attribute in the context
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setAttribute(LoginServerConstants.CONFIG_KEY, config);
+        context.setAttribute(LoginServletConstants.CONFIG_KEY, config);
 
         // the default path will direct to a landing page with
         // "Login with Slack" button

@@ -3,12 +3,8 @@ package Server.Servlets;
 import DataBase.DBCPDataSource;
 import DataBase.SessionsJDBC;
 import DataBase.UsersJDBC;
-import Server.LoginServerConstants;
+import Server.LoginServletConstants;
 import UI.AccountPage;
-import Util.ClientInfo;
-import Util.Config;
-import Util.HttpFetcher;
-import Util.LoginUtilities;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,16 +12,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.Scanner;
+
 import static Server.HttpServer.LOGGER;
 
 public class AccountServlet extends HttpServlet {
@@ -37,7 +30,7 @@ public class AccountServlet extends HttpServlet {
         // retrieve the ID of this session
         String sessionId = req.getSession(true).getId();
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
 
         if(clientInfoObj != null) {
             // already authed, no need to log in
@@ -71,7 +64,7 @@ public class AccountServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
 
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
 
         if(clientInfoObj != null) {
             resp.setStatus(HttpStatus.OK_200);

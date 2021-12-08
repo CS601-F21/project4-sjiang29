@@ -1,6 +1,6 @@
 package Server.Servlets;
 
-import Server.LoginServerConstants;
+import Server.LoginServletConstants;
 import Server.ServerConstants;
 import UI.LandingPage;
 import Util.Config;
@@ -9,9 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.http.HttpStatus;
-import org.eclipse.jetty.server.session.Session;
 
 
 import java.io.IOException;
@@ -30,7 +28,7 @@ public class LandingServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
 
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
         LOGGER.info("landing---get client info");
         String uri = req.getRequestURI();
         LOGGER.info("uri from landing:" + uri);
@@ -42,15 +40,15 @@ public class LandingServlet extends HttpServlet {
 
         if(clientInfoObj != null) {
             // already authed, no need to log in
-            resp.getWriter().println(LoginServerConstants.PAGE_HEADER);
+            resp.getWriter().println(LoginServletConstants.PAGE_HEADER);
             resp.getWriter().println("<h1>You have already been authenticated</h1>");
             resp.getWriter().println(LandingPage.LINKS);
-            resp.getWriter().println(LoginServerConstants.PAGE_FOOTER);
+            resp.getWriter().println(LoginServletConstants.PAGE_FOOTER);
             return;
         }
 
         // retrieve the config info from the context
-        Config config = (Config) req.getServletContext().getAttribute(LoginServerConstants.CONFIG_KEY);
+        Config config = (Config) req.getServletContext().getAttribute(LoginServletConstants.CONFIG_KEY);
 
         /** From the OpenID spec:
          * state

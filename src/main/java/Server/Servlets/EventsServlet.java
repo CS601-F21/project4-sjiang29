@@ -2,10 +2,7 @@ package Server.Servlets;
 
 import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
-import DataBase.SessionsJDBC;
-import DataBase.UsersJDBC;
-import Server.LoginServerConstants;
-import UI.AccountPage;
+import Server.LoginServletConstants;
 import UI.EventsPage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -31,7 +28,7 @@ public class EventsServlet extends HttpServlet {
         // retrieve the ID of this session
         String sessionId = req.getSession(true).getId();
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
         resp.setStatus(HttpStatus.OK_200);
         if(clientInfoObj != null) {
             // already authed, no need to log in
@@ -71,7 +68,7 @@ public class EventsServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
 
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
         resp.setStatus(HttpStatus.OK_200);
         if(clientInfoObj != null) {
 

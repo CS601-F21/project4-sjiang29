@@ -1,6 +1,6 @@
 package UI;
 
-import Server.LoginServerConstants;
+import Server.LoginServletConstants;
 
 public class LandingPage {
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
@@ -25,7 +25,7 @@ public class LandingPage {
     public static String getLandingPage(String url){
         return PAGE_HEADER +
                 "<h1>Welcome to your event handler, please login using slack</h1>\n"+
-                "<a href=\""+url+"\"><img src=\"" + LoginServerConstants.BUTTON_URL +"\"/></a>" +
+                "<a href=\""+url+"\"><img src=\"" + LoginServletConstants.BUTTON_URL +"\"/></a>" +
                 PAGE_FOOTER;
     }
 

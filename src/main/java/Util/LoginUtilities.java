@@ -1,14 +1,11 @@
 package Util;
 
-import Server.LoginServerConstants;
+import Server.LoginServletConstants;
 import com.google.gson.Gson;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.StringReader;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Map;
 
@@ -43,19 +40,19 @@ public class LoginUtilities {
     public static String generateSlackAuthorizeURL(String clientId, String state, String nonce, String redirectURI) {
 
         String url = String.format("https://%s/%s?%s=%s&%s=%s&%s=%s&%s=%s&%s=%s&%s=%s",
-                LoginServerConstants.HOST,
-                LoginServerConstants.AUTH_PATH,
-                LoginServerConstants.RESPONSE_TYPE_KEY,
-                LoginServerConstants.RESPONSE_TYPE_VALUE,
-                LoginServerConstants.SCOPE_KEY,
-                LoginServerConstants.SCOPE_VALUE,
-                LoginServerConstants.CLIENT_ID_KEY,
+                LoginServletConstants.HOST,
+                LoginServletConstants.AUTH_PATH,
+                LoginServletConstants.RESPONSE_TYPE_KEY,
+                LoginServletConstants.RESPONSE_TYPE_VALUE,
+                LoginServletConstants.SCOPE_KEY,
+                LoginServletConstants.SCOPE_VALUE,
+                LoginServletConstants.CLIENT_ID_KEY,
                 clientId,
-                LoginServerConstants.STATE_KEY,
+                LoginServletConstants.STATE_KEY,
                 state,
-                LoginServerConstants.NONCE_KEY,
+                LoginServletConstants.NONCE_KEY,
                 nonce,
-                LoginServerConstants.REDIRECT_URI_KEY,
+                LoginServletConstants.REDIRECT_URI_KEY,
                 redirectURI
         );
         return url;
@@ -72,15 +69,15 @@ public class LoginUtilities {
     public static String generateSlackTokenURL(String clientId, String clientSecret, String code, String redirectURI) {
 
         String url = String.format("https://%s/%s?%s=%s&%s=%s&%s=%s&%s=%s",
-                LoginServerConstants.HOST,
-                LoginServerConstants.TOKEN_PATH,
-                LoginServerConstants.CLIENT_ID_KEY,
+                LoginServletConstants.HOST,
+                LoginServletConstants.TOKEN_PATH,
+                LoginServletConstants.CLIENT_ID_KEY,
                 clientId,
-                LoginServerConstants.CLIENT_SECRET_KEY,
+                LoginServletConstants.CLIENT_SECRET_KEY,
                 clientSecret,
-                LoginServerConstants.CODE_KEY,
+                LoginServletConstants.CODE_KEY,
                 code,
-                LoginServerConstants.REDIRECT_URI_KEY,
+                LoginServletConstants.REDIRECT_URI_KEY,
                 redirectURI
         );
         return url;
@@ -107,13 +104,13 @@ public class LoginUtilities {
     public static ClientInfo verifyTokenResponse(Map<String, Object> map, String sessionId) {
 
         // verify ok: true
-        if(!map.containsKey(LoginServerConstants.OK_KEY) || !(boolean)map.get(LoginServerConstants.OK_KEY)) {
+        if(!map.containsKey(LoginServletConstants.OK_KEY) || !(boolean)map.get(LoginServletConstants.OK_KEY)) {
             return null;
         }
 
         // verify state is the users session cookie id
-        if(!map.containsKey(LoginServerConstants.STATE_KEY) || !map.get(LoginServerConstants.STATE_KEY).equals(sessionId)) {
-            System.out.println(map.get(LoginServerConstants.STATE_KEY));
+        if(!map.containsKey(LoginServletConstants.STATE_KEY) || !map.get(LoginServletConstants.STATE_KEY).equals(sessionId)) {
+            System.out.println(map.get(LoginServletConstants.STATE_KEY));
             System.out.println(sessionId);
             return null;
         }
@@ -125,14 +122,14 @@ public class LoginUtilities {
 
         //verify nonce
         String expectedNonce = generateNonce(sessionId);
-        String actualNonce = (String) payloadMap.get(LoginServerConstants.NONCE_KEY);
+        String actualNonce = (String) payloadMap.get(LoginServletConstants.NONCE_KEY);
         if(!expectedNonce.equals(actualNonce)) {
             return null;
         }
 
         // extract name from response
-        String username = (String) payloadMap.get(LoginServerConstants.NAME_KEY);
-        String email = (String)payloadMap.get(LoginServerConstants.EMAIL_KEY);
+        String username = (String) payloadMap.get(LoginServletConstants.NAME_KEY);
+        String email = (String)payloadMap.get(LoginServletConstants.EMAIL_KEY);
         return new ClientInfo(username,email);
     }
 

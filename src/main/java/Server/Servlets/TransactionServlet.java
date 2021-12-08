@@ -3,8 +3,7 @@ package Server.Servlets;
 import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
-import Server.LoginServerConstants;
-import UI.AccountPage;
+import Server.LoginServletConstants;
 import UI.TransactionPage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -24,7 +23,7 @@ public class TransactionServlet extends HttpServlet {
         // retrieve the ID of this session
         String sessionId = req.getSession(true).getId();
         // determine whether the user is already authenticated
-        Object clientInfoObj = req.getSession().getAttribute(LoginServerConstants.CLIENT_INFO_KEY);
+        Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
 
         if(clientInfoObj != null) {
             // already authed, no need to log in
