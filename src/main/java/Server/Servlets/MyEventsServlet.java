@@ -4,8 +4,7 @@ import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
 import Server.LoginServletConstants;
-import UI.EventsPage;
-import UI.MyOwnEventsPage;
+import UI.MyEventsPage;
 import UI.UIConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -52,18 +51,18 @@ public class MyEventsServlet extends HttpServlet {
                 if(deletedEventId != null){
                     int deletedEventID = Integer.parseInt(deletedEventId);
                     ResultSet deletedEvent = EventsJDBC.executeSelectEventById(connection, deletedEventID);
-                    resp.getWriter().println(UI.MyOwnEventsPage.getDeleteResponse(deletedEvent));
+                    resp.getWriter().println(MyEventsPage.getDeleteResponse(deletedEvent));
                 }else if(modifiedEventId != null){
                     int modifiedEventID = Integer.parseInt(modifiedEventId);
                     ResultSet modifiedEvent = EventsJDBC.executeSelectEventById(connection, modifiedEventID);
-                    resp.getWriter().println(UI.MyOwnEventsPage.getModifyEventResponse(modifiedEvent));
+                    resp.getWriter().println(MyEventsPage.getModifyEventResponse(modifiedEvent));
                 }else{
                     ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
                     if(user.next()){
                         userEmail = user.getString("email");
                     }
                     ResultSet myOwnEvents = EventsJDBC.executeSelectEventsByCreator(connection, userEmail);
-                    resp.getWriter().println(UI.MyOwnEventsPage.displayMyEvents(myOwnEvents));
+                    resp.getWriter().println(MyEventsPage.displayMyEvents(myOwnEvents));
                 }
             }catch (SQLException | URISyntaxException e){
                 e.printStackTrace();
@@ -109,7 +108,7 @@ public class MyEventsServlet extends HttpServlet {
         String deletedEventId = getId(bodyParts[1]);
         try (Connection connection = DBCPDataSource.getConnection()){
             EventsJDBC.executeDeleteEventById(connection, Integer.parseInt(deletedEventId));
-            writer.println(MyOwnEventsPage.DELETE_SUCCESS);
+            writer.println(MyEventsPage.DELETE_SUCCESS);
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -158,7 +157,7 @@ public class MyEventsServlet extends HttpServlet {
         try (Connection connection = DBCPDataSource.getConnection()){
             EventsJDBC.executeUpdateEventById(connection, modifiedEventId, eventName, eventDescription,
                     zipCode, date, startTime, endTime, location);
-            writer.println(MyOwnEventsPage.MODIFY_SUCCESS);
+            writer.println(MyEventsPage.MODIFY_SUCCESS);
 
         }catch (SQLException e){
             e.printStackTrace();

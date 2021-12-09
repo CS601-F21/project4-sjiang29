@@ -5,8 +5,8 @@ import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static UI.MyOwnEventsPage.buildDeleteEventByIdUri;
-import static UI.MyOwnEventsPage.buildModifyEventByIdUri;
+import static UI.MyEventsPage.buildDeleteEventByIdUri;
+import static UI.MyEventsPage.buildModifyEventByIdUri;
 
 public class NewEventPage {
 

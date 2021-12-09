@@ -30,9 +30,9 @@ public class EventsPage {
             String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
             LOGGER.info("url to an event:" + urlToAnEvent);
 
-            builder.append("<li>" + "Event Id: " + events.getInt("id") + "      " +
-                    "Event name: " + events.getString("name") + "      " +
-                    "Event Detail: " + "<a href=" + urlToAnEvent + ">" + "Detail</a>" +
+            builder.append("<li>" + "<b>Event Id</b>: " + events.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event name</b>: " + events.getString("name") + "&ensp;&ensp;" +
+                    "<b>Event Detail</b>: " + "<a href=" + urlToAnEvent + ">" + "Detail</a>" +
                     "</li>\n");
         }
 
@@ -68,13 +68,13 @@ public class EventsPage {
         builder.append("<h3 style=\"color:#AA336A\">Below are the details of your selected event.</h3>\n");
 
         while(event.next()){
-            builder.append("<li>" + "Event id: " + event.getInt("id") + "<br>" +
-                    "   Event name: " + event.getString("name") + "<br>" +
-                    "   Event description: " + event.getString("description") + "<br>" +
-                    "   Event time: " + event.getDate("date") + "<br>" +
-                    "   Event zipcode: " + event.getInt("zipcode") + "<br>" +
-                    "   Event location: " + event.getString("location") + "<br>" +
-                    "   Event creator's email: " + event.getString("creator_email") +
+            builder.append("<li>" + "<b>Event id</b>: " + event.getInt("id") + "<br>" +
+                    "<b>Event name</b>: " + event.getString("name") + "<br>" +
+                    "<b>Event description</b>: " + event.getString("description") + "<br>" +
+                    "<b>Event time</b>: " + event.getDate("date") + "<br>" +
+                    "<b>Event zipcode</b>: " + event.getInt("zipcode") + "<br>" +
+                    "<b>Event location</b>: " + event.getString("location") + "<br>" +
+                    "<b>Event creator's email</b>: " + event.getString("creator_email") +
                     "</li>\n");
         }
 

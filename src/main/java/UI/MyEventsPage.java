@@ -1,5 +1,6 @@
 package UI;
 
+import Server.ServerConstants;
 import Util.LandingUri;
 import com.google.gson.Gson;
 import org.apache.http.client.methods.HttpGet;
@@ -14,12 +15,15 @@ import java.sql.SQLException;
 
 import static Server.HttpServer.LOGGER;
 
-public class MyOwnEventsPage {
+public class MyEventsPage {
 
     public static String displayMyEvents(ResultSet myEvents) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
-        builder.append("<h1>Below are all the events created by you.</h1>\n");
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append("<hr>");
+        builder.append("<h3 style=\"color:#AA336A\">Below are all the events created by you.</h3>\n");
 
         while(myEvents.next()){
 
@@ -27,20 +31,22 @@ public class MyOwnEventsPage {
             String urlToDeleteEvent = buildDeleteEventByIdUri(eventId);
             String urlToModifyEvent = buildModifyEventByIdUri(eventId);
 
-            builder.append("<li>" + "Event Id: " + myEvents.getInt("id") + "\n" +
-                    "Event name: " + myEvents.getString("name") + "\n" +
-                    "Event description: " + myEvents.getString("description") + "<br>" +
-                    "Event time: " + myEvents.getDate("date") + "<br>" +
-                    "Event zipcode: " + myEvents.getInt("zipcode") + "<br>" +
-                    "Event location: " + myEvents.getString("location") + "<br>" +
-                    "<a href=" + urlToDeleteEvent + ">" + "Delete</a>" + "<br>" +
+            builder.append("<li>" + "Event Id: " + myEvents.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "Event name: " + myEvents.getString("name") + "&ensp;&ensp;&ensp;" +
+                    "Event description: " + myEvents.getString("description") + "&ensp;&ensp;&ensp;" +
+                    "Event time: " + myEvents.getDate("date") + "&ensp;&ensp;&ensp;" +
+                    "Event zipcode: " + myEvents.getInt("zipcode") + "&ensp;&ensp;&ensp;" +
+                    "Event location: " + myEvents.getString("location") + "&ensp;&ensp;" +
+                    "<a href=" + urlToDeleteEvent + ">" + "Delete</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToModifyEvent + ">" + "Modify</a>" + "\n" +
                     "</li>\n");
         }
 
-        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the events created by you.</h1>\n")){
-            builder.append("<h2>You haven't created any events</h2>\n");
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h3 style=\"color:#AA336A\">Below are all the events created by you.</h3>\n")){
+            builder.append("<h3 style=\"color:#AA336A\">You haven't created any events</h3>\n");
         }
+        builder.append("<br>");
+        builder.append("<br>");
         builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
@@ -50,23 +56,27 @@ public class MyOwnEventsPage {
 
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
-        builder.append("<h1>Below are the details of the event you would like to delete.</h1>\n");
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append("<hr>");
+        builder.append("<h2 style=\"color:#AA336A\">Below are the details of the event you would like to delete.</h2>\n");
 
         String deletedEventId = "";
         while(deletedEvent.next()){
 
             deletedEventId = Integer.toString(deletedEvent.getInt("id"));
 
-
-            builder.append("<li>" + "Event Id: " + deletedEvent.getInt("id") + "\n" +
-                    "Event name: " + deletedEvent.getString("name") + "\n" +
-                    "Event description: " + deletedEvent.getString("description") + "<br>" +
-                    "Event time: " + deletedEvent.getDate("date") + "<br>" +
-                    "Event zipcode: " + deletedEvent.getInt("zipcode") + "<br>" +
-                    "Event location: " + deletedEvent.getString("location") + "<br>" +
+            builder.append("<li>" + "<b>Event Id</b>: " + deletedEvent.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event name</b>: " + deletedEvent.getString("name") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event description</b>: " + deletedEvent.getString("description") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event time</b>: " + deletedEvent.getDate("date") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event zipcode</b>: " + deletedEvent.getInt("zipcode") + "&ensp;&ensp;&ensp;"+
+                    "<b>Event location</b>: " + deletedEvent.getString("location") + "&ensp;&ensp;&ensp;"+
                     "</li>\n");
         }
         builder.append(getDeleteEventForm(deletedEventId));
+        builder.append("<br>");
+        builder.append("<br>");
         builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
@@ -76,8 +86,8 @@ public class MyOwnEventsPage {
 
     public static String getDeleteEventForm(String eventId){
         StringBuilder builder = new StringBuilder();
-        builder.append("<h2>Please check the box for deleting confirmation.</h2>\n");
-        builder.append("<form style=\"text-align: center\" action=\"/myOwnEvents\" method=\"post\">\n" +
+        builder.append("<h2 style=\"color:#AA336A\">Please check the box for deleting confirmation.</h2>\n");
+        builder.append("<form action=\"/myEvents\" method=\"post\">\n" +
                 "  <label for=\"deletedEventId\">DELETE</label><br/>\n" +
                 "  <input type=\"checkbox\" id=\"deletedEventId\" name=\"deletedEventId\" value=" + eventId + "/><br/>\n" +
                 "  <input type=\"submit\" value=\"Submit\"/>\n" +
@@ -88,23 +98,29 @@ public class MyOwnEventsPage {
     public static String getModifyEventResponse(ResultSet modifiedEvent) throws SQLException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
-        builder.append("<h1>Below are the details of the event you would like to modify.</h1>\n");
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append("<hr>");
+        builder.append("<h2 style=\"color:#AA336A\">Below are the details of the event you would like to modify.</h2>\n");
 
         String modifiedEventId = "";
         while(modifiedEvent.next()){
 
             modifiedEventId = Integer.toString(modifiedEvent.getInt("id"));
+            LOGGER.info("modifiedEventId: " + modifiedEventId);
 
 
-            builder.append("<li>" + "Event Id: " + modifiedEvent.getInt("id") + "\n" +
-                    "Event name: " + modifiedEvent.getString("name") + "\n" +
-                    "Event description: " + modifiedEvent.getString("description") + "<br>" +
-                    "Event time: " + modifiedEvent.getDate("date") + "<br>" +
-                    "Event zipcode: " + modifiedEvent.getInt("zipcode") + "<br>" +
-                    "Event location: " + modifiedEvent.getString("location") + "<br>" +
+            builder.append("<li>" + "<b>Event Id</b>: " + modifiedEvent.getInt("id") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event name</b>: " + modifiedEvent.getString("name") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event description</b>: " + modifiedEvent.getString("description") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event time</b>: " + modifiedEvent.getDate("date") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event zipcode</b>: " + modifiedEvent.getInt("zipcode") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event location</b>: " + modifiedEvent.getString("location") + "<br>" +
                     "</li>\n");
         }
         builder.append(getModifyEventForm(modifiedEventId));
+        builder.append("<br>");
+        builder.append("<br>");
         builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
@@ -113,11 +129,11 @@ public class MyOwnEventsPage {
 
     public static String getModifyEventForm(String modifiedEventId){
         StringBuilder builder = new StringBuilder();
-        builder.append("<h1>Please use the form below to update</h1>\n");
-        builder.append("<form style=\"text-align: center\" action=\"/myOwnEvents\" method=\"post\">\n" +
+        builder.append("<h3 style=\"color:#AA336A\">Please use the form below to update</h3>\n");
+        builder.append("<form  action=\"/myEvents\" method=\"post\">\n" +
                 "  <label for=\"term\">Modified Event Id(Please double check)</label><br/>\n" +
-                "  <input type=\"text\" id=\"modifiedEventId\" name=\"modifiedEventId\" value=" + modifiedEventId + "/><br/>\n" +
-                "  <label for=\"term\">Event Name(MUST HAVE)</label><br/>\n" +
+                "  <input type=\"text\" id=\"modifiedEventId\" name=\"modifiedEventId\" value=" + modifiedEventId + "><br/>\n" +
+                "  <label for=\"term\">Event Name</label><br/>\n" +
                 "  <input type=\"text\" id=\"eventName\" name=\"eventName\"/><br/>\n" +
                 "  <label for=\"term\">Event Zipcode</label><br/>\n" +
                 "  <input type=\"text\" id=\"eventZipcode\" name=\"eventZipcode\"/><br/>\n" +
@@ -141,13 +157,13 @@ public class MyOwnEventsPage {
 
     public static final String DELETE_SUCCESS =
             UIConstants.PAGE_HEADER +
-                    "<h1>The selected event has been deleted successfully</h1>\n" +
-                    "<p style=\"text-align: center\">" +
-                    "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/events\"> Show All Events</a> | " +
-                    "<a href=\"/myOwnEvents\"> Show All Events Created By Me</a> | " +
-                    "<a href=\"/tickets\"> Buy Ticket</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>" +
+                    "<br>"+
+                    "<br>"+
+                    "<hr>"+
+                    "<h2 style=\"color:#AA336A\">The selected event has been deleted successfully</h2>\n" +
+                    "<br>"+
+                    "<br>"+
+                    UIConstants.LINKS_IN_PAGE +
                     UIConstants.PAGE_FOOTER;
 
 
@@ -155,13 +171,13 @@ public class MyOwnEventsPage {
 
     public static final  String MODIFY_SUCCESS =
             UIConstants.PAGE_HEADER +
-                    "<h1>The selected event has been modified successfully</h1>\n" +
-                    "<p style=\"text-align: center\">" +
-                    "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/events\"> Show All Events</a> | " +
-                    "<a href=\"/myOwnEvents\"> Show All Events Created By Me</a> | " +
-                    "<a href=\"/tickets\"> Buy Ticket</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>" +
+                    "<br>"+
+                    "<br>"+
+                    "<hr>"+
+                    "<h2 style=\"color:#AA336A\">The selected event has been modified successfully</h2>\n" +
+                    "<br>"+
+                    "<br>"+
+                    UIConstants.LINKS_IN_PAGE +
                     UIConstants.PAGE_FOOTER;
 
 
@@ -173,10 +189,10 @@ public class MyOwnEventsPage {
         Gson gson = new Gson();
         LandingUri landingUri = gson.fromJson(new FileReader(file), LandingUri.class);
 
-        String landingUrl = landingUri.getLandingUri() + "/myOwnEvents";
-        LOGGER.info("landing url:" + landingUrl);
+        String myEventsUrl = landingUri.getLandingUri() + ServerConstants.PATH_TO_MYEVENTS;
+        LOGGER.info("myEventsUrl url:" + myEventsUrl);
 
-        HttpGet httpGet = new HttpGet(landingUrl);
+        HttpGet httpGet = new HttpGet(myEventsUrl);
         URI uri = new URIBuilder(httpGet.getURI())
                 .addParameter("deletedEventId", eventId)
                 .build();
@@ -189,10 +205,10 @@ public class MyOwnEventsPage {
         Gson gson = new Gson();
         LandingUri landingUri = gson.fromJson(new FileReader(file), LandingUri.class);
 
-        String landingUrl = landingUri.getLandingUri() + "/myOwnEvents";
-        LOGGER.info("landing url:" + landingUrl);
+        String myEventsUrl = landingUri.getLandingUri() + ServerConstants.PATH_TO_MYEVENTS;
+        LOGGER.info("myEventsUrl url:" + myEventsUrl);
 
-        HttpGet httpGet = new HttpGet(landingUrl);
+        HttpGet httpGet = new HttpGet(myEventsUrl);
         URI uri = new URIBuilder(httpGet.getURI())
                 .addParameter("modifiedEventId", eventId)
                 .build();
