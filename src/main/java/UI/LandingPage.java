@@ -19,8 +19,10 @@ public class LandingPage {
 
     public static final String ALREADY_AUTHENTICATED =
             UIConstants.PAGE_HEADER +
+                    "<br>"+
+                    "<br>"+
+                    UIConstants.LINKS_IN_PAGE +
             "<h1>You have already been authenticated</h1>" +
-            UIConstants.LINKS_IN_PAGE +
             UIConstants.PAGE_FOOTER;
 
 }

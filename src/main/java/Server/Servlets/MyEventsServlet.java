@@ -46,6 +46,7 @@ public class MyEventsServlet extends HttpServlet {
             int zipcode = 0;
             String deletedEventId = req.getParameter("deletedEventId");
             String modifiedEventId = req.getParameter("modifiedEventId");
+            String slackedEventId = req.getParameter("slackedEventId");
 
             try (Connection connection = DBCPDataSource.getConnection()){
                 if(deletedEventId != null){
@@ -56,6 +57,11 @@ public class MyEventsServlet extends HttpServlet {
                     int modifiedEventID = Integer.parseInt(modifiedEventId);
                     ResultSet modifiedEvent = EventsJDBC.executeSelectEventById(connection, modifiedEventID);
                     resp.getWriter().println(MyEventsPage.getModifyEventResponse(modifiedEvent));
+                }else if(slackedEventId != null){
+                    int slackedEventID = Integer.parseInt(slackedEventId);
+                    ResultSet slackedEvent= EventsJDBC.executeSelectEventById(connection, slackedEventID);
+                    resp.getWriter().println(MyEventsPage.getSlackEventResponse(slackedEvent));
+
                 }else{
                     ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
                     if(user.next()){

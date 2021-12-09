@@ -28,12 +28,12 @@ public class MyTicketsPage {
             LOGGER.info("url to transfer ticket:" + urlToTransferTicket);
             String urlToAnEvent = buildGetEventByIdUri(Integer.toString(tickets.getInt("event_id")));
 
-            builder.append("<li>" + "Event Id: " + "<a href=" + urlToAnEvent + ">" + tickets.getInt("event_id") +"</a>" + "    " +
-                    "Ticket Id: " + tickets.getInt("id") + "    " +
-                    "Ticket Price: " + tickets.getInt("price") + "    " +
-                    "Sold Or Not: " + tickets.getString("sold") + "    " +
-                    "Buyer Email: " + tickets.getString("buyer_email") + "    " +
-                    "Ticket Type: " + tickets.getString("type") + "    " +
+            builder.append("<li>" + "Event Id: " + "<a href=" + urlToAnEvent + ">" + tickets.getInt("event_id") +"</a>" + "&ensp;&ensp;&ensp;" +
+                    "Ticket Id: " + tickets.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "Ticket Price: " + tickets.getInt("price") + "&ensp;&ensp;&ensp;" +
+                    "Sold Or Not: " + tickets.getString("sold") + "&ensp;&ensp;&ensp;" +
+                    "Buyer Email: " + tickets.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
+                    "Ticket Type: " + tickets.getString("type") + "&ensp;&ensp;&ensp;" +
                     "<a href=" + urlToTransferTicket + ">" + "Transfer this Ticket</a>" + "\n" +
                     "</li>\n");
         }

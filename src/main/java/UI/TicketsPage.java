@@ -19,25 +19,26 @@ public class TicketsPage {
     public static String displayEventsHaveTickets(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
-        builder.append("<h1>Below are all the events that still have available tickets.</h1>\n");
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append("<h2 style=\"color:orange\">Below are all the events that still have available tickets.</h2>\n");
 
         while(events.next()){
-
             String urlToTicketDetail = buildUriToTicketDetail(Integer.toString(events.getInt("id")));
             LOGGER.info("url to show event ticket:" + urlToTicketDetail);
 
-            builder.append("<li>" + "Event Id: " + events.getInt("id") + "\n" +
-                    "Event name: " + events.getString("name") + "\n" +
-                    "Tickets Detail: " + "<a href=" + urlToTicketDetail + ">" + "Show Tickets</a>" + "\n" +
+            builder.append("<li>" + "<b>Event Id</b>: " + events.getInt("id") + "\n" +
+                    "<b>Event name</b>: " + events.getString("name") + "\n" +
+                    "<b>Tickets Detail</b>: " + "<a href=" + urlToTicketDetail + ">" + "Show Tickets</a>" + "\n" +
                     "</li>\n");
         }
-        //}
-        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the events that still have available tickets.</h1>\n")){
-            builder.append("<h2>There are no available events ongoing.</h2>\n");
+
+        if(builder.toString().equals(UIConstants.PAGE_HEADER +
+                "<h2 style=\"color:orange\">Below are all the events that still have available tickets.</h2>\n")){
+            builder.append("<h2 style=\"color:orange\">There are no available events ongoing.</h2>\n");
         }
 
-        //builder.append(EVENT_DETAIL_FORM);
-        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
@@ -46,28 +47,30 @@ public class TicketsPage {
     public static String displayTickets(ResultSet tickets) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
-        builder.append("<h1>Below are all the tickets for the selected event.</h1>\n");
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append("<h2 style=\"color:orange\">Below are all the tickets for the selected event.</h2>\n");
 
         while(tickets.next()){
 
             String urlToBuyTicket = buildUriToBuyTicket(Integer.toString(tickets.getInt("id")));
             LOGGER.info("url to buy event ticket:" + urlToBuyTicket);
 
-            builder.append("<li>" + "Event Id: " + tickets.getInt("event_id") + "    " +
-                    "Ticket Id: " + tickets.getInt("id") + "    " +
-                    "Ticket Price: " + tickets.getInt("price") + "    " +
-                    "Sold Or Not: " + tickets.getString("sold") + "    " +
-                    "Buyer Email: " + tickets.getString("buyer_email") + "    " +
-                    "Ticket Type: " + tickets.getString("type") + "    " +
-                    "<a href=" + urlToBuyTicket + ">" + "Buy this Ticket</a>" + "\n" +
+            builder.append("<li>" + "<b>Event Id</b>: " + tickets.getInt("event_id") + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Id</b>: " + tickets.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Price</b>: " + tickets.getInt("price") + "&ensp;&ensp;&ensp;" +
+                    "<b>Sold Or Not</b>: " + tickets.getString("sold") + "&ensp;&ensp;&ensp;" +
+                    "<b>Buyer Email</b>: " + tickets.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Type</b>: " + tickets.getString("type") + "&ensp;&ensp;&ensp;" +
+                    "<a href=" + urlToBuyTicket + ">" + "Buy This Ticket</a>" + "\n" +
                     "</li>\n");
         }
         //}
-        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the tickets for the selected event.</h1>\n")){
-            builder.append("<h2>There are no available tickets.</h2>\n");
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h2>Below are all the tickets for the selected event.</h2>\n")){
+            builder.append("<h2 style=\"color:orange\">There are no available tickets.</h2>\n");
         }
 
-        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
@@ -108,8 +111,10 @@ public class TicketsPage {
     }
 
     public static String updateSuccessfully = UIConstants.PAGE_HEADER +
-            "<h2>You have purchased the ticket successfully</h2>\n" +
+            "<br>"+
+            "<br>"+
             UIConstants.LINKS_IN_PAGE +
+            "<h2 style=\"color:orange\">You have purchased the ticket successfully</h2>\n" +
             UIConstants.PAGE_FOOTER;
 
 }

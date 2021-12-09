@@ -20,13 +20,14 @@ public class AccountPage {
 
     public static String getAccountPage(String userName, String email, int zipcode){
         return  UIConstants.PAGE_HEADER +
+                "<br>"+
+                "<br>"+
+                UIConstants.LINKS_IN_PAGE +
+                "<hr>"+
                 "<h3 style=\"color:green\">Below are your user account information</h3>\n" +
                 getUserInfo(userName, email, zipcode) +
                 "<h3 style=\"color:green\">You can use the form below to modify your account information(name and/or zipcode)</h3>\n" +
                 ACCOUNT_FORM +
-                "<br>" +
-                "<br>" +
-                UIConstants.LINKS_IN_PAGE +
                 UIConstants.PAGE_FOOTER;
     }
 
@@ -34,12 +35,10 @@ public class AccountPage {
         return  UIConstants.PAGE_HEADER +
                 "<br>"+
                 "<br>"+
+                UIConstants.LINKS_IN_PAGE +
                 "<hr>"+
                 "<h3 style=\"color:green\">Below are your updated user account information</h3>\n" +
                 getUserInfo(userName, email, zipcode) +
-                "<br>"+
-                "<br>"+
-                UIConstants.LINKS_IN_PAGE +
                 UIConstants.PAGE_FOOTER;
     }
 

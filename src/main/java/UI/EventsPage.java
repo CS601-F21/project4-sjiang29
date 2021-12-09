@@ -23,6 +23,7 @@ public class EventsPage {
         builder.append(UIConstants.PAGE_HEADER);
         builder.append("<br>");
         builder.append("<br>");
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append("<hr>");
         builder.append("<h3 style=\"color:#AA336A\">Below are all the events.</h3>\n");
 
@@ -41,9 +42,6 @@ public class EventsPage {
         }
 
         builder.append(EVENT_DETAIL_FORM);
-        builder.append("<br>");
-        builder.append("<br>");
-        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
@@ -64,6 +62,7 @@ public class EventsPage {
         builder.append(UIConstants.PAGE_HEADER);
         builder.append("<br>");
         builder.append("<br>");
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append("<hr>");
         builder.append("<h3 style=\"color:#AA336A\">Below are the details of your selected event.</h3>\n");
 
@@ -82,9 +81,6 @@ public class EventsPage {
             builder.append("<h3 style=\"color:#AA336A\">There is no event that has the given id, please double check</h3>\n");
         }
 
-        builder.append("<br>");
-        builder.append("<br>");
-        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
