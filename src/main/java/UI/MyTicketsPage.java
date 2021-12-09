@@ -20,29 +20,32 @@ public class MyTicketsPage {
     public static String displayMyTickets(ResultSet tickets) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
-        builder.append("<h1>Below are all your purchased tickets.</h1>\n");
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append("<hr>");
+        builder.append("<h2 style=\"color:orange\">Below are all your purchased tickets.</h2>\n");
 
         while(tickets.next()){
-
             String urlToTransferTicket = buildUriToTransferTicket(Integer.toString(tickets.getInt("id")));
             LOGGER.info("url to transfer ticket:" + urlToTransferTicket);
             String urlToAnEvent = buildGetEventByIdUri(Integer.toString(tickets.getInt("event_id")));
 
-            builder.append("<li>" + "Event Id: " + "<a href=" + urlToAnEvent + ">" + tickets.getInt("event_id") +"</a>" + "&ensp;&ensp;&ensp;" +
-                    "Ticket Id: " + tickets.getInt("id") + "&ensp;&ensp;&ensp;" +
-                    "Ticket Price: " + tickets.getInt("price") + "&ensp;&ensp;&ensp;" +
-                    "Sold Or Not: " + tickets.getString("sold") + "&ensp;&ensp;&ensp;" +
-                    "Buyer Email: " + tickets.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
-                    "Ticket Type: " + tickets.getString("type") + "&ensp;&ensp;&ensp;" +
+            builder.append("<li>" + "<b>Event Id</b>: " + "<a href=" + urlToAnEvent + ">" + tickets.getInt("event_id") +"</a>" + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Id</b>: " + tickets.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Price</b>: " + tickets.getInt("price") + "&ensp;&ensp;&ensp;" +
+                    "<b>Sold Or Not</b>: " + tickets.getString("sold") + "&ensp;&ensp;&ensp;" +
+                    "<b>Buyer Email</b>: " + tickets.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Type</b>: " + tickets.getString("type") + "&ensp;&ensp;&ensp;" +
                     "<a href=" + urlToTransferTicket + ">" + "Transfer this Ticket</a>" + "\n" +
                     "</li>\n");
         }
-        //}
-        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all your purchased tickets.</h1>\n")){
-            builder.append("<h2>You haven't purchased any tickets yet</h2>\n");
+
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<br>" + "<br>" + UIConstants.LINKS_IN_PAGE + "<hr>" +
+                "<h2 style=\"color:orange\">Below are all your purchased tickets.</h2>\n")){
+            builder.append("<h2 style=\"color:orange\">You haven't purchased any tickets yet</h2>\n");
         }
 
-        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
@@ -51,7 +54,11 @@ public class MyTicketsPage {
 
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
-        builder.append("<h1>Below are the details of the ticket you would like to transfer, please double check</h1>\n");
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append("<hr>");
+        builder.append("<h2 style=\"color:orange\">Below are the details of the ticket you would like to transfer, please double check</h2>\n");
         String transferredTicketId = "";
 
         while(ticketToBeTransfer.next()){
@@ -68,29 +75,34 @@ public class MyTicketsPage {
 
                     "</li>\n");
         }
-        //}
-        builder.append(TRANSFER_TICKET_FORM);
-        builder.append(UIConstants.LINKS_IN_PAGE);
+
+        builder.append(getTransferTicketForm(transferredTicketId));
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
 
-    public static String TRANSFER_TICKET_FORM =
-            "<form style=\"text-align: center\" action=\"/myTickets\" method=\"post\">\n" +
-                    "  <label for=\"term\">Transferred Ticket Id</label><br/>\n" +
-                    "  <input type=\"text\" id=\"ticketId\" name=\"ticketId\"/><br/>\n" +
-                    "  <label for=\"term\">Email of whom you would transfer ticket to</label><br/>\n" +
-                    "  <input type=\"text\" id=\"newOwnerEmail\" name=\"newOwnerEmail\"/><br/>\n" +
-                    "  <input type=\"submit\" value=\"Submit\"/>\n" +
-                    "</form>";
+    public static String getTransferTicketForm(String transferredTicketId){
+        StringBuilder builder = new StringBuilder();
+        builder.append("<form action=\"/myTickets\" method=\"post\">\n" +
+                "  <label for=\"term\">Transferred Ticket Id</label><br/>\n" +
+                "  <input type=\"text\" id=\"ticketId\" name=\"ticketId\" value=" + transferredTicketId +"><br/>\n" +
+                "  <label for=\"term\">Email of whom you would transfer ticket to</label><br/>\n" +
+                "  <input type=\"text\" id=\"newOwnerEmail\" name=\"newOwnerEmail\"/><br/>\n" +
+                "  <input type=\"submit\" value=\"Submit\"/>\n" +
+                "</form>");
+        return builder.toString();
 
+    }
 
 
 
 
     public static final String TRANSFER_SUCCESSFUL = UIConstants.PAGE_HEADER +
-            "<h1>The ticket has been transferred successfully</h1>\n" +
+            "<br>"+
+            "<br>"+
             UIConstants.LINKS_IN_PAGE +
+            "<hr>"+
+            "<h2 style=\"color:orange\">The ticket has been transferred successfully</h2>\n" +
             UIConstants.PAGE_FOOTER;
 
     public static String buildUriToTransferTicket (String ticketId) throws URISyntaxException, FileNotFoundException {

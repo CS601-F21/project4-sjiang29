@@ -22,6 +22,7 @@ public class TicketsPage {
         builder.append("<br>");
         builder.append("<br>");
         builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append("<hr>");
         builder.append("<h2 style=\"color:orange\">Below are all the events that still have available tickets.</h2>\n");
 
         while(events.next()){
@@ -34,7 +35,7 @@ public class TicketsPage {
                     "</li>\n");
         }
 
-        if(builder.toString().equals(UIConstants.PAGE_HEADER +
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<br>" + "<br>"+ UIConstants.LINKS_IN_PAGE + "<hr>" +
                 "<h2 style=\"color:orange\">Below are all the events that still have available tickets.</h2>\n")){
             builder.append("<h2 style=\"color:orange\">There are no available events ongoing.</h2>\n");
         }

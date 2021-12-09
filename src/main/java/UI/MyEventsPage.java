@@ -47,7 +47,8 @@ public class MyEventsPage {
                     "</li>\n");
         }
 
-        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h3 style=\"color:#AA336A\">Below are all the events created by you.</h3>\n")){
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<br>" + "<br>" + UIConstants.LINKS_IN_PAGE + "<hr>" +
+                "<h3 style=\"color:#AA336A\">Below are all the events created by you.</h3>\n")){
             builder.append("<h3 style=\"color:#AA336A\">You haven't created any events</h3>\n");
         }
 

@@ -49,6 +49,7 @@ public class NewEventPage {
         builder.append(UIConstants.PAGE_HEADER);
         builder.append("<br>");
         builder.append("<br>");
+        builder.append("<hr>");
         builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append("<h2 style=\"color:#AA336A\">Below is the event you just created.</h2>\n");
 
