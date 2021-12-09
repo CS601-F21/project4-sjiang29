@@ -86,29 +86,47 @@ public class AccountServlet extends HttpServlet {
 
         String userNamePart = bodyParts[0];
         String[] parsedUserName = userNamePart.split("=");
-        String newUserName = parsedUserName[1];
+        String newUserName = "";
+        if(parsedUserName.length == 2){
+            newUserName = parsedUserName[1];
+        }
+
         LOGGER.info("new user name: " + newUserName);
 
         String zipcodePart = bodyParts[1];
         String[] parsedZipcode = zipcodePart.split("=");
-        String zipcode = parsedZipcode[1];
-        LOGGER.info("new zipcode: " + zipcode);
+        String inputZipcode = "";
+        if(parsedZipcode.length == 2){
+            inputZipcode = parsedZipcode[1];
+        }
+
+        LOGGER.info("new zipcode: " + inputZipcode);
 
         int newZipcode = 0;
-        if(zipcode != ""){
-            newZipcode = Integer.parseInt(zipcode);
+        if(inputZipcode != ""){
+            newZipcode = Integer.parseInt(inputZipcode);
         }
 
         String userEmail = "";
+        String userName = "";
+        int zipcode = 0;
         String updatedName = "";
         int updatedZipcode = 0;
         try (Connection connection = DBCPDataSource.getConnection()){
             ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
             if(user.next()){
+                userName = user.getString("name");
                 userEmail = user.getString("email");
+                zipcode = user.getInt("zipcode");
+            }
+            if(newUserName.equals("")){
+                newUserName = userName;
+            }
+            if(newZipcode == 0){
+                newZipcode = zipcode;
             }
 
-            UsersJDBC.executeUpdateUser(connection,userEmail,newUserName, newZipcode);
+            UsersJDBC.executeUpdateUser(connection,userEmail, newUserName, newZipcode);
             ResultSet updatedUser = UsersJDBC.executeSelectUserByEmail(connection, userEmail);
             if(updatedUser.next()){
                 updatedName = updatedUser.getString("name");
@@ -116,7 +134,7 @@ public class AccountServlet extends HttpServlet {
                 updatedZipcode = updatedUser.getInt("zipcode");
                 LOGGER.info("updated zipcode from db: " + updatedZipcode);
             }
-            writer.println(AccountPage.postAccountPage(updatedName,userEmail, updatedZipcode));
+            writer.println(AccountPage.postAccountPage(updatedName, userEmail, updatedZipcode));
 
         }catch (SQLException e){
             e.printStackTrace();

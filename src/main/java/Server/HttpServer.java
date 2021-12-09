@@ -62,7 +62,7 @@ public class HttpServer {
 
         context.addServlet(TicketsServlet.class, ServerConstants.PATH_TO_TICKETS);
 
-        context.addServlet(MyTicketsServlet.class, ServerConstants.PATH_TO_MYEVENTS);
+        context.addServlet(MyTicketsServlet.class, ServerConstants.PATH_TO_MYTICKETS);
         context.addServlet(NewEventServlet.class, ServerConstants.PATH_TO_NEWEVENT);
         context.addServlet(MyEventsServlet.class, ServerConstants.PATH_TO_MYEVENTS);
 
