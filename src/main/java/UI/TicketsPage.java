@@ -16,31 +16,11 @@ import static Server.HttpServer.LOGGER;
 
 public class TicketsPage {
 
-    public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
-            "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-            "<head>\n" +
-            "  <title>Tickets page</title>\n" +
-            "</head>\n" +
-            "<body>\n" +
-            "\n";
-
-    public static final String PAGE_FOOTER = "\n" +
-            "</body>\n" +
-            "</html>";
-
-    public static final String RETURN_TO_LANDING =
-            PAGE_HEADER + "<h1>Please login</h1>\n" + "<p><a href=\"/\">Login</a></p>" + PAGE_FOOTER;
-
-
     public static String displayEventsHaveTickets(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
-        builder.append(PAGE_HEADER);
+        builder.append(UIConstants.PAGE_HEADER);
         builder.append("<h1>Below are all the events that still have available tickets.</h1>\n");
 
-        //if(rowcount == 0){
-        //builder.append("<h2>There are no available events ongoing.</h2>\n");
-        //}else{
-        //String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
         while(events.next()){
 
             String urlToTicketDetail = buildUriToTicketDetail(Integer.toString(events.getInt("id")));
@@ -52,20 +32,20 @@ public class TicketsPage {
                     "</li>\n");
         }
         //}
-        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are all the events that still have available tickets.</h1>\n")){
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the events that still have available tickets.</h1>\n")){
             builder.append("<h2>There are no available events ongoing.</h2>\n");
         }
 
         //builder.append(EVENT_DETAIL_FORM);
-        builder.append(LINKS_IN_GET);
-        builder.append(PAGE_FOOTER);
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
     }
 
     public static String displayTickets(ResultSet tickets) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
-        builder.append(PAGE_HEADER);
+        builder.append(UIConstants.PAGE_HEADER);
         builder.append("<h1>Below are all the tickets for the selected event.</h1>\n");
 
         while(tickets.next()){
@@ -83,21 +63,16 @@ public class TicketsPage {
                     "</li>\n");
         }
         //}
-        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are all the tickets for the selected event.</h1>\n")){
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the tickets for the selected event.</h1>\n")){
             builder.append("<h2>There are no available tickets.</h2>\n");
         }
 
-        builder.append(LINKS_IN_GET);
-        builder.append(PAGE_FOOTER);
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
 
-    public static String LINKS_IN_GET =
-            "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
-                    "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/myTickets\"> Transfer Ticket</a> | " +
-                    "<a href=\"/newEvent\"> Add a New Event</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>\n";
+
 
 
     public static String buildUriToTicketDetail (String eventId) throws URISyntaxException, FileNotFoundException {
@@ -132,9 +107,9 @@ public class TicketsPage {
         return uri.toString();
     }
 
-    public static String updateSuccessfully = PAGE_HEADER +
+    public static String updateSuccessfully = UIConstants.PAGE_HEADER +
             "<h2>You have purchased the ticket successfully</h2>\n" +
-            LINKS_IN_GET +
-            PAGE_FOOTER;
+            UIConstants.LINKS_IN_PAGE +
+            UIConstants.PAGE_FOOTER;
 
 }

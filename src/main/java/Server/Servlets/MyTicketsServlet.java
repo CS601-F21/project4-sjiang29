@@ -6,6 +6,7 @@ import DataBase.TicketsJDBC;
 import Server.LoginServletConstants;
 import UI.EventsPage;
 import UI.MyTicketsPage;
+import UI.UIConstants;
 import Util.ServletUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -69,7 +70,7 @@ public class MyTicketsServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(EventsPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 
@@ -110,7 +111,7 @@ public class MyTicketsServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(EventsPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 

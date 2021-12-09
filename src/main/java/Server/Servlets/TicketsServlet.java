@@ -7,6 +7,7 @@ import DataBase.TicketsJDBC;
 import Server.LoginServletConstants;
 import UI.EventsPage;
 import UI.TicketsPage;
+import UI.UIConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,7 +75,7 @@ public class TicketsServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(EventsPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 
@@ -85,9 +86,9 @@ public class TicketsServlet extends HttpServlet {
 
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
-        resp.setStatus(HttpStatus.OK_200);
-        if(clientInfoObj != null) {
 
+        if(clientInfoObj != null) {
+            resp.setStatus(HttpStatus.OK_200);
             try(BufferedReader reader = req.getReader()) {
                 String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
                 //TODO: verify the body exists and it contains a =
@@ -108,7 +109,7 @@ public class TicketsServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(EventsPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 

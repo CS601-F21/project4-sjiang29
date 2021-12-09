@@ -6,6 +6,7 @@ import DataBase.SessionsJDBC;
 import Server.LoginServletConstants;
 import UI.EventsPage;
 import UI.MyOwnEventsPage;
+import UI.UIConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -77,7 +78,7 @@ public class MyEventsServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(EventsPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 
@@ -170,7 +171,7 @@ public class MyEventsServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(EventsPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 

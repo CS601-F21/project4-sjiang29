@@ -42,6 +42,7 @@ public class LoginServlet extends HttpServlet {
         Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
         if(clientInfoObj != null) {
             // already authed, no need to log in
+            resp.setStatus(HttpStatus.OK_200);
             resp.getWriter().println(LoginPage.LOGIN_ALREADY);
             return;
         }
@@ -66,7 +67,7 @@ public class LoginServlet extends HttpServlet {
         ClientInfo clientInfo = LoginUtilities.verifyTokenResponse(response, sessionId);
 
         if(clientInfo == null) {
-            resp.setStatus(HttpStatus.OK_200);
+            resp.setStatus(HttpStatus.UNAUTHORIZED_401);
             resp.getWriter().println(LoginPage.failedLogin(url));
 
         } else {

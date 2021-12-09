@@ -5,6 +5,7 @@ import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
 import Server.LoginServletConstants;
 import UI.TransactionPage;
+import UI.UIConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,7 +50,7 @@ public class TransactionServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(TransactionPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 }

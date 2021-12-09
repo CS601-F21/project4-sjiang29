@@ -5,6 +5,7 @@ import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
 import Server.LoginServletConstants;
 import UI.NewEventPage;
+import UI.UIConstants;
 import Util.ResponseFromSlack;
 import Util.SlackRequestBody;
 import Util.Token;
@@ -41,11 +42,12 @@ public class NewEventServlet extends HttpServlet {
         Object clientInfoObj = req.getSession().getAttribute(LoginServletConstants.CLIENT_INFO_KEY);
         if(clientInfoObj != null) {
             // already authed, no need to log in
+            resp.setStatus(HttpStatus.OK_200);
            resp.getWriter().println(NewEventPage.RESPONSE_FOR_GET);
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(NewEventPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 
@@ -74,7 +76,7 @@ public class NewEventServlet extends HttpServlet {
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
-            resp.getWriter().println(NewEventPage.RETURN_TO_LANDING);
+            resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         }
     }
 
