@@ -60,13 +60,9 @@ public class MyTicketsServlet extends HttpServlet {
 
                     resp.getWriter().println(MyTicketsPage.displayMyTickets(myTickets));
                 }
-
-
             }catch (SQLException | URISyntaxException e){
                 e.printStackTrace();
             }
-
-
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);

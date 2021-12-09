@@ -15,6 +15,7 @@ import org.eclipse.jetty.http.HttpStatus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -52,9 +53,6 @@ public class MyEventsServlet extends HttpServlet {
                     int deletedEventID = Integer.parseInt(deletedEventId);
                     ResultSet deletedEvent = EventsJDBC.executeSelectEventById(connection, deletedEventID);
                     resp.getWriter().println(UI.MyOwnEventsPage.getDeleteResponse(deletedEvent));
-
-
-
                 }else if(modifiedEventId != null){
                     int modifiedEventID = Integer.parseInt(modifiedEventId);
                     ResultSet modifiedEvent = EventsJDBC.executeSelectEventById(connection, modifiedEventID);
@@ -64,17 +62,12 @@ public class MyEventsServlet extends HttpServlet {
                     if(user.next()){
                         userEmail = user.getString("email");
                     }
-
                     ResultSet myOwnEvents = EventsJDBC.executeSelectEventsByCreator(connection, userEmail);
                     resp.getWriter().println(UI.MyOwnEventsPage.displayMyEvents(myOwnEvents));
                 }
-
-
             }catch (SQLException | URISyntaxException e){
                 e.printStackTrace();
             }
-
-
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
@@ -95,78 +88,12 @@ public class MyEventsServlet extends HttpServlet {
             try(BufferedReader reader = req.getReader()) {
 
                 String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
-                //TODO: verify the body exists and it contains a =
                 LOGGER.info("body: " + body);
                 if(body.contains("deletedEventId")){
-                    String[] bodyParts = body.split("=");
-
-                    String deletedEventId = getId(bodyParts[1]);
-                    try (Connection connection = DBCPDataSource.getConnection()){
-                        EventsJDBC.executeDeleteEventById(connection, Integer.parseInt(deletedEventId));
-                        resp.getWriter().println(MyOwnEventsPage.DELETE_SUCCESS);
-
-                    }catch (SQLException e){
-                        e.printStackTrace();
-                    }
-
+                    deleteEvent(body, resp.getWriter());
                 }else{
-
-                    //String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
-                    //TODO: verify the body exists and it contains a =
-                    LOGGER.info("body: " + body);
-                    String[] bodyParts = body.split("&");
-
-                    String modifiedEventIdPart = bodyParts[0];
-                    int modifiedEventId = Integer.parseInt(getBodyParameter(modifiedEventIdPart));
-
-                    String eventNamePart = bodyParts[1];
-                    String eventName = getBodyParameter(eventNamePart);
-                    LOGGER.info("new event name: " + eventName);
-
-                    String zipcodePart = bodyParts[2];
-                    String zipcode = getBodyParameter(zipcodePart);
-                    LOGGER.info("new event zipcode: " + zipcode);
-                    int zipCode = 0;
-                    if(!zipcode.equals("")){
-                        zipCode = Integer.parseInt(zipcode);
-                    }
-
-                    String locationPart = bodyParts[3];
-                    String location = getBodyParameter(locationPart);
-
-                    String eventDatePart = bodyParts[4];
-                    Date date = null;
-                    if(getBodyParameter(eventDatePart) != ""){
-                        date  = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
-                    }
-
-                    String startTimePart = bodyParts[5];
-                    String startTime = getBodyParameter(startTimePart);
-
-                    String endTimePart = bodyParts[6];
-                    String endTime = getBodyParameter(endTimePart);
-
-                    String eventDescriptionPart = bodyParts[7];
-                    String eventDescription = getBodyParameter(eventDescriptionPart);
-
-
-                    String userEmail = "";
-
-                    try (Connection connection = DBCPDataSource.getConnection()){
-                        EventsJDBC.executeUpdateEventById(connection, modifiedEventId, eventName, eventDescription,
-                      zipCode, date, startTime, endTime, location);
-
-
-                        resp.getWriter().println(MyOwnEventsPage.MODIFY_SUCCESS);
-
-                    }catch (SQLException e){
-                        e.printStackTrace();
-                    }
-
-
-
+                    modifyEvent(body,resp.getWriter());
                 }
-
             }
         }else{
             // ask the user to login
@@ -176,4 +103,66 @@ public class MyEventsServlet extends HttpServlet {
     }
 
 
+    private static void deleteEvent(String body, PrintWriter writer){
+        String[] bodyParts = body.split("=");
+
+        String deletedEventId = getId(bodyParts[1]);
+        try (Connection connection = DBCPDataSource.getConnection()){
+            EventsJDBC.executeDeleteEventById(connection, Integer.parseInt(deletedEventId));
+            writer.println(MyOwnEventsPage.DELETE_SUCCESS);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void modifyEvent(String body, PrintWriter writer){
+        LOGGER.info("body: " + body);
+        String[] bodyParts = body.split("&");
+
+        String modifiedEventIdPart = bodyParts[0];
+        int modifiedEventId = Integer.parseInt(getBodyParameter(modifiedEventIdPart));
+
+        String eventNamePart = bodyParts[1];
+        String eventName = getBodyParameter(eventNamePart);
+        LOGGER.info("new event name: " + eventName);
+
+        String zipcodePart = bodyParts[2];
+        String zipcode = getBodyParameter(zipcodePart);
+        LOGGER.info("new event zipcode: " + zipcode);
+        int zipCode = 0;
+        if(!zipcode.equals("")){
+            zipCode = Integer.parseInt(zipcode);
+        }
+
+        String locationPart = bodyParts[3];
+        String location = getBodyParameter(locationPart);
+
+        String eventDatePart = bodyParts[4];
+        Date date = null;
+        if(getBodyParameter(eventDatePart) != ""){
+            date  = Date.valueOf(LocalDate.parse(getBodyParameter(eventDatePart)));
+        }
+
+        String startTimePart = bodyParts[5];
+        String startTime = getBodyParameter(startTimePart);
+
+        String endTimePart = bodyParts[6];
+        String endTime = getBodyParameter(endTimePart);
+
+        String eventDescriptionPart = bodyParts[7];
+        String eventDescription = getBodyParameter(eventDescriptionPart);
+        String userEmail = "";
+
+        try (Connection connection = DBCPDataSource.getConnection()){
+            EventsJDBC.executeUpdateEventById(connection, modifiedEventId, eventName, eventDescription,
+                    zipCode, date, startTime, endTime, location);
+            writer.println(MyOwnEventsPage.MODIFY_SUCCESS);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
 }

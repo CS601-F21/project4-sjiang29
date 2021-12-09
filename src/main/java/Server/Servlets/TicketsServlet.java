@@ -65,13 +65,9 @@ public class TicketsServlet extends HttpServlet {
                     LOGGER.info("events have tickets: " + eventsHaveTickets);
                     resp.getWriter().println(TicketsPage.displayEventsHaveTickets(eventsHaveTickets));
                 }
-
-
             }catch (SQLException | URISyntaxException e){
                 e.printStackTrace();
             }
-
-
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);

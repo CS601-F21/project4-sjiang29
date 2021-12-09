@@ -71,7 +71,6 @@ public class AccountServlet extends HttpServlet {
             resp.setStatus(HttpStatus.OK_200);
             try(BufferedReader reader = req.getReader()) {
                 String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
-                //TODO: verify the body exists and it contains a =
                 LOGGER.info("body: " + body);
                 String[] bodyParts = body.split("&");
 
