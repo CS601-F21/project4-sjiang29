@@ -41,10 +41,8 @@ public class LandingServlet extends HttpServlet {
 
         if(clientInfoObj != null) {
             // already authed, no need to log in
-            resp.getWriter().println(UIConstants.PAGE_HEADER);
-            resp.getWriter().println("<h1>You have already been authenticated</h1>");
-            resp.getWriter().println(LandingPage.LINKS);
-            resp.getWriter().println(UIConstants.PAGE_FOOTER);
+            resp.setStatus(HttpStatus.OK_200);
+            resp.getWriter().println(LandingPage.ALREADY_AUTHENTICATED);
             return;
         }
 
@@ -80,10 +78,7 @@ public class LandingServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         LOGGER.info("landing successfully");
         writer.println(LandingPage.getLandingPage(url));
-        //writer.println(LoginServerConstants.PAGE_HEADER);
-        //writer.println("<h1>Welcome to the Login with Slack Demo Application</h1>");
-        //writer.println("<a href=\""+url+"\"><img src=\"" + LoginServerConstants.BUTTON_URL +"\"/></a>");
-        //writer.println(LoginServerConstants.PAGE_FOOTER);
+
     }
 
 

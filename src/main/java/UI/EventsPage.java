@@ -38,17 +38,13 @@ public class EventsPage {
         }
 
         builder.append(EVENT_DETAIL_FORM);
-        builder.append(LINKS_IN_GET);
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
     }
 
-    public static final String LINKS_IN_GET =
-            "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
-                    "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/newEvent\"> Add a New Event</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>\n";
+
 
     public static final String EVENT_DETAIL_FORM =
             "<h2>Please input the id of event that you are interested for more detail.</h2>\n" +
@@ -78,21 +74,12 @@ public class EventsPage {
             builder.append("<h2>There is no event that has the given id, please double check</h2>\n");
         }
 
-        builder.append(LINKS_IN_POST);
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
 
     }
-
-    public static final String LINKS_IN_POST =
-            "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
-                    "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/newEvent\"> Add a New Event</a> | " +
-                    "<a href=\"/events\"> Show All Events</a> | " +
-                    "<a href=\"/tickets\"> Buy Tickets</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>\n";
-
 
 
     public static String buildGetEventByIdUri (String eventId) throws URISyntaxException, FileNotFoundException {

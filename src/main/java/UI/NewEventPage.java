@@ -10,20 +10,7 @@ import static UI.MyOwnEventsPage.buildModifyEventByIdUri;
 
 public class NewEventPage {
 
-    public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
-            "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-            "<head>\n" +
-            "  <title>New Event page</title>\n" +
-            "</head>\n" +
-            "<body>\n" +
-            "\n";
 
-    public static final String PAGE_FOOTER = "\n" +
-            "</body>\n" +
-            "</html>";
-
-    public static final String RETURN_TO_LANDING =
-            PAGE_HEADER + "<h1>Please login</h1>\n" + "<p><a href=\"/\">Login</a></p>" + PAGE_FOOTER;
 
     public static final String NEW_EVENT_FORM =
             "<h1>Please input the following table to create a new event</h1>\n" +
@@ -45,27 +32,18 @@ public class NewEventPage {
                     "  <input type=\"submit\" value=\"Submit\"/>\n" +
                     "</form>";
 
-    public static final String LINKS_IN_GET =
-            "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
-                    "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/events\"> Show All Events</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>\n";
 
     public static final String RESPONSE_FOR_GET =
-            PAGE_HEADER +
+            UIConstants.PAGE_HEADER +
                     NEW_EVENT_FORM +
-                    LINKS_IN_GET +
-                    PAGE_FOOTER;
+                    UIConstants.LINKS_IN_PAGE +
+                    UIConstants.PAGE_FOOTER;
 
-    public static final String LINKS_IN_POST =
-            "<p><a href=\"/transaction\"> Show My Transactions</a> | " +
-                    "<a href=\"/account\"> Show My Account</a> | " +
-                    "<a href=\"/newEvents\"> Add New Event</a> | " +
-                    "<a href=\"/logout\">Logout</a></p>\n";
+
 
     public static String displayResponseForPost(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
-        builder.append(PAGE_HEADER);
+        builder.append(UIConstants.PAGE_HEADER);
         builder.append("<h1>Below is the event you just created.</h1>\n");
 
         String eventId = "";
@@ -82,8 +60,8 @@ public class NewEventPage {
                     "</li>\n");
         }
         builder.append(getSlackEventForm(eventId));
-        builder.append(LINKS_IN_POST);
-        builder.append(PAGE_FOOTER);
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
     }
@@ -100,17 +78,17 @@ public class NewEventPage {
     }
 
     public static final String SLACK_SUCCESS =
-            PAGE_HEADER +
+            UIConstants.PAGE_HEADER +
             "<h2>The message including newly created event detail has been sent to slack channel successfully</h2>\n" +
-                    LINKS_IN_POST
-            + PAGE_FOOTER;
+                    UIConstants.LINKS_IN_PAGE +
+                    UIConstants.PAGE_FOOTER;
 
     public static final String SLACK_FAILURE =
-            PAGE_HEADER +
+            UIConstants.PAGE_HEADER +
             "<h2>Oops, something went wrong, please try again</h2>\n" +
                     NEW_EVENT_FORM +
-                    LINKS_IN_POST +
-                    PAGE_FOOTER;
+                    UIConstants.LINKS_IN_PAGE +
+                    UIConstants.PAGE_FOOTER;
 
 
 }

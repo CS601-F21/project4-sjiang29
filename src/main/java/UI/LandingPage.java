@@ -1,36 +1,26 @@
 package UI;
 
 import Server.LoginServletConstants;
+import Server.ServerConstants;
 
 public class LandingPage {
-    public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
-            "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-            "<head>\n" +
-            "  <title>Get landing page</title>\n" +
-            "</head>\n" +
-            "<body>\n" +
-            "\n";
 
-    public static final String PAGE_FOOTER = "\n" +
-            "</body>\n" +
-            "</html>";
-
-
-    public static String LINKS = "<p style=\"text-align: center\">" +
-            "<a href=\"/account\"> Show My Account</a> | " +
-            "<a href=\"/events\"> Show All Events</a> | " +
-            "<a href=\"/tickets\"> Buy Ticket</a> | " +
-            "<a href=\"/logout\">Logout</a></p>";
 
     public static String getLandingPage(String url){
-        return PAGE_HEADER +
+        return UIConstants.PAGE_HEADER +
                 "<br>" +
                 "<br>" +
                 "<hr>" +
                 "<h1>Welcome to your event handler, please login using slack</h1>\n"+
                 "<br>" +
                 "<a href=\""+url+"\"><img src=\"" + LoginServletConstants.BUTTON_URL +"\"/></a>" +
-                PAGE_FOOTER;
+                UIConstants.PAGE_FOOTER;
     }
+
+    public static final String ALREADY_AUTHENTICATED =
+            UIConstants.PAGE_HEADER +
+            "<h1>You have already been authenticated</h1>" +
+            UIConstants.LINKS_IN_PAGE +
+            UIConstants.PAGE_FOOTER;
 
 }

@@ -50,24 +50,24 @@ public class HttpServer {
 
         // the default path will direct to a landing page with
         // "Login with Slack" button
-        context.addServlet(LandingServlet.class, "/");
+        context.addServlet(LandingServlet.class, ServerConstants.PATH_TO_LANDING);
 
         // Once authenticated, Slack will redirect the user
         // back to /login
-        context.addServlet(LoginServlet.class, "/login");
+        context.addServlet(LoginServlet.class, ServerConstants.PATH_TO_LOGIN);
 
-        context.addServlet(AccountServlet.class, "/account");
-        context.addServlet(TransactionServlet.class, "/transaction");
-        context.addServlet(EventsServlet.class, "/events");
+        context.addServlet(AccountServlet.class, ServerConstants.PATH_TO_ACCOUNT);
+        context.addServlet(TransactionServlet.class, ServerConstants.PATH_TO_TRANSACTIONS);
+        context.addServlet(EventsServlet.class, ServerConstants.PATH_TO_EVENTS);
 
-        context.addServlet(TicketsServlet.class, "/tickets");
+        context.addServlet(TicketsServlet.class, ServerConstants.PATH_TO_TICKETS);
 
-        context.addServlet(MyTicketsServlet.class, "/myTickets");
-        context.addServlet(NewEventServlet.class, "/newEvent");
-        context.addServlet(MyEventsServlet.class, "/myOwnEvents");
+        context.addServlet(MyTicketsServlet.class, ServerConstants.PATH_TO_MYEVENTS);
+        context.addServlet(NewEventServlet.class, ServerConstants.PATH_TO_NEWEVENT);
+        context.addServlet(MyEventsServlet.class, ServerConstants.PATH_TO_MYEVENTS);
 
         // handle logout
-        context.addServlet(LogoutServlet.class, "/logout");
+        context.addServlet(LogoutServlet.class, ServerConstants.PATH_TO_LOGOUT);
 
         // start it up!
         server.setHandler(context);

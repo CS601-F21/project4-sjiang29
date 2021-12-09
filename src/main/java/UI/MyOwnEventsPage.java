@@ -41,7 +41,7 @@ public class MyOwnEventsPage {
         if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the events created by you.</h1>\n")){
             builder.append("<h2>You haven't created any events</h2>\n");
         }
-        builder.append(LINKS_IN_MYEVENTS);
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
@@ -67,7 +67,7 @@ public class MyOwnEventsPage {
                     "</li>\n");
         }
         builder.append(getDeleteEventForm(deletedEventId));
-        builder.append(LINKS_IN_MYEVENTS);
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
 
@@ -105,7 +105,7 @@ public class MyOwnEventsPage {
                     "</li>\n");
         }
         builder.append(getModifyEventForm(modifiedEventId));
-        builder.append(LINKS_IN_MYEVENTS);
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
 
@@ -165,11 +165,7 @@ public class MyOwnEventsPage {
                     UIConstants.PAGE_FOOTER;
 
 
-    public static String LINKS_IN_MYEVENTS = "<p style=\"text-align: center\">" +
-            "<a href=\"/account\"> Show My Account</a> | " +
-            "<a href=\"/events\"> Show All Events</a> | " +
-            "<a href=\"/tickets\"> Buy Ticket</a> | " +
-            "<a href=\"/logout\">Logout</a></p>";
+
 
     public static String buildDeleteEventByIdUri (String eventId) throws URISyntaxException, FileNotFoundException {
 

@@ -42,7 +42,7 @@ public class MyTicketsPage {
             builder.append("<h2>You haven't purchased any tickets yet</h2>\n");
         }
 
-        builder.append(LINKS_IN_MYTICKETS);
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
@@ -70,7 +70,7 @@ public class MyTicketsPage {
         }
         //}
         builder.append(TRANSFER_TICKET_FORM);
-        builder.append(LINKS_IN_MYTICKETS);
+        builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append(UIConstants.PAGE_FOOTER);
         return builder.toString();
     }
@@ -85,16 +85,12 @@ public class MyTicketsPage {
                     "</form>";
 
 
-    public static final String LINKS_IN_MYTICKETS = "<p style=\"text-align: center\">" +
-            "<a href=\"/account\"> Show My Account</a> | " +
-            "<a href=\"/events\"> Show All Events</a> | " +
-            "<a href=\"/tickets\"> Buy Ticket</a> | " +
-            "<a href=\"/logout\">Logout</a></p>";
+
 
 
     public static final String TRANSFER_SUCCESSFUL = UIConstants.PAGE_HEADER +
             "<h1>The ticket has been transferred successfully</h1>\n" +
-            LINKS_IN_MYTICKETS +
+            UIConstants.LINKS_IN_PAGE +
             UIConstants.PAGE_FOOTER;
 
     public static String buildUriToTransferTicket (String ticketId) throws URISyntaxException, FileNotFoundException {
