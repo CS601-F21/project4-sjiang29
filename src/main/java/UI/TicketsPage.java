@@ -115,6 +115,7 @@ public class TicketsPage {
             "<br>"+
             "<br>"+
             UIConstants.LINKS_IN_PAGE +
+            "<hr>" +
             "<h2 style=\"color:orange\">You have purchased the ticket successfully</h2>\n" +
             UIConstants.PAGE_FOOTER;
 

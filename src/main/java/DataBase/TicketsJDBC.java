@@ -61,16 +61,16 @@ public class TicketsJDBC {
      * @param con
      * @param price
      * @param eventId
-     * @param sold
+
 
      * @throws SQLException
      */
-    public static void executeInsertTicket(Connection con, int price, int eventId, String sold) throws SQLException {
+    public static void executeInsertTicket(Connection con, int price, int eventId) throws SQLException {
         String insertTicketSql = "INSERT INTO tickets (event_id, price, sold, buyer_email) VALUES (?, ?, ?, ?);";
         PreparedStatement insertTicketStmt = con.prepareStatement(insertTicketSql);
         insertTicketStmt.setInt(1, eventId);
         insertTicketStmt.setInt(2, price);
-        insertTicketStmt.setString(3, sold);
+        insertTicketStmt.setString(3, "no");
         insertTicketStmt.setNull(4,java.sql.Types.NULL);
 
         insertTicketStmt.executeUpdate();

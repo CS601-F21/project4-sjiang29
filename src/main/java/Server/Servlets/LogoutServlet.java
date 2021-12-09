@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
         // log out by invalidating the session
         req.getSession().invalidate();
         resp.getWriter().println(UIConstants.PAGE_HEADER);
-        resp.getWriter().println("<h1>Thank you.</h1>");
+        resp.getWriter().println("<h1 style=\"text-align: center\">Thank you.</h1>");
         resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
         resp.getWriter().println(UIConstants.PAGE_FOOTER);
 

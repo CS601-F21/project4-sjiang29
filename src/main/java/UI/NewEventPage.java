@@ -1,10 +1,19 @@
 package UI;
 
+import Server.ServerConstants;
+import Util.LandingUri;
+import com.google.gson.Gson;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static Server.HttpServer.LOGGER;
 import static UI.MyEventsPage.buildDeleteEventByIdUri;
 import static UI.MyEventsPage.buildModifyEventByIdUri;
 
@@ -22,7 +31,7 @@ public class NewEventPage {
                     "  <label for=\"term\">Event Location</label><br/>\n" +
                     "  <input type=\"text\" id=\"eventLocation\" name=\"eventLocation\"/ required><br/>\n" +
                     "  <label for=\"term\">Event Date(YYYY-MM-DD)</label><br/>\n" +
-                    "  <input type=\"text\" id=\"eventDate\" name=\"eventDate\"/><br/ required>\n" +
+                    "  <input type=\"text\" id=\"eventDate\" name=\"eventDate\"/ required><br/>\n" +
                     "  <label for=\"term\">Start Time(hh:mm)</label><br/>\n" +
                     "  <input type=\"text\" id=\"startTime\" name=\"startTime\"/><br/>\n" +
                     "  <label for=\"term\">End Time(hh:mm)</label><br/>\n" +
@@ -49,8 +58,8 @@ public class NewEventPage {
         builder.append(UIConstants.PAGE_HEADER);
         builder.append("<br>");
         builder.append("<br>");
-        builder.append("<hr>");
         builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append("<hr>");
         builder.append("<h2 style=\"color:#AA336A\">Below is the event you just created.</h2>\n");
 
         String eventId = "";
@@ -60,8 +69,11 @@ public class NewEventPage {
 
             String urlToDeleteEvent = buildDeleteEventByIdUri(eventId);
             String urlToModifyEvent = buildModifyEventByIdUri(eventId);
+            String urlToAddTicket = buildAddTicketByEventIdUri(eventId);
+
             builder.append("<li>" + "<b>Event Id</b>: " + events.getInt("id") + "&ensp;&ensp;&ensp;" +
                     "<b>Event name</b>: " + events.getString("name") + "&ensp;&ensp;&ensp;" +
+                    "<a href=" + urlToAddTicket + ">" + "Add Ticket</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToDeleteEvent + ">" + "Delete</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToModifyEvent + ">" + "Modify</a>" + "\n" +
                     "</li>\n");
@@ -81,6 +93,22 @@ public class NewEventPage {
                 "  <input type=\"submit\" value=\"Submit\"/>\n" +
                 "</form>");
         return  builder.toString();
+    }
+
+    public static String buildAddTicketByEventIdUri (String eventId) throws URISyntaxException, FileNotFoundException {
+
+        String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
+        Gson gson = new Gson();
+        LandingUri landingUri = gson.fromJson(new FileReader(file), LandingUri.class);
+
+        String newTicketUrl = landingUri.getLandingUri() + ServerConstants.PATH_TO_NEWTICKET;
+        LOGGER.info("myEventsUrl url:" + newTicketUrl);
+
+        HttpGet httpGet = new HttpGet(newTicketUrl);
+        URI uri = new URIBuilder(httpGet.getURI())
+                .addParameter("eventId", eventId)
+                .build();
+        return uri.toString();
     }
 
     public static final String SLACK_SUCCESS =

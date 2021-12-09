@@ -36,7 +36,6 @@ public class MyTicketsPage {
                     "<b>Ticket Price</b>: " + tickets.getInt("price") + "&ensp;&ensp;&ensp;" +
                     "<b>Sold Or Not</b>: " + tickets.getString("sold") + "&ensp;&ensp;&ensp;" +
                     "<b>Buyer Email</b>: " + tickets.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
-                    "<b>Ticket Type</b>: " + tickets.getString("type") + "&ensp;&ensp;&ensp;" +
                     "<a href=" + urlToTransferTicket + ">" + "Transfer this Ticket</a>" + "\n" +
                     "</li>\n");
         }
@@ -93,7 +92,6 @@ public class MyTicketsPage {
         return builder.toString();
 
     }
-
 
 
 

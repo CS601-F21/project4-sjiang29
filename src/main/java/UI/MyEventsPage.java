@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static Server.HttpServer.LOGGER;
+import static UI.NewEventPage.buildAddTicketByEventIdUri;
 import static UI.NewEventPage.getSlackEventForm;
 
 public class MyEventsPage {
@@ -33,6 +34,7 @@ public class MyEventsPage {
             String urlToDeleteEvent = buildDeleteEventByIdUri(eventId);
             String urlToModifyEvent = buildModifyEventByIdUri(eventId);
             String urlToSlackEvent = buildSlackEventByIdUri(eventId);
+            String urlToAddTicket = buildAddTicketByEventIdUri(eventId);
 
 
             builder.append("<li>" + "Event Id: " + myEvents.getInt("id") + "&ensp;&ensp;&ensp;" +
@@ -41,6 +43,7 @@ public class MyEventsPage {
                     "Event time: " + myEvents.getDate("date") + "&ensp;&ensp;&ensp;" +
                     "Event zipcode: " + myEvents.getInt("zipcode") + "&ensp;&ensp;&ensp;" +
                     "Event location: " + myEvents.getString("location") + "&ensp;&ensp;" +
+                    "<a href=" + urlToAddTicket + ">" + "Add Ticket</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToSlackEvent + ">" + "Send To Slack</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToDeleteEvent + ">" + "Delete</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToModifyEvent + ">" + "Modify</a>" + "\n" +
