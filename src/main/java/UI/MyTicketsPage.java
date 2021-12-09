@@ -66,12 +66,10 @@ public class MyTicketsPage {
 
             transferredTicketId = Integer.toString(ticketToBeTransfer.getInt("id"));
             builder.append("<li>" + "Event Id: " + "<a href=" + urlToAnEvent + ">" + ticketToBeTransfer.getInt("event_id") +"</a>" + "    " +
-                    "Ticket Id: " + ticketToBeTransfer.getInt("id") + "    " +
-                    "Ticket Price: " + ticketToBeTransfer.getInt("price") + "    " +
-                    "Sold Or Not: " + ticketToBeTransfer.getString("sold") + "    " +
-                    "Buyer Email: " + ticketToBeTransfer.getString("buyer_email") + "    " +
-                    "Ticket Type: " + ticketToBeTransfer.getString("type") + "    " +
-
+                    "Ticket Id: " + ticketToBeTransfer.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "Ticket Price: " + ticketToBeTransfer.getInt("price") + "&ensp;&ensp;&ensp;" +
+                    "Sold Or Not: " + ticketToBeTransfer.getString("sold") + "&ensp;&ensp;&ensp;" +
+                    "Buyer Email: " + ticketToBeTransfer.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
                     "</li>\n");
         }
 
