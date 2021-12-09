@@ -14,6 +14,7 @@ import org.eclipse.jetty.http.HttpStatus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -46,7 +47,6 @@ public class AccountServlet extends HttpServlet {
                     userEmail = user.getString("email");
                     zipcode = user.getInt("zipcode");
                 }
-
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -72,50 +72,54 @@ public class AccountServlet extends HttpServlet {
             try(BufferedReader reader = req.getReader()) {
                 String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
                 LOGGER.info("body: " + body);
-                String[] bodyParts = body.split("&");
-
-                String userNamePart = bodyParts[0];
-                String[] parsedUserName = userNamePart.split("=");
-                String newUserName = parsedUserName[1];
-                LOGGER.info("new user name: " + newUserName);
-
-                String zipcodePart = bodyParts[1];
-                String[] parsedZipcode = zipcodePart.split("=");
-                String zipcode = parsedZipcode[1];
-                LOGGER.info("new zipcode: " + zipcode);
-
-                int newZipcode = 0;
-                if(zipcode != ""){
-                    newZipcode = Integer.parseInt(zipcode);
-                }
-
-                String userEmail = "";
-                String updatedName = "";
-                int updatedZipcode = 0;
-                try (Connection connection = DBCPDataSource.getConnection()){
-                    ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
-                    if(user.next()){
-                        userEmail = user.getString("email");
-                    }
-
-                    UsersJDBC.executeUpdateUser(connection,userEmail,newUserName, newZipcode);
-                    ResultSet updatedUser = UsersJDBC.executeSelectUserByEmail(connection, userEmail);
-                    if(updatedUser.next()){
-                        updatedName = updatedUser.getString("name");
-                        LOGGER.info("updated username from db:" + updatedName);
-                        updatedZipcode = updatedUser.getInt("zipcode");
-                        LOGGER.info("updated zipcode from db: " + updatedZipcode);
-                    }
-                    resp.getWriter().println(AccountPage.postAccountPage(updatedName,userEmail, updatedZipcode));
-
-                }catch (SQLException e){
-                    e.printStackTrace();
-                }
+                updateAccount(body, resp.getWriter(), sessionId);
             }
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
             resp.getWriter().println(UIConstants.RETURN_TO_LANDING);
+        }
+    }
+
+    private static void updateAccount(String body, PrintWriter writer, String sessionId){
+        String[] bodyParts = body.split("&");
+
+        String userNamePart = bodyParts[0];
+        String[] parsedUserName = userNamePart.split("=");
+        String newUserName = parsedUserName[1];
+        LOGGER.info("new user name: " + newUserName);
+
+        String zipcodePart = bodyParts[1];
+        String[] parsedZipcode = zipcodePart.split("=");
+        String zipcode = parsedZipcode[1];
+        LOGGER.info("new zipcode: " + zipcode);
+
+        int newZipcode = 0;
+        if(zipcode != ""){
+            newZipcode = Integer.parseInt(zipcode);
+        }
+
+        String userEmail = "";
+        String updatedName = "";
+        int updatedZipcode = 0;
+        try (Connection connection = DBCPDataSource.getConnection()){
+            ResultSet user = SessionsJDBC.executeSelectUserBySessionId(connection, sessionId);
+            if(user.next()){
+                userEmail = user.getString("email");
+            }
+
+            UsersJDBC.executeUpdateUser(connection,userEmail,newUserName, newZipcode);
+            ResultSet updatedUser = UsersJDBC.executeSelectUserByEmail(connection, userEmail);
+            if(updatedUser.next()){
+                updatedName = updatedUser.getString("name");
+                LOGGER.info("updated username from db:" + updatedName);
+                updatedZipcode = updatedUser.getInt("zipcode");
+                LOGGER.info("updated zipcode from db: " + updatedZipcode);
+            }
+            writer.println(AccountPage.postAccountPage(updatedName,userEmail, updatedZipcode));
+
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 }
