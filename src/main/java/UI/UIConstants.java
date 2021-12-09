@@ -7,6 +7,7 @@ public class UIConstants {
             "<head>\n" +
             "  <title>Project4_Event Handler</title>\n" +
             "</head>\n" +
+
             "<body>\n" +
             "\n";
 
@@ -15,5 +16,8 @@ public class UIConstants {
             "</html>";
 
     public static final String RETURN_TO_LANDING =
-            PAGE_HEADER + "<h1>Please login</h1>\n" + "<p><a href=\"/\">Login</a></p>" + PAGE_FOOTER;
+            PAGE_HEADER +
+                    "<h1 style=\"text-align: center\">Please login</h1>\n" +
+                    "<p style=\"text-align: center\"><a href=\"/\">Login</a></p>" +
+                    PAGE_FOOTER;
 }

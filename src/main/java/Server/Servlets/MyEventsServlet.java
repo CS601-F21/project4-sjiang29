@@ -27,7 +27,7 @@ import static Server.HttpServer.LOGGER;
 import static Util.ServletUtil.getBodyParameter;
 import static Util.ServletUtil.getId;
 
-public class MyOwnEventsServlet extends HttpServlet {
+public class MyEventsServlet extends HttpServlet {
 
 
     @Override

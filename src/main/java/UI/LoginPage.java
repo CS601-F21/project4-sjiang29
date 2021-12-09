@@ -23,8 +23,8 @@ public class LoginPage {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
         builder.append("<hr>");
-        builder.append("<h2 style=\"text-align: center\">Oops, login unsuccessful, please try to login again</h2>");
-        builder.append("<a style=\"text-align: center\" href=\""+url+"\"><img src=\"" + LoginServletConstants.BUTTON_URL +"\"/></a>");
+        builder.append("<h2 >Oops, login unsuccessful, please try to login again</h2>");
+        builder.append("<a href=\""+url+"\"><img src=\"" + LoginServletConstants.BUTTON_URL +"\"/></a>");
         builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();

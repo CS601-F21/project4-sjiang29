@@ -18,48 +18,28 @@ import static Server.HttpServer.LOGGER;
 
 public class EventsPage {
 
-    public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
-            "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-            "<head>\n" +
-            "  <title>Events page</title>\n" +
-            "</head>\n" +
-            "<body>\n" +
-            "\n";
-
-    public static final String PAGE_FOOTER = "\n" +
-            "</body>\n" +
-            "</html>";
-
-    public static final String RETURN_TO_LANDING =
-            PAGE_HEADER + "<h1>Please login</h1>\n" + "<p><a href=\"/\">Login</a></p>" + PAGE_FOOTER;
-
     public static String displayEvents(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
-        builder.append(PAGE_HEADER);
-        builder.append("<h1>Below are all the events.</h1>\n");
+        builder.append(UIConstants.PAGE_HEADER);
+        builder.append("<h2>Below are all the events.</h2>\n");
 
-        //if(rowcount == 0){
-            //builder.append("<h2>There are no available events ongoing.</h2>\n");
-        //}else{
-        //String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
-            while(events.next()){
+        while(events.next()){
+            String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
+            LOGGER.info("url to an event:" + urlToAnEvent);
 
-                String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
-                LOGGER.info("url to an event:" + urlToAnEvent);
+            builder.append("<li>" + "Event Id: " + events.getInt("id") + "\n" +
+                    "Event name: " + events.getString("name") + "\n" +
+                    "Event Detail: " + "<a href=" + urlToAnEvent + ">" + "Detail</a>" + "\n" +
+                    "</li>\n");
+        }
 
-                builder.append("<li>" + "Event Id: " + events.getInt("id") + "\n" +
-                        "Event name: " + events.getString("name") + "\n" +
-                        "Event Detail: " + "<a href=" + urlToAnEvent + ">" + "Detail</a>" + "\n" +
-                        "</li>\n");
-            }
-        //}
-        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are all the events.</h1>\n")){
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are all the events.</h1>\n")){
             builder.append("<h2>There are no available events ongoing.</h2>\n");
         }
 
         builder.append(EVENT_DETAIL_FORM);
         builder.append(LINKS_IN_GET);
-        builder.append(PAGE_FOOTER);
+        builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
     }
@@ -80,29 +60,26 @@ public class EventsPage {
 
     public static String displaySingleEvent(ResultSet event) throws SQLException {
         StringBuilder builder = new StringBuilder();
-        builder.append(PAGE_HEADER);
-        builder.append("<h1>Below are the details of your selected event.</h1>\n");
+        builder.append(UIConstants.PAGE_HEADER);
+        builder.append("<h2>Below are the details of your selected event.</h2>\n");
 
-            //builder.append("<h2>There is no event that has the given id, please double check</h2>\n");
+        while(event.next()){
+            builder.append("<li>" + "Event id: " + event.getInt("id") + "<br>" +
+                    "Event name: " + event.getString("name") + "<br>" +
+                    "Event description: " + event.getString("description") + "<br>" +
+                    "Event time: " + event.getDate("date") + "<br>" +
+                    "Event zipcode: " + event.getInt("zipcode") + "<br>" +
+                    "Event location: " + event.getString("location") + "<br>" +
+                    "Event creator's email: " + event.getString("creator_email") +
+                    "</li>\n");
+        }
 
-        //}else{
-            while(event.next()){
-                builder.append("<li>" + "Event id: " + event.getInt("id") + "<br>" +
-                        "Event name: " + event.getString("name") + "<br>" +
-                        "Event description: " + event.getString("description") + "<br>" +
-                        "Event time: " + event.getDate("date") + "<br>" +
-                        "Event zipcode: " + event.getInt("zipcode") + "<br>" +
-                        "Event location: " + event.getString("location") + "<br>" +
-                        "Event creator's email: " + event.getString("creator_email") +
-                        "</li>\n");
-            }
-        //}
-        if(builder.toString().equals(PAGE_HEADER + "<h1>Below are the details of your selected event.</h1>\n")){
+        if(builder.toString().equals(UIConstants.PAGE_HEADER + "<h1>Below are the details of your selected event.</h1>\n")){
             builder.append("<h2>There is no event that has the given id, please double check</h2>\n");
         }
 
         builder.append(LINKS_IN_POST);
-        builder.append(PAGE_FOOTER);
+        builder.append(UIConstants.PAGE_FOOTER);
 
         return builder.toString();
 
