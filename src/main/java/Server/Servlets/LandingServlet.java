@@ -22,6 +22,14 @@ import static Server.HttpServer.LOGGER;
  */
 public class LandingServlet extends HttpServlet {
 
+
+    /**
+     * Reference code from cs 601 Example code
+     * Implement logic to deal get request sent to /
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

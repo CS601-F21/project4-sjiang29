@@ -17,8 +17,19 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+/**
+ * Implements logic for the /transactions path
+ *
+ */
 public class TransactionServlet extends HttpServlet {
 
+    /**
+     * Implement logic to deal get request sent to /transactions
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session

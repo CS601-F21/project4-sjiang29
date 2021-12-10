@@ -21,6 +21,14 @@ import java.sql.SQLException;
  */
 public class LogoutServlet extends HttpServlet {
 
+
+    /**
+     * Reference code from cs 601 example code
+     * Implement logic to deal get request sent to /logout
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

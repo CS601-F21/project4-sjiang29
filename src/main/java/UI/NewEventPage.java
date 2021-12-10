@@ -17,6 +17,10 @@ import static Server.HttpServer.LOGGER;
 import static UI.MyEventsPage.buildDeleteEventByIdUri;
 import static UI.MyEventsPage.buildModifyEventByIdUri;
 
+
+/**
+ * A class to deal all UI in /newEvent
+ */
 public class NewEventPage {
 
 

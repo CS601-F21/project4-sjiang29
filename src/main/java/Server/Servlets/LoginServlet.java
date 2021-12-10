@@ -30,8 +30,14 @@ import static Server.HttpServer.LOGGER;
  */
 public class LoginServlet extends HttpServlet {
 
-    //private Connection connection;
 
+    /**
+     * Reference code from cs 601 example code
+     * Implement logic to deal get request sent to /login
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

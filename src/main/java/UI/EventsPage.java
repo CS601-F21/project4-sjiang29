@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import static Server.HttpServer.LOGGER;
 
 
+/**
+ * A class to deal all UI in /events
+ */
 
 public class EventsPage {
 

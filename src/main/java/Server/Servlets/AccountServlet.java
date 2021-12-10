@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import static Server.HttpServer.LOGGER;
 
 /**
- * Implements logic for the /account
+ * Implements logic for the /account path
  *
  */
 public class AccountServlet extends HttpServlet {

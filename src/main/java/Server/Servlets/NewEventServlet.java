@@ -32,8 +32,20 @@ import static Server.HttpServer.LOGGER;
 import static Util.ServletUtil.getBodyParameter;
 import static Util.ServletUtil.getId;
 
+
+/**
+ * Implements logic for the /newEvent path
+ *
+ */
 public class NewEventServlet extends HttpServlet {
 
+
+    /**
+     * Implement logic to deal get request sent to /newEvent
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session
@@ -51,6 +63,13 @@ public class NewEventServlet extends HttpServlet {
         }
     }
 
+
+    /**
+     * Implement logic to deal post request sent to /newEvent
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 
@@ -81,6 +100,12 @@ public class NewEventServlet extends HttpServlet {
     }
 
 
+    /**
+     * Private helper method to deal post request relating to send message to slack
+     * @param body post request's body
+     * @param writer
+     *
+     */
     private void sendToSlackRequest(String body, PrintWriter writer){
         String[] bodyParts = body.split("=");
         String sendToSlackEventId = getId(bodyParts[1]);
@@ -94,8 +119,6 @@ public class NewEventServlet extends HttpServlet {
                 messageBuilder.append("Event location: " + sendToSlackEvent.getString("location") + "\n");
                 messageBuilder.append("Event date: " + sendToSlackEvent.getString("date") + "\n");
             }
-
-
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -127,11 +150,16 @@ public class NewEventServlet extends HttpServlet {
         }else{
             writer.println(NewEventPage.SLACK_FAILURE);
         }
-
-
-
     }
 
+
+    /**
+     * Private helper method to deal post request relating to create event
+     * @param body post request's body
+     * @param writer
+     * @param sessionId
+     *
+     */
     private void createNewEvent(String body, PrintWriter writer, String sessionId){
         String[] bodyParts = body.split("&");
 

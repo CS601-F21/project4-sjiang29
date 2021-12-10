@@ -4,6 +4,10 @@ import Server.LoginServletConstants;
 import Server.ServerConstants;
 import Util.ClientInfo;
 
+
+/**
+ * A class to deal all UI in /login
+ */
 public class LoginPage {
 
     public static final String LOGIN_ALREADY = UIConstants.PAGE_HEADER +

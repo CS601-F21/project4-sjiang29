@@ -17,6 +17,10 @@ import static Server.HttpServer.LOGGER;
 import static UI.NewEventPage.buildAddTicketByEventIdUri;
 import static UI.NewEventPage.getSlackEventForm;
 
+
+/**
+ * A class to deal all UI in /myEvents
+ */
 public class MyEventsPage {
 
     public static String displayMyEvents(ResultSet myEvents) throws SQLException, FileNotFoundException, URISyntaxException {

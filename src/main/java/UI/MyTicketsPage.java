@@ -15,6 +15,10 @@ import java.sql.SQLException;
 import static Server.HttpServer.LOGGER;
 import static UI.EventsPage.buildGetEventByIdUri;
 
+
+/**
+ * A class to deal all UI in /myTickets
+ */
 public class MyTicketsPage {
 
     public static String displayMyTickets(ResultSet tickets) throws SQLException, FileNotFoundException, URISyntaxException {

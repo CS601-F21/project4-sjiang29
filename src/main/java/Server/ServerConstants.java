@@ -3,6 +3,10 @@ package Server;
 import java.util.Arrays;
 import java.util.HashSet;
 
+
+/**
+ * A helper class to maintain constants used for the server.
+ */
 public class ServerConstants {
 
     public static final HashSet<String> PATHS = new HashSet<>(Arrays.asList(ServerConstants.PATH_TO_LANDING,

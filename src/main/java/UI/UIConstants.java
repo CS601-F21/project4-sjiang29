@@ -2,6 +2,10 @@ package UI;
 
 import Server.ServerConstants;
 
+
+/**
+ * A class to deal all common UI components
+ * */
 public class UIConstants {
 
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +

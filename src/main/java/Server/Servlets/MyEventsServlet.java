@@ -3,6 +3,7 @@ package Server.Servlets;
 import DataBase.DBCPDataSource;
 import DataBase.EventsJDBC;
 import DataBase.SessionsJDBC;
+import DataBase.TicketsJDBC;
 import Server.LoginServletConstants;
 import UI.MyEventsPage;
 import UI.UIConstants;
@@ -28,9 +29,20 @@ import static Server.HttpServer.LOGGER;
 import static Util.ServletUtil.getBodyParameter;
 import static Util.ServletUtil.getId;
 
+
+/**
+ * Implements logic for the /myEvents path
+ *
+ */
 public class MyEventsServlet extends HttpServlet {
 
 
+    /**
+     * Implement logic to deal get request sent to /myEvents
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session
@@ -80,6 +92,12 @@ public class MyEventsServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Implement logic to deal post request sent to /myEvents
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 
@@ -108,12 +126,21 @@ public class MyEventsServlet extends HttpServlet {
     }
 
 
+    /**
+     * Private helper method to deal post request relating to delete event
+     * @param body post request's body
+     * @param writer
+     *
+     */
     private static void deleteEvent(String body, PrintWriter writer){
         String[] bodyParts = body.split("=");
 
         String deletedEventId = getId(bodyParts[1]);
         try (Connection connection = DBCPDataSource.getConnection()){
+            // delete the event from event db
             EventsJDBC.executeDeleteEventById(connection, Integer.parseInt(deletedEventId));
+            // delete the event's corresponding tickets
+            TicketsJDBC.executeDeleteTicketsByEventId(connection, Integer.parseInt(deletedEventId));
             writer.println(MyEventsPage.DELETE_SUCCESS);
 
         }catch (SQLException e){
@@ -122,6 +149,13 @@ public class MyEventsServlet extends HttpServlet {
 
     }
 
+
+    /**
+     * Private helper method to deal post request relating to modify event
+     * @param body post request's body
+     * @param writer
+     *
+     */
     private static void modifyEvent(String body, PrintWriter writer){
         LOGGER.info("body: " + body);
         String[] bodyParts = body.split("&");

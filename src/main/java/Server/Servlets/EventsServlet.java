@@ -22,8 +22,20 @@ import java.sql.SQLException;
 
 import static Server.HttpServer.LOGGER;
 
+
+/**
+ * Implements logic for the /events path
+ *
+ */
 public class EventsServlet extends HttpServlet {
 
+
+    /**
+     * Implement logic to deal get request sent to /events
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session
@@ -51,12 +63,9 @@ public class EventsServlet extends HttpServlet {
                     resp.getWriter().println(EventsPage.displayEvents(allEvents));
                 }
 
-
             }catch (SQLException | URISyntaxException e){
                 e.printStackTrace();
             }
-
-
         }else{
             // ask the user to login
             resp.setStatus(HttpStatus.UNAUTHORIZED_401);
@@ -64,6 +73,12 @@ public class EventsServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Implement logic to deal post request sent to /events
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 
@@ -76,7 +91,6 @@ public class EventsServlet extends HttpServlet {
             resp.setStatus(HttpStatus.OK_200);
             try(BufferedReader reader = req.getReader()) {
                 String body = URLDecoder.decode(reader.readLine(), StandardCharsets.UTF_8.toString());
-                //TODO: verify the body exists and it contains a =
                 LOGGER.info("body: " + body);
                 String[] bodyParts = body.split("=");
 

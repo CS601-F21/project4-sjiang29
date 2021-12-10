@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import static Server.HttpServer.LOGGER;
 
 
-
+/**
+ * A class to deal all UI in /transactions
+ */
 public class TransactionPage {
 
     public static String displayTransactions(ResultSet transactions) throws SQLException {

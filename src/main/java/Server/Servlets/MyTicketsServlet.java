@@ -25,8 +25,20 @@ import java.sql.SQLException;
 
 import static Server.HttpServer.LOGGER;
 
+
+/**
+ * Implements logic for the /myTickets path
+ *
+ */
 public class MyTicketsServlet extends HttpServlet {
 
+
+    /**
+     * Implement logic to deal get request sent to /myTickets
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session
@@ -70,6 +82,12 @@ public class MyTicketsServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Implement logic to deal post request sent to /myTickets
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 

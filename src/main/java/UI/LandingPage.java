@@ -3,6 +3,10 @@ package UI;
 import Server.LoginServletConstants;
 import Server.ServerConstants;
 
+
+/**
+ * A class to deal all UI in /
+ */
 public class LandingPage {
 
 

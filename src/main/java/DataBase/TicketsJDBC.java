@@ -133,4 +133,18 @@ public class TicketsJDBC {
     }
 
 
+    /**
+     * A method to delete tickets using eventId
+     * @param con
+     * @param eventId
+     * @return
+     * @throws SQLException
+     */
+    public static void executeDeleteTicketsByEventId(Connection con, int eventId) throws SQLException {
+        String deleteEventByIdSql = "DELETE FROM tickets WHERE event_id=?;";
+        PreparedStatement deleteEventByIdStmt = con.prepareStatement(deleteEventByIdSql);
+        deleteEventByIdStmt.setInt(1, eventId);
+        deleteEventByIdStmt.executeUpdate();
+
+    }
 }

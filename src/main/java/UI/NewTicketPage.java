@@ -1,5 +1,9 @@
 package UI;
 
+
+/**
+ * A class to deal all UI in /newTicket
+ */
 public class NewTicketPage {
 
     public static String getCreateTicketForm(String eventId){

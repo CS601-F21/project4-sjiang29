@@ -1,7 +1,8 @@
 package Server;
 
 /**
- * A helper class to maintain constants used for the LoginServer example.
+ * Reference cs 601 example code
+ * A helper class to maintain constants used for the LoginServlet.
  */
 public class LoginServletConstants {
 

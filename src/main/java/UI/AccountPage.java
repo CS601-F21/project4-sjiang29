@@ -1,7 +1,10 @@
 package UI;
 
-public class AccountPage {
 
+/**
+ * A class to deal all UI in /account
+ */
+public class AccountPage {
 
     public static String getUserInfo(String userName, String email, int zipcode){
         return "<li >" + "UserName: " + userName + "</li>\n" +
