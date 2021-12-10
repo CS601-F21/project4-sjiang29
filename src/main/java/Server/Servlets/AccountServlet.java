@@ -23,10 +23,19 @@ import java.sql.SQLException;
 
 import static Server.HttpServer.LOGGER;
 
+/**
+ * Implements logic for the /account
+ *
+ */
 public class AccountServlet extends HttpServlet {
 
 
-
+    /**
+     * Implement logic to deal get request sent to /account
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session
@@ -59,6 +68,13 @@ public class AccountServlet extends HttpServlet {
         }
     }
 
+
+    /**
+     * Implement logic to deal post request sent to /account
+     * @param req
+     * @param resp
+     *
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 
@@ -81,6 +97,14 @@ public class AccountServlet extends HttpServlet {
         }
     }
 
+
+    /**
+     * Private helper method to deal post request relating to update account
+     * @param body post request's body
+     * @param writer
+     * @param sessionId
+     *
+     */
     private static void updateAccount(String body, PrintWriter writer, String sessionId){
         String[] bodyParts = body.split("&");
 

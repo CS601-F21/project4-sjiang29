@@ -1,12 +1,14 @@
 package DataBase;
 
 
-
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
+
+/**
+ * Reference: CS 601 example code
+ */
 public class DBCPDataSource {
     // Apache commons connection pool implementation
     private static BasicDataSource ds = new BasicDataSource();
@@ -15,7 +17,6 @@ public class DBCPDataSource {
     // -- https://www.geeksforgeeks.org/static-blocks-in-java/
     static {
         DBConfig dbConfig = DBUtilities.readConfig();
-        // TODO: do something other than exit the whole program
         // if the config file cannot be found
         if(dbConfig == null) {
             System.exit(1);
@@ -36,6 +37,9 @@ public class DBCPDataSource {
         return ds.getConnection();
     }
 
+    /**
+     * A private DBCP default constructor.
+     */
     private DBCPDataSource(){ }
 }
 

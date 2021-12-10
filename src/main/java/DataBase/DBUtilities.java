@@ -8,6 +8,10 @@ import java.io.FileReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Reference: CS 601 example code
+ * Utility class to read db config file
+ */
 public class DBUtilities {
 
     public static final String configFileName = "dbConfig.json";

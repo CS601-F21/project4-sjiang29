@@ -2,12 +2,16 @@ package DataBase;
 
 import java.sql.*;
 
+/**
+ * Class to do data modification or selection towards events table.
+ */
 public class EventsJDBC {
 
     /**
-     * A method to demonstrate using a PrepareStatement to execute a database select
+     * A method to select all events of which a specific user has tickets
      * @param con
      * @param buyerEmail
+     * @return
      * @throws SQLException
      */
     public static ResultSet executeDisplayUserTransactions(Connection con, String buyerEmail) throws SQLException {
@@ -19,9 +23,9 @@ public class EventsJDBC {
     }
 
     /**
-     * A method to demonstrate using a PrepareStatement to execute a database select
+     * A method to select all events
      * @param con
-
+     * @return
      * @throws SQLException
      */
     public static ResultSet executeSelectAllEvents(Connection con) throws SQLException {
@@ -32,6 +36,14 @@ public class EventsJDBC {
         return results;
     }
 
+
+    /**
+     * A method to select all events created by a specific user according to such user's email
+     * @param con
+     * @param creator_email
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet executeSelectEventsByCreator(Connection con, String creator_email) throws SQLException {
         String selectEventsByCreatorSql = "SELECT * FROM events where creator_email=? ;";
         PreparedStatement selectEventsByCreatorStmt = con.prepareStatement(selectEventsByCreatorSql);
@@ -41,6 +53,14 @@ public class EventsJDBC {
         return results;
     }
 
+
+    /**
+     * A method to select an event using eventId
+     * @param con
+     * @param eventId
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet executeSelectEventById(Connection con, int eventId) throws SQLException {
         String selectEventByIdSql = "SELECT * FROM events WHERE id=?;";
         PreparedStatement selectEventByIdStmt = con.prepareStatement(selectEventByIdSql);
@@ -50,6 +70,12 @@ public class EventsJDBC {
         return results;
     }
 
+    /**
+     * A method to select all events which have available tickets
+     * @param con
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet executeSelectEventHasTickets(Connection con) throws SQLException {
         String selectEventHasTicketsSql = "SELECT events.id, events.name, events.date FROM events WHERE events.id= ANY (SELECT DISTINCT event_id FROM tickets WHERE sold= 'no');";
         PreparedStatement selectEventHasTicketsStmt = con.prepareStatement(selectEventHasTicketsSql);
@@ -58,6 +84,14 @@ public class EventsJDBC {
         return results;
     }
 
+
+    /**
+     * A method to delete an event using eventId
+     * @param con
+     * @param eventId
+     * @return
+     * @throws SQLException
+     */
     public static void executeDeleteEventById(Connection con, int eventId) throws SQLException {
         String deleteEventByIdSql = "DELETE FROM events WHERE id=?;";
         PreparedStatement deleteEventByIdStmt = con.prepareStatement(deleteEventByIdSql);
@@ -67,13 +101,17 @@ public class EventsJDBC {
     }
 
     /**
-     * A method to demonstrate using a PreparedStatement to execute a database insert.
+     * A method to demonstrate using a PreparedStatement to execute a database insert and return newly insert row's eventId
      * @param con
      * @param creatorEmail
      * @param eventName
+     * @param startTime
+     * @param endTime
+     * @param location
      * @param date
      * @param zipcode
      * @param eventDescription
+     * @return
 
      * @throws SQLException
      */
@@ -129,14 +167,23 @@ public class EventsJDBC {
         return rs;
     }
 
-    public static ResultSet executeNewlyInsertedEventId(Connection con) throws SQLException {
-        String selectNewEventIdSql = "SELECT LAST_INSERT_ID() FROM events;";
-        PreparedStatement selectNewEventIdStmt = con.prepareStatement(selectNewEventIdSql);
 
-        ResultSet results = selectNewEventIdStmt.executeQuery();
-        return results;
-    }
 
+
+    /**
+     * A method to update an event according to its id.
+     * @param con
+     * @param eventName
+     * @param startTime
+     * @param endTime
+     * @param location
+     * @param date
+     * @param zipcode
+     * @param eventDescription
+     * @return
+
+     * @throws SQLException
+     */
 
     public static void executeUpdateEventById(Connection con, int eventId, String eventName, String eventDescription,
                                           int zipcode, Date date, String startTime, String endTime, String location) throws SQLException {
@@ -202,11 +249,6 @@ public class EventsJDBC {
             updateEventStmt.setInt(2,eventId);
             updateEventStmt.executeUpdate();
         }
-
-
     }
-
-
-
 
 }

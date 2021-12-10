@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+/**
+ * Class to do data modification or selection towards users table.
+ */
 public class UsersJDBC {
 
     /**

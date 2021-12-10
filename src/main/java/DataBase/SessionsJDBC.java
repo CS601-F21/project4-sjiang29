@@ -5,12 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+/**
+ * Class to do data modification or selection towards sessions table.
+ */
 public class SessionsJDBC {
 
     /**
      * A method to demonstrate using a PrepareStatement to execute a database select
      * @param con
      * @param sessionId
+     * @return
      * @throws SQLException
      */
     public static ResultSet executeSelectUserBySessionId(Connection con, String sessionId) throws SQLException {
