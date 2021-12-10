@@ -21,6 +21,11 @@ import static Server.HttpServer.LOGGER;
 
 public class EventsPage {
 
+    /**
+     * UI method to display all events
+     * @param events
+     * @return
+     */
     public static String displayEvents(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -52,6 +57,7 @@ public class EventsPage {
 
 
 
+    // form for asking for a specific event's detail by providing event id
     public static final String EVENT_DETAIL_FORM =
             "<h3 style=\"color:#AA336A\">Please input the id of event that you are interested for more detail.</h3>\n" +
             "<form action=\"/events\" method=\"post\">\n" +
@@ -60,6 +66,11 @@ public class EventsPage {
                     "  <input type=\"submit\" value=\"Submit\"/>\n" +
                     "</form>";
 
+    /**
+     * UI method to display single event
+     * @param event
+     * @return
+     */
     public static String displaySingleEvent(ResultSet event) throws SQLException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -91,6 +102,11 @@ public class EventsPage {
     }
 
 
+    /**
+     * UI helper method to generate a redirect link
+     * @param eventId
+     * @return
+     */
     public static String buildGetEventByIdUri (String eventId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";

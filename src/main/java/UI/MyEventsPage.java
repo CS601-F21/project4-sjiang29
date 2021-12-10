@@ -23,6 +23,11 @@ import static UI.NewEventPage.getSlackEventForm;
  */
 public class MyEventsPage {
 
+    /**
+     * UI method to display events created by user
+     * @param myEvents
+     * @return
+     */
     public static String displayMyEvents(ResultSet myEvents) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -63,6 +68,11 @@ public class MyEventsPage {
         return builder.toString();
     }
 
+    /**
+     * UI method to generate page to let user send an event to slack
+     * @param slackedEvent
+     * @return
+     */
     public static String getSlackEventResponse(ResultSet slackedEvent) throws SQLException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -70,7 +80,7 @@ public class MyEventsPage {
         builder.append("<br>");
         builder.append(UIConstants.LINKS_IN_PAGE);
         builder.append("<hr>");
-        builder.append("<h2 style=\"color:#AA336A\">Below are the details of the event you would like to modify.</h2>\n");
+        builder.append("<h2 style=\"color:#AA336A\">Below are the details of the event you would like to send to slack.</h2>\n");
 
         String slackedEventId = "";
         while(slackedEvent.next()){
@@ -92,7 +102,11 @@ public class MyEventsPage {
     }
 
 
-
+    /**
+     * UI method to generate page to let user delete an event
+     * @param deletedEvent
+     * @return
+     */
     public static String getDeleteResponse(ResultSet deletedEvent) throws SQLException {
 
         StringBuilder builder = new StringBuilder();
@@ -123,6 +137,10 @@ public class MyEventsPage {
     }
 
 
+    /**
+     * UI method to generate form to delete event
+     * @param eventId
+     */
     public static String getDeleteEventForm(String eventId){
         StringBuilder builder = new StringBuilder();
         builder.append("<h2 style=\"color:#AA336A\">Please check the box for deleting confirmation.</h2>\n");
@@ -134,6 +152,12 @@ public class MyEventsPage {
         return  builder.toString();
     }
 
+
+    /**
+     * UI method to generate page to let user to modify an event
+     * @param modifiedEvent
+     * @return
+     */
     public static String getModifyEventResponse(ResultSet modifiedEvent) throws SQLException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -163,6 +187,10 @@ public class MyEventsPage {
     }
 
 
+    /**
+     * UI method to generate form to modify event
+     * @param modifiedEventId
+     */
     public static String getModifyEventForm(String modifiedEventId){
         StringBuilder builder = new StringBuilder();
         builder.append("<h3 style=\"color:#AA336A\">Please use the form below to update</h3>\n");
@@ -191,6 +219,7 @@ public class MyEventsPage {
     }
 
 
+    // response to tell user deletion was successfully
     public static final String DELETE_SUCCESS =
             UIConstants.PAGE_HEADER +
                     "<br>"+
@@ -201,8 +230,7 @@ public class MyEventsPage {
                     UIConstants.PAGE_FOOTER;
 
 
-
-
+    // response to tell user modification was successfully
     public static final  String MODIFY_SUCCESS =
             UIConstants.PAGE_HEADER +
                     "<br>"+
@@ -215,6 +243,11 @@ public class MyEventsPage {
 
 
 
+    /**
+     * UI helper method to generate a redirect link
+     * @param eventId
+     * @return
+     */
     public static String buildDeleteEventByIdUri (String eventId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
@@ -231,6 +264,11 @@ public class MyEventsPage {
         return uri.toString();
     }
 
+    /**
+     * UI helper method to generate a redirect link
+     * @param eventId
+     * @return
+     */
     public static String buildModifyEventByIdUri (String eventId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
@@ -247,6 +285,11 @@ public class MyEventsPage {
         return uri.toString();
     }
 
+    /**
+     * UI helper method to generate a redirect link
+     * @param eventId
+     * @return
+     */
     public static String buildSlackEventByIdUri (String eventId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";

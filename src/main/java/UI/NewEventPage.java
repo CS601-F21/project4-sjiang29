@@ -25,6 +25,7 @@ public class NewEventPage {
 
 
 
+    // generate NEW_EVENT_FORM
     public static final String NEW_EVENT_FORM =
             "<h3 style=\"color:#AA336A\">Please input the following table to create a new event</h3>\n" +
             "<form  action=\"/newEvent\" method=\"post\">\n" +
@@ -46,6 +47,7 @@ public class NewEventPage {
                     "</form>";
 
 
+    // response for a get request
     public static final String RESPONSE_FOR_GET =
             UIConstants.PAGE_HEADER +
                     "<br>"+
@@ -57,6 +59,11 @@ public class NewEventPage {
 
 
 
+    /**
+     * Method to generate a response to post request
+     * @param events
+     * @return
+     */
     public static String displayResponseForPost(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -88,6 +95,11 @@ public class NewEventPage {
         return builder.toString();
     }
 
+    /**
+     * Method to generate SlackEventForm
+     * @param eventId
+     * @return
+     */
     public static String getSlackEventForm(String eventId){
         StringBuilder builder = new StringBuilder();
         builder.append("<h2 style=\"color:#AA336A\">Please check the box for sending this event to slack.</h2>\n");
@@ -99,6 +111,11 @@ public class NewEventPage {
         return  builder.toString();
     }
 
+    /**
+     * UI helper method to generate a redirect link
+     * @param eventId
+     * @return
+     */
     public static String buildAddTicketByEventIdUri (String eventId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
@@ -115,6 +132,7 @@ public class NewEventPage {
         return uri.toString();
     }
 
+    // response to tell user slack event was successfully
     public static final String SLACK_SUCCESS =
             UIConstants.PAGE_HEADER +
                     "<br>"+
@@ -123,6 +141,7 @@ public class NewEventPage {
             "<h2 style=\"color:#AA336A\">The message including newly created event detail has been sent to slack channel successfully.</h2>\n" +
                     UIConstants.PAGE_FOOTER;
 
+    // response to tell user slack event failed
     public static final String SLACK_FAILURE =
             UIConstants.PAGE_HEADER +
                     "<br>"+

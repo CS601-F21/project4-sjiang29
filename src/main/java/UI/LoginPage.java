@@ -10,6 +10,7 @@ import Util.ClientInfo;
  */
 public class LoginPage {
 
+    // response to tell user he/she has already authenticated
     public static final String LOGIN_ALREADY = UIConstants.PAGE_HEADER +
             "<h2 style=\"text-align: center\">You have already been authenticated</h2>" +
             UIConstants.LINKS_IN_PAGE +
@@ -17,6 +18,7 @@ public class LoginPage {
 
 
 
+    // redirect links in login page
     public static String LINKS_IN_LOGIN = "<p style=\"text-align: center\">" +
             "<h2 style=\"text-align: center; color:green\">For Account Information</h2>" +
             "<p style=\"text-align: center\">" +
@@ -41,6 +43,11 @@ public class LoginPage {
             "<p style=\"text-align: center\">" +
                     "<a href=" + ServerConstants.PATH_TO_LOGOUT + "> Logout</a> </p>";
 
+
+    /**
+     * UI method to notify user login is failed
+     * @param url
+     */
     public static String failedLogin(String url){
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -53,7 +60,10 @@ public class LoginPage {
         return builder.toString();
     }
 
-
+    /**
+     * UI method to notify user login is successful
+     * @param clientInfo
+     */
     public static String successfulLogin(ClientInfo clientInfo){
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);

@@ -20,6 +20,11 @@ import static Server.HttpServer.LOGGER;
  */
 public class TicketsPage {
 
+    /**
+     * UI method to display events which still have tickets
+     * @param events
+     * @return
+     */
     public static String displayEventsHaveTickets(ResultSet events) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -49,6 +54,12 @@ public class TicketsPage {
         return builder.toString();
     }
 
+
+    /**
+     * UI method to display tickets for an event
+     * @param tickets
+     * @return
+     */
     public static String displayTickets(ResultSet tickets) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -80,8 +91,11 @@ public class TicketsPage {
     }
 
 
-
-
+    /**
+     * UI helper method to generate a redirect link
+     * @param eventId
+     * @return
+     */
     public static String buildUriToTicketDetail (String eventId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
@@ -98,6 +112,11 @@ public class TicketsPage {
         return uri.toString();
     }
 
+    /**
+     * UI helper method to generate a redirect link
+     * @param ticketId
+     * @return
+     */
     public static String buildUriToBuyTicket (String ticketId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";
@@ -114,6 +133,7 @@ public class TicketsPage {
         return uri.toString();
     }
 
+    // response to tell user a ticket was purchased successfully
     public static String updateSuccessfully = UIConstants.PAGE_HEADER +
             "<br>"+
             "<br>"+

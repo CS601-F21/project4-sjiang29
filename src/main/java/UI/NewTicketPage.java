@@ -6,6 +6,11 @@ package UI;
  */
 public class NewTicketPage {
 
+    /**
+     * Method to generate CreateTicketForm
+     * @param eventId
+     * @return
+     */
     public static String getCreateTicketForm(String eventId){
         StringBuilder builder = new StringBuilder();
         builder.append("<h3 >Please input the following table to create a new ticket</h3>\n");
@@ -20,6 +25,11 @@ public class NewTicketPage {
         return builder.toString();
     }
 
+    /**
+     * Method to generate response for get request
+     * @param eventId
+     * @return
+     */
     public static String getCreateTicketResponse(String eventId){
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -34,6 +44,7 @@ public class NewTicketPage {
         return builder.toString();
     }
 
+    // response to tell user a new ticket was added successfully
     public static final String ADD_TICKET_SUCCESS = UIConstants.PAGE_HEADER +
             "<br>"+
             "<br>"+

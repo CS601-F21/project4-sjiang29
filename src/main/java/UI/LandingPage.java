@@ -10,6 +10,11 @@ import Server.ServerConstants;
 public class LandingPage {
 
 
+    /**
+     * UI method to display landing page
+     * @param url
+     * @return
+     */
     public static String getLandingPage(String url){
         return UIConstants.PAGE_HEADER +
                 "<br>" +
@@ -21,6 +26,7 @@ public class LandingPage {
                 UIConstants.PAGE_FOOTER;
     }
 
+    // response to show a user is already authenticated
     public static final String ALREADY_AUTHENTICATED =
             UIConstants.PAGE_HEADER +
                     "<br>"+

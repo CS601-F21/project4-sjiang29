@@ -21,6 +21,11 @@ import static UI.EventsPage.buildGetEventByIdUri;
  */
 public class MyTicketsPage {
 
+    /**
+     * Method to display a user's purchased tickets
+     * @param tickets
+     * @return
+     */
     public static String displayMyTickets(ResultSet tickets) throws SQLException, FileNotFoundException, URISyntaxException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);
@@ -53,6 +58,12 @@ public class MyTicketsPage {
         return builder.toString();
     }
 
+
+    /**
+     * Method to display page to let a user to transfer a ticket
+     * @param ticketToBeTransfer
+     * @return
+     */
     public static String transferTicket(ResultSet ticketToBeTransfer) throws SQLException, FileNotFoundException, URISyntaxException {
 
         StringBuilder builder = new StringBuilder();
@@ -82,6 +93,11 @@ public class MyTicketsPage {
         return builder.toString();
     }
 
+    /**
+     * Method to generate TransferTicketForm
+     * @param transferredTicketId
+     * @return
+     */
     public static String getTransferTicketForm(String transferredTicketId){
         StringBuilder builder = new StringBuilder();
         builder.append("<form action=\"/myTickets\" method=\"post\">\n" +
@@ -97,6 +113,7 @@ public class MyTicketsPage {
 
 
 
+    // response to tell user ticket transfer was successfully
     public static final String TRANSFER_SUCCESSFUL = UIConstants.PAGE_HEADER +
             "<br>"+
             "<br>"+
@@ -105,6 +122,11 @@ public class MyTicketsPage {
             "<h2 style=\"color:orange\">The ticket has been transferred successfully</h2>\n" +
             UIConstants.PAGE_FOOTER;
 
+    /**
+     * UI helper method to generate a redirect link
+     * @param ticketId
+     * @return
+     */
     public static String buildUriToTransferTicket (String ticketId) throws URISyntaxException, FileNotFoundException {
 
         String file = "/Users/sj/Desktop/601_sw development/assignments/p4/landingUri.json";

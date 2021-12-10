@@ -10,6 +10,11 @@ import static Server.HttpServer.LOGGER;
  */
 public class TransactionPage {
 
+    /**
+     * UI method to display events which user has tickets
+     * @param transactions
+     * @return
+     */
     public static String displayTransactions(ResultSet transactions) throws SQLException {
         StringBuilder builder = new StringBuilder();
         builder.append(UIConstants.PAGE_HEADER);

@@ -10,7 +10,7 @@ import java.util.Base64;
 import java.util.Map;
 
 /**
- * A utility class with several helper methods.
+ * A utility class with several helper methods for login servlet.
  */
 public class LoginUtilities {
 

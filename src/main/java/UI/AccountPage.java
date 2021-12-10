@@ -6,6 +6,14 @@ package UI;
  */
 public class AccountPage {
 
+
+    /**
+     * UI method to display a user account infor
+     * @param userName
+     * @param email
+     * @param zipcode
+     * @return
+     */
     public static String getUserInfo(String userName, String email, int zipcode){
         return "<li >" + "UserName: " + userName + "</li>\n" +
                 "<li >" + "UserEmail: " + email + "</li>\n" +
@@ -21,6 +29,14 @@ public class AccountPage {
                     "  <input type=\"submit\" value=\"Submit\"/>\n" +
                     "</form>";
 
+
+    /**
+     * UI method to let user modify his/her account infor
+     * @param userName
+     * @param email
+     * @param zipcode
+     * @return
+     */
     public static String getAccountPage(String userName, String email, int zipcode){
         return  UIConstants.PAGE_HEADER +
                 "<br>"+
@@ -34,6 +50,13 @@ public class AccountPage {
                 UIConstants.PAGE_FOOTER;
     }
 
+    /**
+     * UI method to return message for post request's response
+     * @param userName
+     * @param email
+     * @param zipcode
+     * @return
+     */
     public static String postAccountPage(String userName, String email, int zipcode){
         return  UIConstants.PAGE_HEADER +
                 "<br>"+
