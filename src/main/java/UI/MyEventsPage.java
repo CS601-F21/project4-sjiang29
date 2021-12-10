@@ -230,16 +230,33 @@ public class MyEventsPage {
                     UIConstants.PAGE_FOOTER;
 
 
-    // response to tell user modification was successfully
-    public static final  String MODIFY_SUCCESS =
-            UIConstants.PAGE_HEADER +
-                    "<br>"+
-                    "<br>"+
-                    UIConstants.LINKS_IN_PAGE +
-                    "<hr>"+
-                    "<h2 style=\"color:#AA336A\">The selected event has been modified successfully</h2>\n" +
-                    UIConstants.PAGE_FOOTER;
+    /**
+     * UI method to generate response to tell user modification was successfully
+     * @param event
+     */
+    public static String getSuccessfulModificationResponse(ResultSet event) throws SQLException {
+        StringBuilder builder = new StringBuilder();
+        builder.append(UIConstants.PAGE_HEADER);
+        builder.append("<br>");
+        builder.append("<br>");
+        builder.append(UIConstants.LINKS_IN_PAGE);
+        builder.append("<hr>");
+        builder.append("<h2 style=\"color:#AA336A\">The selected event has been modified successfully. " +
+                "Below is the event information after modification</h2>\n");
+        while(event.next()){
+            builder.append("<li>" + "<b>Event id</b>: " + event.getInt("id") + "<br>" +
+                    "<b>Event name</b>: " + event.getString("name") + "<br>" +
+                    "<b>Event description</b>: " + event.getString("description") + "<br>" +
+                    "<b>Event time</b>: " + event.getDate("date") + "<br>" +
+                    "<b>Event zipcode</b>: " + event.getInt("zipcode") + "<br>" +
+                    "<b>Event location</b>: " + event.getString("location") + "<br>" +
+                    "<b>Event creator's email</b>: " + event.getString("creator_email") +
+                    "</li>\n");
+        }
 
+        builder.append(UIConstants.PAGE_FOOTER);
+        return builder.toString();
+    }
 
 
 

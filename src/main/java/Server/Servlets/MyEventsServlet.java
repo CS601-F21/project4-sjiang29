@@ -197,7 +197,8 @@ public class MyEventsServlet extends HttpServlet {
         try (Connection connection = DBCPDataSource.getConnection()){
             EventsJDBC.executeUpdateEventById(connection, modifiedEventId, eventName, eventDescription,
                     zipCode, date, startTime, endTime, location);
-            writer.println(MyEventsPage.MODIFY_SUCCESS);
+            ResultSet eventAfterModification = EventsJDBC.executeSelectEventById(connection, modifiedEventId);
+            writer.println(MyEventsPage.getSuccessfulModificationResponse(eventAfterModification));
 
         }catch (SQLException e){
             e.printStackTrace();

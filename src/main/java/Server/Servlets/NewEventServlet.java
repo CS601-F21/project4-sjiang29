@@ -114,7 +114,7 @@ public class NewEventServlet extends HttpServlet {
         try (Connection connection = DBCPDataSource.getConnection()){
             ResultSet sendToSlackEvent = EventsJDBC.executeSelectEventById(connection, Integer.parseInt(sendToSlackEventId));
             if(sendToSlackEvent.next()){
-                messageBuilder.append("A new event was just created by me. Welcome to come.\n" );
+                messageBuilder.append("A new event was just created by me. Welcome to come and join us.\n" );
                 messageBuilder.append("Event name: " + sendToSlackEvent.getString("name") + "\n");
                 messageBuilder.append("Event location: " + sendToSlackEvent.getString("location") + "\n");
                 messageBuilder.append("Event date: " + sendToSlackEvent.getString("date") + "\n");
