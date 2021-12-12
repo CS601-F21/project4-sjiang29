@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * A class that provides static methods to send HTTP GET and POST requests.
+ * Referenced from cs 601 example code
  */
 public class HttpFetcher {
 

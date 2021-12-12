@@ -2,6 +2,7 @@ package Util;
 
 /**
  * A class to maintain info about each client.
+ * Referenced from cs 601 example code
  */
 public class ClientInfo {
 
@@ -25,6 +26,10 @@ public class ClientInfo {
         return name;
     }
 
+    /**
+     * return email
+     * @return
+     */
     public String getEmail() {
         return email;
     }

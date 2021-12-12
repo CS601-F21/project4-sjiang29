@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * A utility class with several helper methods for login servlet.
+ * Reference from cs 601 example code
  */
 public class LoginUtilities {
 

@@ -112,7 +112,6 @@ public class MyTicketsPage {
     }
 
 
-
     // response to tell user ticket transfer was successfully
     public static final String TRANSFER_SUCCESSFUL = UIConstants.PAGE_HEADER +
             "<br>"+

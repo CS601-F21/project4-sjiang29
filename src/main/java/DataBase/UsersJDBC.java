@@ -29,7 +29,6 @@ public class UsersJDBC {
      * @param con
      * @param name
      * @param email
-
      * @throws SQLException
      */
     public static void executeInsertUser(Connection con, String name, String email) throws SQLException {
@@ -48,7 +47,6 @@ public class UsersJDBC {
      * @param name
      * @param zipcode
      * @param email
-
      * @throws SQLException
      */
     public static void executeUpdateUser(Connection con, String email, String name, int zipcode) throws SQLException {

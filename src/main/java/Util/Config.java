@@ -2,6 +2,7 @@ package Util;
 
 /**
  * A class parse necessary configuration info.
+ * Referenced from cs 601 example code
  */
 public class Config {
 

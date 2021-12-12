@@ -35,7 +35,6 @@ public class ServletUtil {
             } else {
                 break;
             }
-
         }
         return res.toString();
     }
