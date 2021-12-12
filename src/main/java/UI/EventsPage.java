@@ -84,9 +84,11 @@ public class EventsPage {
             builder.append("<li>" + "<b>Event id</b>: " + event.getInt("id") + "<br>" +
                     "<b>Event name</b>: " + event.getString("name") + "<br>" +
                     "<b>Event description</b>: " + event.getString("description") + "<br>" +
-                    "<b>Event time</b>: " + event.getDate("date") + "<br>" +
+                    "<b>Event date</b>: " + event.getDate("date") + "<br>" +
                     "<b>Event zipcode</b>: " + event.getInt("zipcode") + "<br>" +
                     "<b>Event location</b>: " + event.getString("location") + "<br>" +
+                    "<b>Event start time</b>: " + event.getTime("start_time") + "<br>" +
+                    "<b>Event end time</b>: " + event.getTime("end_time") + "<br>" +
                     "<b>Event creator's email</b>: " + event.getString("creator_email") +
                     "</li>\n");
         }

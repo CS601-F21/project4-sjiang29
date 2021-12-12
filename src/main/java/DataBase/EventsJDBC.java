@@ -233,9 +233,7 @@ public class EventsJDBC {
         }
 
         if(!endTime.equals("")){
-            updateEventSql = "UPDATE events SET" +
-                    "end_time=?" +
-                    "WHERE id=?;";
+            updateEventSql = "UPDATE events SET end_time=? WHERE id=?;";
             updateEventStmt = con.prepareStatement(updateEventSql);
             updateEventStmt.setString(1, endTime);
             updateEventStmt.setInt(2,eventId);

@@ -46,12 +46,12 @@ public class MyEventsPage {
             String urlToAddTicket = buildAddTicketByEventIdUri(eventId);
 
 
-            builder.append("<li>" + "Event Id: " + myEvents.getInt("id") + "&ensp;&ensp;&ensp;" +
-                    "Event name: " + myEvents.getString("name") + "&ensp;&ensp;&ensp;" +
-                    "Event description: " + myEvents.getString("description") + "&ensp;&ensp;&ensp;" +
-                    "Event time: " + myEvents.getDate("date") + "&ensp;&ensp;&ensp;" +
-                    "Event zipcode: " + myEvents.getInt("zipcode") + "&ensp;&ensp;&ensp;" +
-                    "Event location: " + myEvents.getString("location") + "&ensp;&ensp;" +
+            builder.append("<li>" + "<b>Event Id</b>: " + myEvents.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event name</b>: " + myEvents.getString("name") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event description</b>: " + myEvents.getString("description") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event time</b>: " + myEvents.getDate("date") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event zipcode</b>: " + myEvents.getInt("zipcode") + "&ensp;&ensp;&ensp;" +
+                    "<b>Event location</b>: " + myEvents.getString("location") + "&ensp;&ensp;" +
                     "<a href=" + urlToAddTicket + ">" + "Add Ticket</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToSlackEvent + ">" + "Send To Slack</a>" + "&ensp;&ensp;" +
                     "<a href=" + urlToDeleteEvent + ">" + "Delete</a>" + "&ensp;&ensp;" +
@@ -178,6 +178,8 @@ public class MyEventsPage {
                     "&ensp;&ensp;&ensp;<b>Event time</b>: " + modifiedEvent.getDate("date") + "<br>" +
                     "&ensp;&ensp;&ensp;<b>Event zipcode</b>: " + modifiedEvent.getInt("zipcode") + "<br>" +
                     "&ensp;&ensp;&ensp;<b>Event location</b>: " + modifiedEvent.getString("location") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event start time</b>: " + modifiedEvent.getTime("start_time") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event end time</b>: " + modifiedEvent.getTime("end_time") + "<br>" +
                     "</li>\n");
         }
         builder.append(getModifyEventForm(modifiedEventId));
@@ -245,12 +247,14 @@ public class MyEventsPage {
                 "Below is the event information after modification</h2>\n");
         while(event.next()){
             builder.append("<li>" + "<b>Event id</b>: " + event.getInt("id") + "<br>" +
-                    "<b>Event name</b>: " + event.getString("name") + "<br>" +
-                    "<b>Event description</b>: " + event.getString("description") + "<br>" +
-                    "<b>Event time</b>: " + event.getDate("date") + "<br>" +
-                    "<b>Event zipcode</b>: " + event.getInt("zipcode") + "<br>" +
-                    "<b>Event location</b>: " + event.getString("location") + "<br>" +
-                    "<b>Event creator's email</b>: " + event.getString("creator_email") +
+                    "&ensp;&ensp;&ensp;<b>Event name</b>: " + event.getString("name") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event description</b>: " + event.getString("description") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event time</b>: " + event.getDate("date") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event zipcode</b>: " + event.getInt("zipcode") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event location</b>: " + event.getString("location") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event creator's email</b>: " + event.getString("creator_email") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event start time</b>: " + event.getTime("start_time") + "<br>" +
+                    "&ensp;&ensp;&ensp;<b>Event end time</b>: " + event.getTime("end_time") + "<br>" +
                     "</li>\n");
         }
 
