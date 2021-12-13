@@ -17,7 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Handles a request to sign out
+ * Handles a request to sign out /logout
  */
 public class LogoutServlet extends HttpServlet {
 

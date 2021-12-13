@@ -1,5 +1,10 @@
 package DataBase;
 
+
+/**
+ *
+ * DBConfig: Utility class to hold database config data
+ */
 public class DBConfig {
 
     private String database;

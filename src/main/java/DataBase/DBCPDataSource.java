@@ -7,7 +7,9 @@ import java.sql.SQLException;
 
 
 /**
+ * DBCPDataSource class: class to build connection to remote db
  * Reference: CS 601 example code
+ *
  */
 public class DBCPDataSource {
     // Apache commons connection pool implementation

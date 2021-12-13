@@ -19,6 +19,7 @@ import static Server.HttpServer.LOGGER;
 
 /**
  * Landing page that allows a user to request to login with Slack.
+ * Referenced from cs 601 example code
  */
 public class LandingServlet extends HttpServlet {
 
