@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static Server.HttpServer.LOGGER;
+import static UI.EventsPage.buildGetEventByIdUri;
 
 
 /**
@@ -38,8 +39,10 @@ public class TicketsPage {
             String urlToTicketDetail = buildUriToTicketDetail(Integer.toString(events.getInt("id")));
             LOGGER.info("url to show event ticket:" + urlToTicketDetail);
 
-            builder.append("<li>" + "<b>Event Id</b>: " + events.getInt("id") + "\n" +
-                    "<b>Event name</b>: " + events.getString("name") + "\n" +
+            String urlToAnEvent = buildGetEventByIdUri(Integer.toString(events.getInt("id")));
+
+            builder.append("<li>" + "<b>Event Id</b>: " + "<a href=" + urlToAnEvent + ">" + events.getInt("id") +"</a>" + "&ensp;&ensp;&ensp;" +
+                    "<b>Event name</b>: " + events.getString("name") + "&ensp;&ensp;&ensp;" +
                     "<b>Tickets Detail</b>: " + "<a href=" + urlToTicketDetail + ">" + "Show Tickets</a>" + "\n" +
                     "</li>\n");
         }

@@ -80,11 +80,11 @@ public class MyTicketsPage {
             String urlToAnEvent = buildGetEventByIdUri(Integer.toString(ticketToBeTransfer.getInt("event_id")));
 
             transferredTicketId = Integer.toString(ticketToBeTransfer.getInt("id"));
-            builder.append("<li>" + "Event Id: " + "<a href=" + urlToAnEvent + ">" + ticketToBeTransfer.getInt("event_id") +"</a>" + "    " +
-                    "Ticket Id: " + ticketToBeTransfer.getInt("id") + "&ensp;&ensp;&ensp;" +
-                    "Ticket Price: " + ticketToBeTransfer.getInt("price") + "&ensp;&ensp;&ensp;" +
-                    "Sold Or Not: " + ticketToBeTransfer.getString("sold") + "&ensp;&ensp;&ensp;" +
-                    "Buyer Email: " + ticketToBeTransfer.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
+            builder.append("<li>" + "<b>Event Id</b>: " + "<a href=" + urlToAnEvent + ">" + ticketToBeTransfer.getInt("event_id") +"</a>" + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Id</b>: " + ticketToBeTransfer.getInt("id") + "&ensp;&ensp;&ensp;" +
+                    "<b>Ticket Price</b>: " + ticketToBeTransfer.getInt("price") + "&ensp;&ensp;&ensp;" +
+                    "<b>Sold Or Not</b>: " + ticketToBeTransfer.getString("sold") + "&ensp;&ensp;&ensp;" +
+                    "<b>Buyer Email</b>: " + ticketToBeTransfer.getString("buyer_email") + "&ensp;&ensp;&ensp;" +
                     "</li>\n");
         }
 
