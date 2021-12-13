@@ -1,5 +1,5 @@
-import Server.ServerConstants;
-import Util.LandingUri;
+import server.ServerConstants;
+import util.LandingUri;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
